@@ -1,0 +1,23 @@
+server:
+  port: 8443
+
+spring:
+  application:
+    name: gateway
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: donation-service
+          uri: lb://donation-service
+          predicates:
+            - Path=/api/v1/donations/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+      preferIpAddress: true
