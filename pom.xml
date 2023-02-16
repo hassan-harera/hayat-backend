@@ -15,6 +15,13 @@
     <version>1.0</version>
     <name>hayat-backend</name>
     <description>project parent</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>landscape/gateway</module>
+        <module>landscape/config-service</module>
+        <module>landscape/discovery-service</module>
+    </modules>
 
     <properties>
         <java.version>17</java.version>

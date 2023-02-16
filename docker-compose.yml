@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  gateway:
+    container_name: "hayat_gateway_service"
+    image: hayat_gateway_service:latest
+    build:
+      context: ./landscape/gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8443:8443"
+  config-service:
+    container_name: "hayat_config_service"
+    image: hayat_config_service:latest
+    build:
+      context: ./landscape/config-service
+      dockerfile: Dockerfile
+    depends_on:
+      - discovery-service
+    healthcheck:
+      test: "curl --fail --silent service-discovery:8761/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    ports:
+      - "8111:8111"
+  discovery-service:
+    container_name: "hayat_discovery_service"
+    image: hayat_discovery_service:latest
+    build:
+      context: ./landscape/discovery-service
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+  redis:
+    container_name: "hayat_redis"
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - hayat_internal_network
+  db:
+    image: mysql:8.0
+    container_name: "hayat_mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=harera
+      - MYSQL_DATABASE=hayat
+    hostname: "localhost"
+    volumes:
+      - hayat_db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - hayat_internal_network
+networks:
+  hayat_app_network:
+    driver: bridge
+  hayat_internal_network:
+    driver: bridge
+    internal: true
+volumes:
+  hayat_db:
+  hayat_mongodb:
