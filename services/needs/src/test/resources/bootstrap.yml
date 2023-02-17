@@ -1,0 +1,9 @@
+  application:
+    name: config-service
+  cloud:
+    config:
+      enabled: false
+      profile: test
+  spring:
+    profiles:
+      default: test

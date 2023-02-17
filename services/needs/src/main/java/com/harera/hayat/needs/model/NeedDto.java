@@ -1,6 +1,6 @@
 package com.harera.hayat.needs.model;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.framework.model.BaseEntityDto;
@@ -19,10 +19,10 @@ public class NeedDto extends BaseEntityDto {
     private String description;
 
     @JsonProperty(value = "need_date")
-    private OffsetDateTime needDate;
+    private LocalDateTime needDate;
 
     @JsonProperty(value = "need_expiration_date")
-    private OffsetDateTime needExpirationDate;
+    private LocalDateTime needExpirationDate;
 
     @JsonProperty(value = "category")
     private NeedCategory category;

@@ -13,6 +13,8 @@ import com.harera.hayat.needs.service.book.BookNeedService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 @RequestMapping("/api/v1/needs/book")
 public class BookNeedController {
@@ -32,6 +34,6 @@ public class BookNeedController {
     @PostMapping
     public ResponseEntity<BookNeedResponse> create(
                     @RequestBody BookNeedRequest bookNeedRequest) {
-        return ResponseEntity.ok(bookNeedService.create(bookNeedRequest));
+        return ok(bookNeedService.create(bookNeedRequest));
     }
 }
