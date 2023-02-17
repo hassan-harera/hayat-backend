@@ -7,58 +7,79 @@ services:
     build:
       context: ./landscape/gateway
       dockerfile: Dockerfile
+    network_mode: "host"
     ports:
       - "8443:8443"
+    depends_on:
+      - discovery-service
+    healthcheck:
+      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
   config-service:
     container_name: "hayat_config_service"
     image: hayat_config_service:latest
     build:
       context: ./landscape/config-service
       dockerfile: Dockerfile
+    network_mode: "host"
+    ports:
+      - "8111:8111"
     depends_on:
       - discovery-service
     healthcheck:
-      test: "curl --fail --silent service-discovery:8761/actuator/health | grep UP || exit 1"
+      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
       interval: 20s
       timeout: 5s
       retries: 5
       start_period: 40s
-    ports:
-      - "8111:8111"
+
   discovery-service:
     container_name: "hayat_discovery_service"
     image: hayat_discovery_service:latest
     build:
       context: ./landscape/discovery-service
       dockerfile: Dockerfile
+    network_mode: "host"
     ports:
       - "8761:8761"
+  needs-service:
+    container_name: "hayat_needs_service"
+    image: hayat_needs_service:latest
+    build:
+      context: ./services/needs
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+    network_mode: "host"
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+      - redis
+      - discovery-service
+      - config-service
   redis:
     container_name: "hayat_redis"
     image: redis:latest
+    network_mode: "host"
     ports:
       - "6379:6379"
-    networks:
-      - hayat_internal_network
   db:
     image: mysql:8.0
     container_name: "hayat_mysql"
     environment:
-      - MYSQL_ROOT_PASSWORD=harera
-      - MYSQL_DATABASE=hayat
-    hostname: "localhost"
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    network_mode: "host"
     volumes:
       - hayat_db:/var/lib/mysql
     ports:
       - "3306:3306"
-    networks:
-      - hayat_internal_network
-networks:
-  hayat_app_network:
-    driver: bridge
-  hayat_internal_network:
-    driver: bridge
-    internal: true
 volumes:
   hayat_db:
   hayat_mongodb:
