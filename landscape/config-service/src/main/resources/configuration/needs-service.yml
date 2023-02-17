@@ -32,7 +32,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver
     password: harera
-    url: jdbc:mysql://localhost:3306/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: root
   hibernate:
     connection:
