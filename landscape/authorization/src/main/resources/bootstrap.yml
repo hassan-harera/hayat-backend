@@ -3,8 +3,13 @@ spring:
     name: authorization-service
   cloud:
     config:
-      uri: http://config-service:8111
-      name: authorization-service
+      uri: http://localhost:8111
+      fail-fast: true
+      retry:
+        max-attempts: 5
+        multiplier: 1.5
+        max-interval: 5000
+        initial-interval: 1000
 
 eureka:
   client:
