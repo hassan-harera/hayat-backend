@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  redis:
+    container_name: "hayat_redis"
+    image: redis:latest
+    ports:
+      - "6633:6379"
+  db:
+    image: mysql:8.0
+    container_name: "hayat_mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=harera
+      - MYSQL_DATABASE=hayat
+    ports:
+      - "3366:3306"

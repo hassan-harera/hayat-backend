@@ -10,8 +10,8 @@ eureka:
     hostname: localhost
     nonSecurePort: 8761
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    fetchRegistry: false
+    registerWithEureka: false
   server:
     wait-time-in-ms-when-sync-empty: 0
     enable-self-preservation: false
