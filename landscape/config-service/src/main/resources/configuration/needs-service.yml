@@ -13,7 +13,7 @@ otp:
     expire: 10
 secret-key: 01234##56789@@hayat$$donations
 server:
-  port: 8082
+  port: 8083
 spring:
   application:
     name: needs-service
@@ -28,6 +28,12 @@ spring:
           min-idle: 0
       port: 6379
       timeout: 2000
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://0.0.0.0:8181/realms/master
+          jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver

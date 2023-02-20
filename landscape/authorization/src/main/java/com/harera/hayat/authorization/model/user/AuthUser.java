@@ -4,12 +4,9 @@ import java.util.Collection;
 import java.util.List;
 
 
-
+import com.harera.hayat.framework.model.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import com.harera.hayat.authorization.model.BaseEntity;
-import com.harera.hayat.authorization.model.auth.UserAuthority;
 
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -24,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "user_")
-public class User extends BaseEntity implements UserDetails {
+public class AuthUser extends BaseEntity implements UserDetails {
 
     @Basic
     @Column(name = "phone_number")
@@ -61,7 +58,7 @@ public class User extends BaseEntity implements UserDetails {
     private List<UserAuthority> authorities;
 
     public String getUsername() {
-        return getId().toString();
+        return getMobile();
     }
 
     @Override

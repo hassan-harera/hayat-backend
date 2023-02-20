@@ -6,18 +6,15 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.authorization.model.user.Role;
-import com.harera.hayat.authorization.model.user.User;
-import com.harera.hayat.authorization.model.auth.LoginResponse;
+import com.harera.hayat.authorization.model.user.AuthUser;
 import com.harera.hayat.authorization.repository.UserRepository;
 import com.harera.hayat.authorization.repository.TokenRepository;
 
 import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -45,15 +42,7 @@ public class JwtService {
         this.tokenRepository = tokenRepository;
     }
 
-    public LoginResponse guestAuthenticate() {
-        LoginResponse authResponse = new LoginResponse();
-        String jwt = createToken("GUEST", -1, getGuestClaims());
-        authResponse.setRefreshToken(jwt);
-        authResponse.setToken(jwt);
-        return authResponse;
-    }
-
-    private Map<String, Object> getClaims(User user) {
+    private Map<String, Object> getClaims(AuthUser user) {
         Map<String, Object> claims = new HashMap<>(2);
         claims.put("id", user.getId());
         claims.put("uid", user.getUid());
@@ -61,18 +50,12 @@ public class JwtService {
         claims.put("email", user.getEmail());
         claims.put("mobile", user.getMobile());
         claims.put("role", Role.GUEST);
+        claims.put("authorities", user.getAuthorities().stream().map(
+                GrantedAuthority::getAuthority).toArray());
         return claims;
     }
 
-    private Map<String, Object> getGuestClaims() {
-        Map<String, Object> claims = new HashMap<>(5);
-        claims.put("id", 0);
-        claims.put("role", Role.GUEST);
-
-        return claims;
-    }
-
-    public String generateToken(User user) {
+    public String generateToken(AuthUser user) {
         final String userSubject = String.valueOf(user.getId());
         final String token = createToken(userSubject, Long.valueOf(tokenExpire),
                         getClaims(user));
@@ -80,7 +63,7 @@ public class JwtService {
         return token;
     }
 
-    public String generateRefreshToken(User user) {
+    public String generateRefreshToken(AuthUser user) {
         final String token = createToken(user.getUsername(),
                         Long.valueOf(refreshTokenExpire), null);
         tokenRepository.addRefreshToken(user.getId(), token);
@@ -102,20 +85,5 @@ public class JwtService {
         jwtBuilder.setSubject(username).setIssuedAt(new Date(System.currentTimeMillis()))
                         .signWith(SignatureAlgorithm.HS256, secretKey);
         return jwtBuilder.compact();
-    }
-
-    public User getUserForAuthorization(String token) {
-        Long userId = jwtUtils.extractUserId(token.substring(7));
-        return userRepository.findById(userId)
-                        .orElseThrow(() -> new UsernameNotFoundException(
-                                        "User not found with id : " + userId));
-    }
-
-    public User getRequestUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication()
-                        .getPrincipal();
-        if (principal instanceof User user)
-            return user;
-        throw new JwtException("Invalid token");
     }
 }

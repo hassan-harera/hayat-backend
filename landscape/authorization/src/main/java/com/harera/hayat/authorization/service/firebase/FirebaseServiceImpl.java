@@ -1,5 +1,8 @@
 package com.harera.hayat.authorization.service.firebase;
 
+import com.harera.hayat.framework.exception.InvalidTokenException;
+import com.harera.hayat.framework.exception.LoginException;
+import com.harera.hayat.framework.util.ErrorCode;
 import kotlin.jvm.internal.Intrinsics;
 import lombok.extern.log4j.Log4j2;
 
@@ -12,11 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
-import com.harera.hayat.authorization.exception.InvalidTokenException;
-import com.harera.hayat.authorization.exception.LoginException;
-import com.harera.hayat.authorization.model.auth.SignupRequest;
+import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
 import com.harera.hayat.authorization.model.user.FirebaseUser;
-import com.harera.hayat.authorization.util.ErrorCode;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -65,17 +65,17 @@ public class FirebaseServiceImpl {
     }
 
     @Nullable
-    public FirebaseUser createUser(@NotNull SignupRequest signupRequest) {
-        Intrinsics.checkNotNullParameter(signupRequest, "signupRequest");
+    public FirebaseUser createUser(@NotNull OauthSignupRequest oauthSignupRequest) {
+        Intrinsics.checkNotNullParameter(oauthSignupRequest, "signupRequest");
         UserRecord.CreateRequest userRecord = (new UserRecord.CreateRequest())
-                .setPhoneNumber("+2" + signupRequest.getMobile())
-                .setPassword(signupRequest.getPassword())
-                .setDisplayName(signupRequest.getFirstName() + " "
-                        + signupRequest.getLastName())
-                .setPassword(signupRequest.getPassword()).setDisabled(false);
+                .setPhoneNumber("+2" + oauthSignupRequest.getMobile())
+                .setPassword(oauthSignupRequest.getPassword())
+                .setDisplayName(oauthSignupRequest.getFirstName() + " "
+                        + oauthSignupRequest.getLastName())
+                .setPassword(oauthSignupRequest.getPassword()).setDisabled(false);
 
-        if (signupRequest.getEmail() != null) {
-            userRecord.setEmail(signupRequest.getEmail());
+        if (oauthSignupRequest.getEmail() != null) {
+            userRecord.setEmail(oauthSignupRequest.getEmail());
         }
 
         try {

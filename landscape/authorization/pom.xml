@@ -98,12 +98,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
-            <version>3.1.4</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>2.3.9</version>
@@ -164,6 +158,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>7.0.5.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.harera.hayat</groupId>
+            <artifactId>framework</artifactId>
+            <version>1.0</version>
         </dependency>
     </dependencies>
 

@@ -1,12 +1,18 @@
 package com.harera.hayat.authorization.service;
 
-import static com.harera.hayat.authorization.util.RegexUtils.isEmail;
-import static com.harera.hayat.authorization.util.RegexUtils.isPhoneNumber;
-import static com.harera.hayat.authorization.util.RegexUtils.isUsername;
-
-import java.util.Objects;
-import java.util.Optional;
-
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
+import com.harera.hayat.authorization.model.auth.*;
+import com.harera.hayat.authorization.model.oauth.OAuthLoginRequest;
+import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
+import com.harera.hayat.authorization.model.user.FirebaseUser;
+import com.harera.hayat.authorization.model.auth.SignupRequest;
+import com.harera.hayat.authorization.model.user.AuthUser;
+import com.harera.hayat.authorization.repository.TokenRepository;
+import com.harera.hayat.authorization.repository.UserRepository;
+import com.harera.hayat.authorization.service.firebase.FirebaseServiceImpl;
+import com.harera.hayat.authorization.service.keycloak.KeycloakService;
+import com.harera.hayat.framework.exception.SignupException;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,21 +20,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.auth.UserRecord;
-import com.harera.hayat.authorization.exception.SignupException;
-import com.harera.hayat.authorization.model.user.FirebaseUser;
-import com.harera.hayat.authorization.model.user.User;
-import com.harera.hayat.authorization.model.auth.FirebaseOauthToken;
-import com.harera.hayat.authorization.model.auth.LoginRequest;
-import com.harera.hayat.authorization.model.auth.LoginResponse;
-import com.harera.hayat.authorization.model.auth.LogoutRequest;
-import com.harera.hayat.authorization.model.auth.OAuthLoginRequest;
-import com.harera.hayat.authorization.model.auth.SignupRequest;
-import com.harera.hayat.authorization.model.auth.SignupResponse;
-import com.harera.hayat.authorization.repository.UserRepository;
-import com.harera.hayat.authorization.repository.TokenRepository;
-import com.harera.hayat.authorization.service.firebase.FirebaseServiceImpl;
+import java.util.Objects;
+import java.util.Optional;
+
+import static com.harera.hayat.authorization.util.RegexUtils.*;
 
 @Service
 public class AuthService {
@@ -41,12 +36,13 @@ public class AuthService {
     private final FirebaseServiceImpl firebaseServiceImpl;
     private final ModelMapper modelMapper;
     private final JwtUtils jwtUtils;
+    private final KeycloakService keycloakService;
 
     public AuthService(UserRepository userRepository, JwtService jwtService,
-                    PasswordEncoder passwordEncoder, AuthValidation authValidation,
-                    TokenRepository tokenRepository,
-                    FirebaseServiceImpl firebaseServiceImpl, ModelMapper modelMapper,
-                    JwtUtils jwtUtils) {
+                       PasswordEncoder passwordEncoder, AuthValidation authValidation,
+                       TokenRepository tokenRepository,
+                       FirebaseServiceImpl firebaseServiceImpl, ModelMapper modelMapper,
+                       JwtUtils jwtUtils, KeycloakService keycloakService) {
         this.userRepository = userRepository;
         this.jwtService = jwtService;
         this.passwordEncoder = passwordEncoder;
@@ -55,46 +51,43 @@ public class AuthService {
         this.firebaseServiceImpl = firebaseServiceImpl;
         this.modelMapper = modelMapper;
         this.jwtUtils = jwtUtils;
+        this.keycloakService = keycloakService;
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
         authValidation.validateLogin(loginRequest);
 
         long userId = getUserId(loginRequest.getSubject());
-        User user = userRepository.findById(userId).orElseThrow(
-                        () -> new UsernameNotFoundException("User not found"));
+        AuthUser user = userRepository.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("User not found"));
 
         if (!Objects.equals(user.getDeviceToken(), loginRequest.getDeviceToken())) {
             user.setDeviceToken(loginRequest.getDeviceToken());
             userRepository.save(user);
         }
 
-        LoginResponse loginResponse = new LoginResponse();
-        loginResponse.setToken(jwtService.generateToken(user));
-        loginResponse.setRefreshToken(jwtService.generateRefreshToken(user));
-
-        return loginResponse;
+        return keycloakService.login(loginRequest);
     }
 
     public LoginResponse login(OAuthLoginRequest oAuthLoginRequest) {
         authValidation.validate(oAuthLoginRequest);
         FirebaseToken firebaseToken = firebaseServiceImpl
-                        .getFirebaseToken(oAuthLoginRequest.getFirebaseToken());
+                .getFirebaseToken(oAuthLoginRequest.getFirebaseToken());
         UserRecord userRecord = firebaseServiceImpl.getUser(firebaseToken.getUid());
-        User user = userRepository.findByUid(userRecord.getUid()).orElseThrow(
-                        () -> new UsernameNotFoundException("User not found"));
+        AuthUser user = userRepository.findByUid(userRecord.getUid()).orElseThrow(
+                () -> new UsernameNotFoundException("User not found"));
         return new LoginResponse(jwtService.generateToken(user),
-                        jwtService.generateRefreshToken(user));
+                jwtService.generateRefreshToken(user));
     }
 
-    public SignupResponse signup(SignupRequest signupRequest) {
+    public SignupResponse signup(OauthSignupRequest signupRequest) {
         authValidation.validate(signupRequest);
         FirebaseUser firebaseUser = firebaseServiceImpl.createUser(signupRequest);
         if (firebaseUser == null) {
             throw new SignupException("User creation failed");
         }
 
-        User user = modelMapper.map(signupRequest, User.class);
+        AuthUser user = modelMapper.map(signupRequest, AuthUser.class);
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         user.setUid(firebaseUser.getUid());
         user.setUsername(firebaseUser.getUid());
@@ -104,7 +97,7 @@ public class AuthService {
     }
 
     private long getUserId(String subject) {
-        Optional<User> user = Optional.empty();
+        Optional<AuthUser> user = Optional.empty();
         if (isPhoneNumber(subject)) {
             user = userRepository.findByMobile(subject);
         } else if (isEmail(subject)) {
@@ -119,7 +112,7 @@ public class AuthService {
     }
 
     public UserDetails loadUserByUsername(String username)
-                    throws UsernameNotFoundException {
+            throws UsernameNotFoundException {
         try {
             long userId = Integer.parseInt(username);
             return userRepository.findById(userId).orElse(null);
@@ -130,7 +123,7 @@ public class AuthService {
 
     public LoginResponse refresh(String refreshToken) {
         String usernameOrMobile = jwtUtils.extractUserSubject(refreshToken);
-        final User user = (User) loadUserByUsername(usernameOrMobile);
+        final AuthUser user = (AuthUser) loadUserByUsername(usernameOrMobile);
         jwtUtils.validateRefreshToken(user, refreshToken);
         LoginResponse authResponse = new LoginResponse();
         authResponse.setToken(jwtService.generateToken(user));
@@ -141,15 +134,15 @@ public class AuthService {
     public FirebaseOauthToken generateFirebaseToken(LoginRequest loginRequest) {
         authValidation.validateLogin(loginRequest);
         long userId = getUserId(loginRequest.getSubject());
-        User user = userRepository.findById(userId).orElseThrow(
-                        () -> new UsernameNotFoundException("User not found"));
+        AuthUser user = userRepository.findById(userId).orElseThrow(
+                () -> new UsernameNotFoundException("User not found"));
         String s = firebaseServiceImpl.generateToken(user.getUid());
         return new FirebaseOauthToken(s);
     }
 
     public void logout(LogoutRequest logoutRequest) {
         String usernameOrMobile = jwtUtils.extractUserSubject(logoutRequest.getToken());
-        final User user = (User) loadUserByUsername(usernameOrMobile);
+        final AuthUser user = (AuthUser) loadUserByUsername(usernameOrMobile);
         if (StringUtils.isNotEmpty(user.getDeviceToken())) {
             user.setDeviceToken(null);
             userRepository.save(user);
@@ -160,5 +153,13 @@ public class AuthService {
             jwtUtils.validateRefreshToken(user, logoutRequest.getRefreshToken());
             tokenRepository.removeUserRefreshToken(logoutRequest.getRefreshToken());
         }
+    }
+
+    public SignupResponse signup(SignupRequest signupRequest) {
+        authValidation.validate(signupRequest);
+        AuthUser user = modelMapper.map(signupRequest, AuthUser.class);
+        user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
+        keycloakService.signup(user, signupRequest.getPassword());
+        return modelMapper.map(userRepository.save(user), SignupResponse.class);
     }
 }

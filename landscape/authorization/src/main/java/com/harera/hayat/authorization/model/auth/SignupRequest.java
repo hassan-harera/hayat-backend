@@ -1,20 +1,16 @@
 package com.harera.hayat.authorization.model.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.harera.hayat.authorization.model.SignupDto;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class SignupRequest {
+import java.io.Serializable;
 
-    @JsonProperty("mobile")
-    private String mobile;
-    @JsonProperty("email")
-    private String email;
-    @JsonProperty("password")
-    private String password;
-    @JsonProperty("first_name")
-    private String firstName;
-    @JsonProperty("last_name")
-    private String lastName;
+@Setter
+@Getter
+public class SignupRequest extends SignupDto {
+
 }

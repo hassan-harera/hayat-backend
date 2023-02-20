@@ -1,4 +1,4 @@
-package com.harera.hayat.authorization.model.auth;
+package com.harera.hayat.authorization.model.oauth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

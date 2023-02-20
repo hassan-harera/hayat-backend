@@ -1,19 +1,6 @@
 package com.harera.hayat.authorization.service;
 
-import static com.harera.hayat.authorization.util.ErrorCode.FORMAT_FIRST_NAME;
-import static com.harera.hayat.authorization.util.ErrorCode.FORMAT_LAST_NAME;
-import static com.harera.hayat.authorization.util.ErrorCode.FORMAT_LOGIN_SUBJECT;
-import static com.harera.hayat.authorization.util.ErrorCode.FORMAT_USER_MOBILE;
-import static com.harera.hayat.authorization.util.ErrorCode.INVALID_FIREBASE_TOKEN;
-import static com.harera.hayat.authorization.util.ErrorCode.MANDATORY_FIRST_NAME;
-import static com.harera.hayat.authorization.util.ErrorCode.MANDATORY_LAST_NAME;
-import static com.harera.hayat.authorization.util.ErrorCode.MANDATORY_LOGIN_OAUTH_TOKEN;
-import static com.harera.hayat.authorization.util.ErrorCode.MANDATORY_LOGIN_PASSWORD;
-import static com.harera.hayat.authorization.util.ErrorCode.MANDATORY_LOGIN_SUBJECT;
-import static com.harera.hayat.authorization.util.ErrorCode.MANDATORY_USER_MOBILE;
-import static com.harera.hayat.authorization.util.ErrorCode.NOT_FOUND_USERNAME_OR_PASSWORD;
-import static com.harera.hayat.authorization.util.ErrorCode.UNIQUE_EMAIL;
-import static com.harera.hayat.authorization.util.ErrorCode.UNIQUE_USER_MOBILE;
+import static com.harera.hayat.framework.util.ErrorCode.*;
 import static com.harera.hayat.authorization.util.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
 import static com.harera.hayat.authorization.util.StringUtils.isValidEmail;
 import static com.harera.hayat.authorization.util.StringUtils.isValidMobile;
@@ -21,26 +8,29 @@ import static com.harera.hayat.authorization.util.StringUtils.isValidName;
 import static com.harera.hayat.authorization.util.StringUtils.isValidPassword;
 import static com.harera.hayat.authorization.util.SubjectUtils.getSubject;
 import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang.StringUtils.isEmpty;
 
 import java.util.Optional;
 
+import com.harera.hayat.authorization.model.SignupDto;
+import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
+import com.harera.hayat.framework.exception.FieldFormatException;
+import com.harera.hayat.framework.exception.LoginException;
+import com.harera.hayat.framework.exception.MandatoryFieldException;
+import com.harera.hayat.framework.exception.UniqueFieldException;
+import com.harera.hayat.framework.util.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.google.firebase.auth.FirebaseToken;
-import com.harera.hayat.authorization.exception.FieldFormatException;
-import com.harera.hayat.authorization.exception.LoginException;
-import com.harera.hayat.authorization.exception.MandatoryFieldException;
-import com.harera.hayat.authorization.exception.UniqueFieldException;
-import com.harera.hayat.authorization.model.user.User;
+import com.harera.hayat.authorization.model.user.AuthUser;
 import com.harera.hayat.authorization.model.auth.LoginRequest;
-import com.harera.hayat.authorization.model.auth.OAuthLoginRequest;
+import com.harera.hayat.authorization.model.oauth.OAuthLoginRequest;
 import com.harera.hayat.authorization.model.auth.SignupRequest;
 import com.harera.hayat.authorization.repository.UserRepository;
 import com.harera.hayat.authorization.service.firebase.FirebaseServiceImpl;
-import com.harera.hayat.authorization.util.ErrorCode;
 import com.harera.hayat.authorization.util.Subject;
 
 import lombok.extern.log4j.Log4j2;
@@ -62,6 +52,12 @@ public class AuthValidation {
     }
 
     public void validate(SignupRequest signupRequest) {
+        validateMandatory(signupRequest);
+        validateFormat(signupRequest);
+        validateExisting(signupRequest);
+    }
+
+    public void validate(OauthSignupRequest signupRequest) {
         validateMandatory(signupRequest);
         validateFormat(signupRequest);
         validateExisting(signupRequest);
@@ -100,8 +96,7 @@ public class AuthValidation {
         }
     }
 
-    private void validateFormat(SignupRequest signupRequest) {
-        //format validation: firstName (3, 24), lastName (3, 24), password (6, 68), email (email pattern)
+    private void validateFormat(SignupDto signupRequest) {
         if (!isValidMobile(signupRequest.getMobile())) {
             throw new FieldFormatException(FORMAT_USER_MOBILE, "Incorrect mobile format");
         }
@@ -151,7 +146,7 @@ public class AuthValidation {
         }
     }
 
-    private void validateExisting(SignupRequest signupRequest) {
+    private void validateExisting(SignupDto signupRequest) {
         validateMobileNotExisted(signupRequest.getMobile());
         if (signupRequest.getEmail() != null) {
             validateEmailNotExisted(signupRequest.getEmail());
@@ -170,18 +165,17 @@ public class AuthValidation {
         }
     }
 
-    private void validateMandatory(SignupRequest signupRequest) {
-        //mandatory validation: mobile, firstName, lastName, password
-        if (!StringUtils.hasText(signupRequest.getMobile())) {
+    private void validateMandatory(SignupDto signupRequest) {
+        if (isEmpty(signupRequest.getMobile())) {
             throw new MandatoryFieldException(MANDATORY_USER_MOBILE, "mobile");
         }
-        if (!StringUtils.hasText(signupRequest.getFirstName())) {
+        if (isEmpty(signupRequest.getFirstName())) {
             throw new MandatoryFieldException(MANDATORY_FIRST_NAME, "firstName");
         }
-        if (!StringUtils.hasText(signupRequest.getLastName())) {
+        if (isEmpty(signupRequest.getLastName())) {
             throw new MandatoryFieldException(MANDATORY_LAST_NAME, "lastName");
         }
-        if (!StringUtils.hasText(signupRequest.getPassword())) {
+        if (isEmpty(signupRequest.getPassword())) {
             throw new MandatoryFieldException(MANDATORY_LOGIN_PASSWORD, "password");
         }
     }
@@ -189,7 +183,7 @@ public class AuthValidation {
     private void validatePassword(LoginRequest loginRequest) {
         String subjectPayload = loginRequest.getSubject();
         Subject subjectType = getSubject(subjectPayload);
-        Optional<User> user;
+        Optional<AuthUser> user;
         if (subjectType instanceof Subject.PhoneNumber) {
             user = userRepository.findByMobile(subjectPayload);
         } else if (subjectType instanceof Subject.Email) {

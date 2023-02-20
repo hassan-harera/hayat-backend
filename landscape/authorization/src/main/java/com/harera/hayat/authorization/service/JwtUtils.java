@@ -5,7 +5,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.authorization.model.user.User;
+import com.harera.hayat.authorization.model.user.AuthUser;
 import com.harera.hayat.authorization.repository.TokenRepository;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -51,14 +51,14 @@ public class JwtUtils {
                         .getBody().get("role");
     }
 
-    public void validateToken(User user, String token) {
+    public void validateToken(AuthUser user, String token) {
         validateJWt(token, user);
         if (!Objects.equals(tokenRepository.getUserIdForToken(token), user.getId())) {
             throw new ExpiredJwtException(null, null, "JWT is not associated to user");
         }
     }
 
-    public void validateRefreshToken(User user, String token) {
+    public void validateRefreshToken(AuthUser user, String token) {
         validateJWt(token, user);
         if (!Objects.equals(tokenRepository.getUserIdForRefreshToken(token),
                         user.getId())) {
@@ -66,7 +66,7 @@ public class JwtUtils {
         }
     }
 
-    private void validateJWt(String token, User user) {
+    private void validateJWt(String token, AuthUser user) {
         Jwts.parser().setSigningKey(secretKey).parse(token);
         final String tokenSubject = extractUserSubject(token);
         if (!(Objects.equals(tokenSubject, user.getUsername())

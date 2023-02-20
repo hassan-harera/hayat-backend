@@ -3,6 +3,7 @@ package com.harera.hayat.authorization.config;
 import org.keycloak.adapters.KeycloakConfigResolver;
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.admin.client.Keycloak;
+import org.keycloak.admin.client.KeycloakBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,7 +39,12 @@ public class KeycloakConfig {
 
     @Bean
     public Keycloak keycloak() {
-        return Keycloak.getInstance(serverUrl, realm, username, password, clientId,
-                        clientSecret);
+        return KeycloakBuilder.builder()
+                .realm(realm)
+                .serverUrl(serverUrl)
+                .clientId(clientId)
+                .username(username)
+                .password(password)
+                .build();
     }
 }
