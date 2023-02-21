@@ -76,6 +76,7 @@ public final class ErrorCode {
     public static final String FORMAT_FOOD_DONATION_AMOUNT = "food_donation_004";
     public static final String FORMAT_LOGIN_SUBJECT = "login_003";
     public static final String INVALID_FIREBASE_UID = "auth_001";
+    public static final String INVALID_LOGIN_CREDENTIALS = "login_004";
 
     private ErrorCode() {
     }

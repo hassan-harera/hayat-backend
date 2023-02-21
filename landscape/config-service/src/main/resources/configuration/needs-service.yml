@@ -29,11 +29,26 @@ spring:
       port: 6379
       timeout: 2000
   security:
+    jackson:
+      serialization:
+        write-dates-as-timestamps: false
+      deserialization:
+        accept-single-value-as-array: true
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://0.0.0.0:8181/realms/master
           jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://0.0.0.0:8181/realms/master
+            jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
+        registration:
+          keycloak:
+            client-id: needs-service
+            authorization-grant-type: authorization_code
+            scope: openid
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver
