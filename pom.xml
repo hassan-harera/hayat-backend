@@ -21,6 +21,7 @@
         <module>landscape/gateway</module>
         <module>landscape/config-service</module>
         <module>landscape/discovery-service</module>
+        <module>landscape/authorization</module>
 
         <module>components/framework</module>
         <module>services/needs</module>
