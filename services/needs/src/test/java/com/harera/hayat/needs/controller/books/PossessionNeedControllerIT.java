@@ -8,7 +8,7 @@ import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedState;
 import com.harera.hayat.needs.model.books.BookNeedRequest;
 import com.harera.hayat.needs.model.books.BookNeedResponse;
-import com.harera.hayat.needs.stubs.BookNeedStubs;
+import com.harera.hayat.needs.stubs.book.BookNeedStubs;
 import com.harera.hayat.needs.stubs.CityStubs;
 import com.harera.hayat.needs.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class BookNeedControllerIT extends ApplicationIT {
+class PossessionNeedControllerIT extends ApplicationIT {
 
     private final RequestUtil requestUtil;
     private final BookNeedStubs bookNeedStubs;

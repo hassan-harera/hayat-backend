@@ -6,5 +6,5 @@ public enum NeedCategory {
     CLOTHES,
     BOOKS,
     BLOOD,
-    PROPERTY,
+    PROPERTY, POSSESSION,
 }

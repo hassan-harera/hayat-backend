@@ -3,9 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0002" author="hharera@pocketsolutions.net">
+    <changeSet id="000_2" author="hharera@pocketsolutions.net">
         <sql>
-            create table user_
+            create table if not exists user_
             (
             id bigint auto_increment primary key,
             active boolean default 1,
@@ -17,24 +17,6 @@
             uid varchar(100),
             username varchar(100),
             device_token varchar(500)
-            );
-
-            create table state
-            (
-            id bigint primary key auto_increment,
-            active boolean default 1,
-            arabic_name varchar(100),
-            english_name varchar(100),
-            country_id bigint
-            );
-
-            create table if not exists city
-            (
-            id bigint primary key auto_increment,
-            active boolean default 1,
-            arabic_name varchar(100),
-            english_name varchar(100),
-            state_id bigint
             );
         </sql>
     </changeSet>
