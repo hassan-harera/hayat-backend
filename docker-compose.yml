@@ -80,6 +80,18 @@ services:
       - hayat_db:/var/lib/mysql
     ports:
       - "3306:3306"
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: "hayat_keycloak"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    network_mode: "host"
+    command: ["start-dev", "--http-port=8181"]
+    volumes:
+      - hayat_keycloak:/var/lib/keycloak
+    ports:
+      - "8181:8080"
 volumes:
   hayat_db:
   hayat_mongodb:
