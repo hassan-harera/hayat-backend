@@ -1,4 +1,4 @@
-package com.harera.hayat.needs.stubs;
+package com.harera.hayat.needs.stubs.book;
 
 
 import com.harera.hayat.framework.model.city.City;

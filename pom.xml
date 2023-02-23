@@ -24,7 +24,10 @@
         <module>landscape/authorization</module>
 
         <module>components/framework</module>
+
+        <module>services/donations</module>
         <module>services/needs</module>
+        <module>services/common</module>
     </modules>
 
     <properties>

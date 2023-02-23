@@ -1,6 +1,7 @@
-donation:
-  food:
-    expiration_in_days: 45
+needs:
+  possession:
+    expiration_days: 45
+
 eureka:
   client:
     enabled: false
@@ -22,6 +23,17 @@ spring:
       charSet: UTF-8
       characterEncoding: utf8
       useUnicode: true
+  security:
+    jackson:
+      serialization:
+        write-dates-as-timestamps: false
+      deserialization:
+        accept-single-value-as-array: true
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://0.0.0.0:8181/realms/master
+          jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
   jpa:
     generate-ddl: true
     hibernate:
@@ -32,20 +44,20 @@ spring:
         format_sql: true
   liquibase:
     change-log: classpath:db/test/changelog/changelog-test.yaml
-    enabled: true
     clear-checksums: true
-    drop-first: true
+
   main:
     allow-bean-definition-overriding: true
-  redis:
-    host: localhost
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        max-wait: -1
-        min-idle: 0
-    port: 6377
-    timeout: 2000
+  data:
+    redis:
+      host: localhost
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          max-wait: -1
+          min-idle: 0
+      port: 6377
+      timeout: 2000
 springdoc:
   enable-spring-security: false
