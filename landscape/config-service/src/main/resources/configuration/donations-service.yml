@@ -28,17 +28,6 @@ spring:
         jwt:
           issuer-uri: http://0.0.0.0:8181/realms/master
           jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
-  data:
-    redis:
-      host: redis
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          max-wait: -1
-          min-idle: 0
-      port: 6379
-      timeout: 2000
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver

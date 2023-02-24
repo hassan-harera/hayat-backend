@@ -46,6 +46,40 @@ services:
     network_mode: "host"
     ports:
       - "8761:8761"
+  authorization-service:
+    container_name: "hayat_authorization_service"
+    image: hayat_authorization_service:latest
+    build:
+      context: ./landscape/authorization
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+    network_mode: "host"
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+      - redis
+      - discovery-service
+      - config-service
+  donations-service:
+    container_name: "hayat_donations_service"
+    image: hayat_donations_service:latest
+    build:
+      context: ./services/donations
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+    network_mode: "host"
+    ports:
+      - "8084:8084"
+    depends_on:
+      - db
+      - redis
+      - discovery-service
+      - config-service
   needs-service:
     container_name: "hayat_needs_service"
     image: hayat_needs_service:latest
@@ -58,6 +92,23 @@ services:
     network_mode: "host"
     ports:
       - "8082:8082"
+    depends_on:
+      - db
+      - redis
+      - discovery-service
+      - config-service
+  common-service:
+    container_name: "hayat_common_service"
+    image: hayat_common_service:latest
+    build:
+      context: ./services/common
+      dockerfile: Dockerfile
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+    network_mode: "host"
+    ports:
+      - "8085:8085"
     depends_on:
       - db
       - redis

@@ -13,6 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private static final String[] OPEN_APIS = {
+            "/api/v1/cities/**",
+            "/api/v1/states/**",
+            "/actuator/**",
             "/api/v1/auth/**", "/api/v1/oauth/**", "/actuator/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**"};
 
     @Bean

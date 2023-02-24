@@ -17,17 +17,6 @@ server:
 spring:
   application:
     name: needs-service
-  data:
-    redis:
-      host: redis
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          max-wait: -1
-          min-idle: 0
-      port: 6379
-      timeout: 2000
   security:
     jackson:
       serialization:
@@ -76,3 +65,6 @@ eureka:
   instance:
     hostname: localhost
     nonSecurePort: 8761
+needs:
+  possession:
+    expiration_days: 45

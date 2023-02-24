@@ -1,37 +1,34 @@
 package com.harera.hayat.authorization.service;
 
+import static com.harera.hayat.authorization.util.StringUtils.*;
 import static com.harera.hayat.framework.util.ErrorCode.*;
-import static com.harera.hayat.authorization.util.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
-import static com.harera.hayat.authorization.util.StringUtils.isValidEmail;
-import static com.harera.hayat.authorization.util.StringUtils.isValidMobile;
-import static com.harera.hayat.authorization.util.StringUtils.isValidName;
-import static com.harera.hayat.authorization.util.StringUtils.isValidPassword;
-import static com.harera.hayat.authorization.util.SubjectUtils.getSubject;
+import static com.harera.hayat.framework.util.ErrorMessage.INCORRECT_USERNAME_PASSWORD_MESSAGE;
+import static com.harera.hayat.framework.util.SubjectUtils.getSubject;
 import static org.apache.commons.lang.StringUtils.isBlank;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
 import java.util.Optional;
 
-import com.harera.hayat.authorization.model.SignupDto;
-import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
-import com.harera.hayat.framework.exception.FieldFormatException;
-import com.harera.hayat.framework.exception.LoginException;
-import com.harera.hayat.framework.exception.MandatoryFieldException;
-import com.harera.hayat.framework.exception.UniqueFieldException;
-import com.harera.hayat.framework.util.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.google.firebase.auth.FirebaseToken;
-import com.harera.hayat.authorization.model.user.AuthUser;
+import com.harera.hayat.authorization.model.SignupDto;
 import com.harera.hayat.authorization.model.auth.LoginRequest;
-import com.harera.hayat.authorization.model.oauth.OAuthLoginRequest;
 import com.harera.hayat.authorization.model.auth.SignupRequest;
+import com.harera.hayat.authorization.model.oauth.OAuthLoginRequest;
+import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
+import com.harera.hayat.authorization.model.user.AuthUser;
 import com.harera.hayat.authorization.repository.UserRepository;
 import com.harera.hayat.authorization.service.firebase.FirebaseServiceImpl;
-import com.harera.hayat.authorization.util.Subject;
+import com.harera.hayat.framework.exception.FieldFormatException;
+import com.harera.hayat.framework.exception.LoginException;
+import com.harera.hayat.framework.exception.MandatoryFieldException;
+import com.harera.hayat.framework.exception.UniqueFieldException;
+import com.harera.hayat.framework.util.ErrorCode;
+import com.harera.hayat.framework.util.Subject;
 
 import lombok.extern.log4j.Log4j2;
 

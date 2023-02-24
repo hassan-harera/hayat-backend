@@ -1,18 +1,10 @@
 package com.harera.hayat.authorization.service;
 
-import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.auth.UserRecord;
-import com.harera.hayat.authorization.model.auth.*;
-import com.harera.hayat.authorization.model.oauth.OAuthLoginRequest;
-import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
-import com.harera.hayat.authorization.model.user.FirebaseUser;
-import com.harera.hayat.authorization.model.auth.SignupRequest;
-import com.harera.hayat.authorization.model.user.AuthUser;
-import com.harera.hayat.authorization.repository.TokenRepository;
-import com.harera.hayat.authorization.repository.UserRepository;
-import com.harera.hayat.authorization.service.firebase.FirebaseServiceImpl;
-import com.harera.hayat.authorization.service.keycloak.KeycloakService;
-import com.harera.hayat.framework.exception.SignupException;
+import static com.harera.hayat.framework.util.RegexUtils.*;
+
+import java.util.Objects;
+import java.util.Optional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +12,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.Optional;
-
-import static com.harera.hayat.authorization.util.RegexUtils.*;
+import com.google.firebase.auth.FirebaseToken;
+import com.google.firebase.auth.UserRecord;
+import com.harera.hayat.authorization.model.auth.*;
+import com.harera.hayat.authorization.model.oauth.OAuthLoginRequest;
+import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
+import com.harera.hayat.authorization.model.user.AuthUser;
+import com.harera.hayat.authorization.model.user.FirebaseUser;
+import com.harera.hayat.authorization.repository.TokenRepository;
+import com.harera.hayat.authorization.repository.UserRepository;
+import com.harera.hayat.authorization.service.firebase.FirebaseServiceImpl;
+import com.harera.hayat.authorization.service.keycloak.KeycloakService;
+import com.harera.hayat.framework.exception.SignupException;
 
 @Service
 public class AuthService {

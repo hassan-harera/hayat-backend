@@ -1,4 +1,4 @@
-package com.harera.hayat.authorization.util
+package com.harera.hayat.framework.util
 
 object ErrorMessage {
 
