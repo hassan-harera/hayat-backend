@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.authorization.model.user.Role;
 import com.harera.hayat.authorization.model.user.AuthUser;
-import com.harera.hayat.authorization.repository.UserRepository;
+import com.harera.hayat.authorization.model.user.Role;
 import com.harera.hayat.authorization.repository.TokenRepository;
+import com.harera.hayat.authorization.repository.UserRepository;
 
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;

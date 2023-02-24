@@ -1,17 +1,18 @@
 package com.harera.hayat.authorization.controller;
 
-import com.harera.hayat.authorization.model.auth.*;
-import com.harera.hayat.authorization.model.auth.SignupRequest;
-import com.harera.hayat.authorization.service.AuthService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.log4j.Log4j2;
+import static org.springframework.http.ResponseEntity.ok;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.http.ResponseEntity.ok;
+import com.harera.hayat.authorization.model.auth.*;
+import com.harera.hayat.authorization.service.AuthService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @RestController

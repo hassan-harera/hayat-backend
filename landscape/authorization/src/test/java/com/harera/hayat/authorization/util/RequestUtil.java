@@ -35,9 +35,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.harera.hayat.authorization.model.user.Role;
 import com.harera.hayat.authorization.model.auth.LoginRequest;
 import com.harera.hayat.authorization.model.auth.LoginResponse;
+import com.harera.hayat.authorization.model.user.Role;
 import com.harera.hayat.authorization.service.AuthService;
 import com.harera.hayat.authorization.service.JwtService;
 

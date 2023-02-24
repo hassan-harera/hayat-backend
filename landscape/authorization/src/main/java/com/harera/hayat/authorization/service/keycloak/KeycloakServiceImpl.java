@@ -1,13 +1,10 @@
 package com.harera.hayat.authorization.service.keycloak;
 
 
-import com.harera.hayat.authorization.model.auth.LoginRequest;
-import com.harera.hayat.authorization.model.auth.LoginResponse;
-import com.harera.hayat.authorization.model.user.AuthUser;
-import com.harera.hayat.framework.exception.LoginException;
-import com.harera.hayat.framework.exception.SignupException;
-import com.harera.hayat.framework.util.ErrorCode;
-import lombok.extern.log4j.Log4j2;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.representations.idm.CredentialRepresentation;
@@ -17,9 +14,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import com.harera.hayat.authorization.model.auth.LoginRequest;
+import com.harera.hayat.authorization.model.auth.LoginResponse;
+import com.harera.hayat.authorization.model.user.AuthUser;
+import com.harera.hayat.framework.exception.LoginException;
+import com.harera.hayat.framework.exception.SignupException;
+import com.harera.hayat.framework.util.ErrorCode;
+
+import lombok.extern.log4j.Log4j2;
 
 
 @Service

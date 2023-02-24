@@ -3,17 +3,12 @@ package com.harera.hayat.authorization.model.user;
 import java.util.Collection;
 import java.util.List;
 
-
-import com.harera.hayat.framework.model.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.Basic;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.harera.hayat.framework.model.BaseEntity;
+
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 

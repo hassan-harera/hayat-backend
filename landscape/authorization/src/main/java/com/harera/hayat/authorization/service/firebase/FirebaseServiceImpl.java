@@ -1,10 +1,6 @@
 package com.harera.hayat.authorization.service.firebase;
 
-import com.harera.hayat.framework.exception.InvalidTokenException;
-import com.harera.hayat.framework.exception.LoginException;
-import com.harera.hayat.framework.util.ErrorCode;
-import kotlin.jvm.internal.Intrinsics;
-import lombok.extern.log4j.Log4j2;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,8 +13,12 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
 import com.harera.hayat.authorization.model.user.FirebaseUser;
+import com.harera.hayat.framework.exception.InvalidTokenException;
+import com.harera.hayat.framework.exception.LoginException;
+import com.harera.hayat.framework.util.ErrorCode;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
+import kotlin.jvm.internal.Intrinsics;
+import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @Service
