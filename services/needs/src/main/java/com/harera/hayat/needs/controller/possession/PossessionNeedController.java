@@ -1,19 +1,19 @@
 package com.harera.hayat.needs.controller.possession;
 
-import com.harera.hayat.needs.model.possession.PossessionNeedRequest;
-import com.harera.hayat.needs.model.possession.PossessionNeedResponse;
-import com.harera.hayat.needs.service.possession.PossessionNeedService;
+import static org.springframework.http.ResponseEntity.ok;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.harera.hayat.needs.model.possession.PossessionNeedRequest;
+import com.harera.hayat.needs.model.possession.PossessionNeedResponse;
+import com.harera.hayat.needs.service.possession.PossessionNeedService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-
-import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @RequestMapping("/api/v1/needs/possession")

@@ -1,6 +1,7 @@
 package com.harera.hayat.needs.model.possession;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 
 @Data

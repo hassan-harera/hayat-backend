@@ -1,6 +1,8 @@
 package com.harera.hayat.needs.service.possession;
 
 
+import org.springframework.stereotype.Service;
+
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.exception.MandatoryFieldException;
 import com.harera.hayat.framework.repository.city.CityRepository;
@@ -11,7 +13,6 @@ import com.harera.hayat.needs.repository.possession.PossessionCategoryRepository
 import com.harera.hayat.needs.repository.possession.PossessionConditionRepository;
 import com.harera.hayat.needs.service.NeedValidation;
 import com.harera.hayat.needs.util.ErrorCode;
-import org.springframework.stereotype.Service;
 
 @Service
 public class PossessionValidation extends NeedValidation {

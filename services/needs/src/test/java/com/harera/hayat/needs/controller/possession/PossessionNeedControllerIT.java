@@ -1,5 +1,12 @@
 package com.harera.hayat.needs.controller.possession;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.needs.ApplicationIT;
 import com.harera.hayat.needs.model.CommunicationMethod;
@@ -15,13 +22,8 @@ import com.harera.hayat.needs.stubs.possession.PossessionConditionStubs;
 import com.harera.hayat.needs.stubs.possession.PossessionNeedStubs;
 import com.harera.hayat.needs.util.DataUtil;
 import com.harera.hayat.needs.util.RequestUtil;
-import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class PossessionNeedControllerIT extends ApplicationIT {

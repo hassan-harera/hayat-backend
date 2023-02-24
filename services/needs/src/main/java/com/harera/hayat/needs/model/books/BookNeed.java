@@ -1,11 +1,10 @@
 package com.harera.hayat.needs.model.books;
 
+import com.harera.hayat.needs.model.Need;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
-import com.harera.hayat.needs.model.Need;
-
 import lombok.Getter;
 import lombok.Setter;
 

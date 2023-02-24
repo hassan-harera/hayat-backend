@@ -1,11 +1,12 @@
 package com.harera.hayat.needs.security;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.function.Supplier;
+
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
-import java.util.function.Supplier;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Example for generic custom access checks on request level.

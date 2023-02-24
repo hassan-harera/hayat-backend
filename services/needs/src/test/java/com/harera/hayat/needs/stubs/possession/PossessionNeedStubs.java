@@ -1,5 +1,9 @@
 package com.harera.hayat.needs.stubs.possession;
 
+import java.time.LocalDateTime;
+
+import org.springframework.stereotype.Service;
+
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.user.User;
 import com.harera.hayat.needs.model.CommunicationMethod;
@@ -9,10 +13,8 @@ import com.harera.hayat.needs.model.possession.PossessionCategory;
 import com.harera.hayat.needs.model.possession.PossessionCondition;
 import com.harera.hayat.needs.model.possession.PossessionNeed;
 import com.harera.hayat.needs.repository.possession.PossessionNeedRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor

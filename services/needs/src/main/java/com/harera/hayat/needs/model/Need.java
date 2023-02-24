@@ -2,15 +2,14 @@ package com.harera.hayat.needs.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
-
 import com.harera.hayat.framework.model.BaseEntity;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.user.User;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
 

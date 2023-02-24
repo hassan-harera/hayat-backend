@@ -2,6 +2,7 @@ package com.harera.hayat.needs.model.possession;
 
 
 import com.harera.hayat.framework.model.BaseEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

@@ -1,5 +1,11 @@
 package com.harera.hayat.needs.service.possession;
 
+import java.time.LocalDateTime;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.harera.hayat.framework.service.CityService;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedState;
@@ -10,11 +16,6 @@ import com.harera.hayat.needs.repository.possession.PossessionCategoryRepository
 import com.harera.hayat.needs.repository.possession.PossessionConditionRepository;
 import com.harera.hayat.needs.repository.possession.PossessionNeedRepository;
 import com.harera.hayat.needs.service.BaseService;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 public class PossessionNeedService implements BaseService {

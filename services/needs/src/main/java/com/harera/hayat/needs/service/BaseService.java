@@ -1,8 +1,10 @@
 package com.harera.hayat.needs.service;
 
-import com.harera.hayat.framework.model.user.User;
-import io.jsonwebtoken.JwtException;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.harera.hayat.framework.model.user.User;
+
+import io.jsonwebtoken.JwtException;
 
 public interface BaseService {
 

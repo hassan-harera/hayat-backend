@@ -1,9 +1,10 @@
 package com.harera.hayat.needs.stubs;
 
-import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.repository.city.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.harera.hayat.framework.model.city.City;
+import com.harera.hayat.framework.repository.city.CityRepository;
 
 
 

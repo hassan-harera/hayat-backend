@@ -1,8 +1,10 @@
 package com.harera.hayat.needs.model.possession;
 
 import com.harera.hayat.framework.model.BaseEntity;
-import com.harera.hayat.needs.model.Need;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -23,8 +23,10 @@
             possession_condition_id bigint null,
             foreign key possession_need_city_id (city_id) REFERENCES city (id),
             foreign key possession_need_user_id (user_id) REFERENCES user_ (id),
-            foreign key possession_need_possession_category_id (possession_category_id) REFERENCES possession_category (id),
-            foreign key possession_need_possession_condition_id (possession_condition_id) REFERENCES possession_condition (id)
+            foreign key possession_need_possession_category_id (possession_category_id) REFERENCES possession_category
+            (id),
+            foreign key possession_need_possession_condition_id (possession_condition_id) REFERENCES
+            possession_condition (id)
             );
         </sql>
     </changeSet>

@@ -2,8 +2,7 @@ package com.harera.hayat.needs.model.possession;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.needs.model.NeedDto;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
 import lombok.Data;
 
 @Data

@@ -2,14 +2,13 @@ package com.harera.hayat.needs.util;
 
 import java.util.Collection;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.framework.model.BaseEntity;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

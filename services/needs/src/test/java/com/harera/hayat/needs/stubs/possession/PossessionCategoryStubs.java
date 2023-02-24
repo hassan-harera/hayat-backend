@@ -1,10 +1,12 @@
 package com.harera.hayat.needs.stubs.possession;
 
 
+import org.springframework.stereotype.Service;
+
 import com.harera.hayat.needs.model.possession.PossessionCategory;
 import com.harera.hayat.needs.repository.possession.PossessionCategoryRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
