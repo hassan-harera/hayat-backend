@@ -41,6 +41,17 @@ spring:
     password: harera
     url: jdbc:mysql://localhost:3306/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: root
+  data:
+    redis:
+      host: localhost
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          max-wait: -1
+          min-idle: 0
+      port: 6379
+      timeout: 2000
   hibernate:
     connection:
       charSet: UTF-8
@@ -56,7 +67,7 @@ spring:
         format_sql: false
   liquibase:
     change-log: classpath:db/main/changelog/changelog-main.yaml
-    clear-checksums: true
+    clearCheckSums: true
   main:
     allow-bean-definition-overriding: true
   redis:
@@ -69,3 +80,17 @@ spring:
         min-idle: 0
     port: 6379
     timeout: 2000
+
+sms:
+  config:
+    environment: ${SMS_ENV}
+    username: ${SMS_USERNAME}
+    password: ${SMS_PASSWORD}
+    sender: ${SMS_SENDER}
+    language: ${SMS_LANGUAGE}
+  schemaless:
+    config:
+      url: https://smsmisr.com/api/SMS/
+  schema:
+    config:
+      url: https://smsmisr.com/api/vSMS/

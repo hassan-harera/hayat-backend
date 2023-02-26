@@ -1,14 +1,12 @@
 package com.harera.hayat.framework.config;
 
 
-import com.harera.hayat.framework.exception.*;
-import com.harera.hayat.framework.model.GlobalMessage;
-import com.harera.hayat.framework.model.exception.ApiError;
-import com.harera.hayat.framework.repository.GlobalMessageRepository;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import lombok.extern.log4j.Log4j2;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+import java.time.format.DateTimeParseException;
+import java.util.Optional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
@@ -30,11 +28,15 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.time.format.DateTimeParseException;
-import java.util.Optional;
+import com.harera.hayat.framework.exception.*;
+import com.harera.hayat.framework.model.GlobalMessage;
+import com.harera.hayat.framework.model.exception.ApiError;
+import com.harera.hayat.framework.repository.GlobalMessageRepository;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import lombok.extern.log4j.Log4j2;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
@@ -273,5 +275,31 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         String error = "Error writing JSON output";
         return buildResponseEntity(
                 new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, error, ex));
+    }
+
+    @ExceptionHandler({InvalidOtpException.class})
+    public ResponseEntity<ApiError> handleInvalidOtpException(
+            InvalidOtpException ex, WebRequest request) {
+        log.error(ex);
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        apiError.setCode(ex.getCode());
+        apiError.setDisplayMessage(assignDisplayMessage(getLanguage(request),
+                ex.getMessage(), ex.getCode()));
+        apiError.setDebugMessage(ex.getMessage());
+        return ResponseEntity.status(apiError.getStatus()).body(apiError);
+    }
+
+    @ExceptionHandler({ExpiredOtpException.class})
+    public ResponseEntity<ApiError> handleInvalidOtpException(
+            ExpiredOtpException ex, WebRequest request) {
+        log.error(ex);
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST);
+        apiError.setMessage(ex.getMessage());
+        apiError.setCode(ex.getCode());
+        apiError.setDisplayMessage(assignDisplayMessage(getLanguage(request),
+                ex.getMessage(), ex.getCode()));
+        apiError.setDebugMessage(ex.getMessage());
+        return ResponseEntity.status(apiError.getStatus()).body(apiError);
     }
 }

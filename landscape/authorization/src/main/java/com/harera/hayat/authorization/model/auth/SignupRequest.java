@@ -9,4 +9,5 @@ import lombok.Setter;
 @Getter
 public class SignupRequest extends SignupDto {
 
+    private String otp;
 }

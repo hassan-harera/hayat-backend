@@ -160,6 +160,9 @@ public class AuthService {
         AuthUser user = modelMapper.map(signupRequest, AuthUser.class);
         user.setPassword(passwordEncoder.encode(signupRequest.getPassword()));
         keycloakService.signup(user, signupRequest.getPassword());
-        return modelMapper.map(userRepository.save(user), SignupResponse.class);
+        user = userRepository.save(user);
+        user.setUsername(user.getId().toString());
+        userRepository.save(user);
+        return modelMapper.map(user, SignupResponse.class);
     }
 }

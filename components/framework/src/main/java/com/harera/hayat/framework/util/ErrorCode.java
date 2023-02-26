@@ -104,6 +104,10 @@ public final class ErrorCode {
             "property_donation_012";
 
     public static final String INVALID_LOGIN_CREDENTIALS = "login_004";
+    public static final String INVALID_OTP = "otp_001";
+    public static final String EXPIRED_OTP = "otp_002";
+    public static final String MANDATORY_SIGNUP_OTP = "signup_004";
+    public static final String FORMAT_SIGNUP_OTP = "signup_005";
 
     private ErrorCode() {
     }

@@ -20,13 +20,12 @@ import com.harera.hayat.authorization.model.auth.LoginRequest;
 import com.harera.hayat.authorization.model.auth.SignupRequest;
 import com.harera.hayat.authorization.model.oauth.OAuthLoginRequest;
 import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
+import com.harera.hayat.authorization.model.otp.OTP;
 import com.harera.hayat.authorization.model.user.AuthUser;
 import com.harera.hayat.authorization.repository.UserRepository;
+import com.harera.hayat.authorization.repository.otp.OtpRepository;
 import com.harera.hayat.authorization.service.firebase.FirebaseServiceImpl;
-import com.harera.hayat.framework.exception.FieldFormatException;
-import com.harera.hayat.framework.exception.LoginException;
-import com.harera.hayat.framework.exception.MandatoryFieldException;
-import com.harera.hayat.framework.exception.UniqueFieldException;
+import com.harera.hayat.framework.exception.*;
 import com.harera.hayat.framework.util.ErrorCode;
 import com.harera.hayat.framework.util.Subject;
 
@@ -39,19 +38,37 @@ public class AuthValidation {
     private final FirebaseServiceImpl firebaseServiceImpl;
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final OtpRepository otpRepository;
 
     @Autowired
     public AuthValidation(FirebaseServiceImpl firebaseService,
-                    UserRepository userRepository, PasswordEncoder encoder) {
+                          UserRepository userRepository, PasswordEncoder encoder, OtpRepository otpRepository) {
         this.firebaseServiceImpl = firebaseService;
         this.userRepository = userRepository;
         this.encoder = encoder;
+        this.otpRepository = otpRepository;
     }
 
     public void validate(SignupRequest signupRequest) {
         validateMandatory(signupRequest);
         validateFormat(signupRequest);
         validateExisting(signupRequest);
+        validateOtp(signupRequest);
+    }
+
+    private void validateOtp(SignupRequest signupRequest) {
+        if (isEmpty(signupRequest.getOtp())) {
+            throw new MandatoryFieldException(ErrorCode.MANDATORY_SIGNUP_OTP, "Otp is mandatory");
+        }
+        if (signupRequest.getOtp().length() != 6){
+            throw new MandatoryFieldException(ErrorCode.FORMAT_SIGNUP_OTP, "Otp is mandatory");
+        }
+        OTP otp = otpRepository.findById(signupRequest.getMobile()).orElseThrow(
+                        () -> new ExpiredOtpException(signupRequest.getMobile(), signupRequest.getOtp())
+        );
+        if (!otp.getOtp().equals(signupRequest.getOtp())) {
+            throw new InvalidOtpException(signupRequest.getMobile(), signupRequest.getOtp());
+        }
     }
 
     public void validate(OauthSignupRequest signupRequest) {
