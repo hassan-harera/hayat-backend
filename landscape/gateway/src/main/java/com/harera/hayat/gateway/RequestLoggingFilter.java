@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.AbstractRequestLoggingFilter;
 
@@ -12,7 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-@Configuration
+@Component
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
     private static final String[] HEADERS = { "user-agent", "x-forwarded-for" };

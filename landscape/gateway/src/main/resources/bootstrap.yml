@@ -4,43 +4,35 @@ server:
 spring:
   application:
     name: gateway
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: reactive
   cloud:
     gateway:
       discovery:
         locator:
-          lower-case-service-id: true
           enabled: true
-  main:
-    allow-bean-definition-overriding: true
-    web-application-type: reactive
-
-#  cloud:
-#    gateway:
-#      discovery:
-#        locator:
-#          enabled: true
-#          lowerCaseServiceId: true
-#      routes:
-#        - id: donation-service
-#          uri: lb://donation-service
-#          predicates:
-#            - Path=/api/v1/donations/**
-#        - id: needs-service
-#          uri: lb://needs-service
-#          predicates:
-#            - Path=/api/v1/needs/**
-#        - id: common-service
-#          uri: lb://common-service
-#          predicates:
-#            - Path=/api/v1/cities/**
-#            - Path=/api/v1/states/**
-#        - id: authorization-service
-#          uri: lb://authorization-service
-#          predicates:
-#            - Path=/api/v1/auth/**
-#            - Path=/api/v1/oauth/**
-#  main:
-#    web-application-type: reactive
+          lower-case-service-id: true
+      routes:
+        - id: donation-service
+          uri: lb://donation-service
+          predicates:
+            - Path=/api/v1/donations/**
+        - id: needs-service
+          uri: lb://needs-service/
+          predicates:
+            - Path=/api/v1/needs/**
+        - id: common-service
+          uri: lb://common-service/
+          predicates:
+            - Path=/api/v1/cities/**
+            - Path=/api/v1/states/**
+        - id: authorization-service/
+          uri: lb://authorization-service
+          predicates:
+            - Path=/api/v1/auth/**
+            - Path=/api/v1/oauth/**
+            - Path=/api/v1/otp/**
 
 eureka:
   client:
@@ -52,3 +44,10 @@ eureka:
   instance:
     preferIpAddress: true
 
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            org.springframework.web.filter.AbstractRequestLoggingFilter: debug, info, trace
