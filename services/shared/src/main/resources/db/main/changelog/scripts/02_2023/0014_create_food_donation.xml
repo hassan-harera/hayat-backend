@@ -13,8 +13,7 @@
             food_expiration_date datetime,
             donation_id bigint,
             unit_id bigint,
-            constraint foreign key (unit_id) references food_unit (id),
-            constraint foreign key (donation_id) references donation (id)
+            constraint foreign key (unit_id) references food_unit (id)
             );
         </sql>
     </changeSet>

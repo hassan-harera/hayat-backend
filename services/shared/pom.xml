@@ -10,7 +10,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>common</artifactId>
+    <artifactId>shared</artifactId>
     <version>1.0</version>
     <name>facets</name>
     <description>Facets service</description>

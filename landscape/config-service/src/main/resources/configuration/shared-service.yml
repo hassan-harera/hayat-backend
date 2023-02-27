@@ -2,7 +2,7 @@ server:
   port: 8085
 spring:
   application:
-    name: common-service
+    name: shared-service
   security:
     jackson:
       serialization:

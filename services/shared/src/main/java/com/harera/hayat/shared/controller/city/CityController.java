@@ -1,4 +1,4 @@
-package com.harera.hayat.common.controller.city;
+package com.harera.hayat.shared.controller.city;
 
 import java.util.List;
 

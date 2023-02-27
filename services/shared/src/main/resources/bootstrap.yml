@@ -1,6 +1,6 @@
 spring:
   application:
-    name: common-service
+    name: shared-service
   cloud:
     config:
       uri: http://localhost:8111
@@ -10,3 +10,5 @@ spring:
         multiplier: 1.5
         max-interval: 5000
         initial-interval: 1000
+  liquibase:
+    change-log: classpath:db/main/changelog/changelog-main.yaml

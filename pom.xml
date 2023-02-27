@@ -27,7 +27,7 @@
 
         <module>services/donations</module>
         <module>services/needs</module>
-        <module>services/common</module>
+        <module>services/shared</module>
     </modules>
 
     <properties>

@@ -22,8 +22,8 @@ spring:
           uri: lb://needs-service/
           predicates:
             - Path=/api/v1/needs/**
-        - id: common-service
-          uri: lb://common-service/
+        - id: shared-service
+          uri: lb://shared-service/
           predicates:
             - Path=/api/v1/cities/**
             - Path=/api/v1/states/**
@@ -50,4 +50,4 @@ logging:
       springframework:
         web:
           filter:
-            org.springframework.web.filter.AbstractRequestLoggingFilter: debug, info, trace
+            org.springframework.web.filter.AbstractRequestLoggingFilter: INFO

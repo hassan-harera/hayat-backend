@@ -105,11 +105,11 @@ services:
       - redis
       - discovery-service
       - config-service
-  common-service:
-    container_name: "hayat_common_service"
-    image: hayat_common_service:latest
+  shared-service:
+    container_name: "hayat_shared_service"
+    image: hayat_shared_service:latest
     build:
-      context: ./services/common
+      context: ./services/shared
       dockerfile: Dockerfile
     restart: on-failure
     environment:
