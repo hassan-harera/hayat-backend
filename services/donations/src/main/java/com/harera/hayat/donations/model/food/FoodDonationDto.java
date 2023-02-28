@@ -22,4 +22,7 @@ public class FoodDonationDto extends DonationDto {
 
     @JsonProperty(value = "unit_id")
     private Long unitId;
+
+    @JsonProperty(value = "food_category_id")
+    private Long foodCategoryId;
 }

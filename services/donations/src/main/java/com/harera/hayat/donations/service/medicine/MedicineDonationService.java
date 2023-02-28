@@ -3,7 +3,6 @@ package com.harera.hayat.donations.service.medicine;
 import com.harera.hayat.donations.model.Donation;
 import com.harera.hayat.donations.model.DonationCategory;
 import com.harera.hayat.donations.model.medicine.*;
-import com.harera.hayat.donations.repository.DonationRepository;
 import com.harera.hayat.donations.repository.medicine.MedicineDonationRepository;
 import com.harera.hayat.donations.repository.medicine.MedicineRepository;
 import com.harera.hayat.donations.repository.medicine.MedicineUnitRepository;
@@ -22,7 +21,6 @@ import java.time.OffsetDateTime;
 @Service
 public class MedicineDonationService implements BaseService {
 
-    private final DonationRepository donationRepository;
     private final MedicineDonationValidation donationValidation;
     private final CityRepository cityRepository;
     private final MedicineUnitRepository medicineUnitRepository;
@@ -30,14 +28,12 @@ public class MedicineDonationService implements BaseService {
     private final MedicineDonationRepository medicineDonationRepository;
     private final MedicineRepository medicineRepository;
 
-    public MedicineDonationService(DonationRepository donationRepository,
-                    MedicineDonationValidation donationValidation,
+    public MedicineDonationService(MedicineDonationValidation donationValidation,
                     CityRepository cityRepository,
                     MedicineUnitRepository medicineUnitRepository,
                     ModelMapper modelMapper,
                     MedicineDonationRepository medicineDonationRepository,
                     MedicineRepository medicineRepository) {
-        this.donationRepository = donationRepository;
         this.donationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.medicineUnitRepository = medicineUnitRepository;
@@ -56,12 +52,9 @@ public class MedicineDonationService implements BaseService {
         donation.setDonationDate(OffsetDateTime.now());
         donation.setUser(getRequestUser());
 
-        Donation savedDonation = donationRepository.save(donation);
-
         MedicineDonation medicineDonation =
                         modelMapper.map(medicineDonationRequest, MedicineDonation.class);
         medicineDonation.setMedicineUnit(getUnit(medicineDonationRequest.getUnitId()));
-        medicineDonation.setDonation(savedDonation);
         medicineDonation.setMedicine(
                         getMedicine(medicineDonationRequest.getMedicineId()));
         medicineDonationRepository.save(medicineDonation);

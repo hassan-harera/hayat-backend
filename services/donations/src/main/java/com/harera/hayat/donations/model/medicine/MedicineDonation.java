@@ -13,7 +13,7 @@ import java.time.OffsetDateTime;
 @Getter
 @Entity
 @Table(name = "medicine_donation")
-public class MedicineDonation extends BaseEntity {
+public class MedicineDonation extends Donation {
 
     @Column(name = "amount")
     private Float amount;
@@ -24,10 +24,6 @@ public class MedicineDonation extends BaseEntity {
 
     @Column(name = "medicine_expiration_date")
     private OffsetDateTime medicineExpirationDate;
-
-    @OneToOne
-    @JoinColumn(name = "donation_id", referencedColumnName = "id")
-    private Donation donation;
 
     @ManyToOne
     @JoinColumn(name = "medicine_id", referencedColumnName = "id")

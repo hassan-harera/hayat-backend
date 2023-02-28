@@ -1,6 +1,7 @@
 package com.harera.hayat.donations.model.food;
 
 import com.harera.hayat.donations.model.Donation;
+import com.harera.hayat.framework.model.food.FoodCategory;
 import com.harera.hayat.framework.model.food.FoodUnit;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,11 +23,11 @@ public class FoodDonation extends Donation {
     @JoinColumn(name = "unit_id", referencedColumnName = "id")
     private FoodUnit unit;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private FoodCategory foodCategory;
+
     @Basic
     @Column(name = "amount")
     private Float amount;
-
-    @OneToOne
-    @JoinColumn(name = "donation_id", referencedColumnName = "id")
-    private Donation donation;
 }

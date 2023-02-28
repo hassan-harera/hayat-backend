@@ -20,8 +20,4 @@ public class DonationImage extends BaseEntity {
     @Basic
     @Column(name = "url")
     private String imageUrl;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "donation_id", referencedColumnName = "id")
-    private Donation donation;
 }

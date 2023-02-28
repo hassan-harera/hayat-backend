@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="03_0014" author="hharera@pocketsolutions.net">
+        <sql>
+            create table food_donation
+            (
+            id bigint primary key auto_increment,
+            active boolean default true,
+            title varchar(100),
+            description varchar(800),
+            donation_date datetime,
+            expiration_date datetime,
+            food_expiration_date datetime,
+            state varchar(50),
+            category varchar(50),
+            communication_method varchar(50),
+            amount float,
+            unit_id bigint,
+            category_id bigint,
+            user_id bigint,
+            city_id bigint,
+            constraint foreign key (user_id) references user_ (id),
+            constraint foreign key (city_id) references city (id),
+            constraint foreign key (unit_id) references food_unit (id),
+            constraint foreign key (category_id) references food_category (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

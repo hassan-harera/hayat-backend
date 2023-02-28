@@ -9,10 +9,9 @@ import lombok.Setter;
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
-@Entity
-@Table(name = "donation")
 @Setter
 @Getter
+@MappedSuperclass
 public class Donation extends BaseEntity {
 
     @Basic
