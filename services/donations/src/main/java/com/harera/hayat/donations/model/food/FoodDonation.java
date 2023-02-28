@@ -1,6 +1,7 @@
 package com.harera.hayat.donations.model.food;
 
 import com.harera.hayat.donations.model.Donation;
+import com.harera.hayat.framework.model.food.FoodUnit;
 import lombok.Getter;
 import lombok.Setter;
 

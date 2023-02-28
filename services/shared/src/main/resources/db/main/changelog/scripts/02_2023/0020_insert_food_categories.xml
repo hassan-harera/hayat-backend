@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="02_2023_0020" author="hharera@pocketsolutions.net">
+        <sql>
+            insert into food_category (arabic_name, english_name, description)
+            values ('قابل للتلف', 'Perishable', 'قابل للتلف');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('غير قابل للتلف', 'Non-Perishable', 'غير قابل للتلف ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('مُعد', 'Prepared', 'مُعد ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('المنتجات الطازجة', 'Fresh Produce', 'المنتجات الطازجة ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('بقوليات', 'Grains', 'بقوليات ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('وجبات خفيفة', 'Snacks', 'وجبات خفيفة');
+        </sql>
+    </changeSet>
+</databaseChangeLog>
