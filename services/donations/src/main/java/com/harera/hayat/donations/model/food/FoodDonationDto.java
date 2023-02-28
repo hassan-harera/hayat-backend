@@ -2,6 +2,7 @@ package com.harera.hayat.donations.model.food;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.donations.model.DonationDto;
+import com.harera.hayat.framework.model.food.FoodUnitDto;
 import lombok.Data;
 
 import java.time.OffsetDateTime;

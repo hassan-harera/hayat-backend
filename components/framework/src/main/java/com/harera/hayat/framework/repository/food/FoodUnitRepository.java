@@ -1,6 +1,6 @@
-package com.harera.hayat.donations.repository.food;
+package com.harera.hayat.framework.repository.food;
 
-import com.harera.hayat.donations.model.food.FoodUnit;
+import com.harera.hayat.framework.model.food.FoodUnit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

@@ -1,4 +1,4 @@
-package com.harera.hayat.shared.controller;
+package com.harera.hayat.shared.controller.city;
 
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.city.CityResponse;
