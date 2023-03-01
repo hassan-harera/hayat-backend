@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CityService {
@@ -28,7 +27,7 @@ public class CityService {
 
     public CityResponse get(long id) {
         City city = cityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.valueOf(id),
-                ErrorCode.NOT_FOUND_CITY_ID));
+                ErrorCode.NOT_FOUND_CITY));
         return modelMapper.map(city, CityResponse.class);
     }
 
@@ -51,6 +50,6 @@ public class CityService {
 
     public City getCity(long id) {
         return cityRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.valueOf(id),
-                ErrorCode.NOT_FOUND_CITY_ID));
+                ErrorCode.NOT_FOUND_CITY));
     }
 }

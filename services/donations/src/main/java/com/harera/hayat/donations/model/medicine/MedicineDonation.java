@@ -2,7 +2,8 @@ package com.harera.hayat.donations.model.medicine;
 
 
 import com.harera.hayat.donations.model.Donation;
-import com.harera.hayat.framework.model.BaseEntity;
+import com.harera.hayat.framework.model.medicine.Medicine;
+import com.harera.hayat.framework.model.medicine.MedicineUnit;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

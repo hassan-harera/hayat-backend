@@ -1,4 +1,4 @@
-package com.harera.hayat.donations.model.medicine;
+package com.harera.hayat.framework.model.medicine;
 
 import com.harera.hayat.framework.model.BaseEntity;
 import lombok.Getter;
@@ -9,11 +9,11 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+@Entity
 @Setter
 @Getter
-@Entity
-@Table(name = "medicine_category")
-public class MedicineCategory extends BaseEntity {
+@Table(name = "medicine_unit")
+public class MedicineUnit extends BaseEntity {
 
     @Basic
     @Column(name = "arabic_name")

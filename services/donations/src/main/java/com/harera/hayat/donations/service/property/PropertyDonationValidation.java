@@ -10,10 +10,16 @@ import org.springframework.stereotype.Service;
 import java.time.OffsetDateTime;
 
 @Service
-public class PropertyDonationValidation extends DonationValidation {
+public class PropertyDonationValidation {
+
+    private final DonationValidation donationValidation;
+
+    public PropertyDonationValidation(DonationValidation donationValidation) {
+        this.donationValidation = donationValidation;
+    }
 
     public void validateCreate(PropertyDonationRequest propertyDonationRequest) {
-        validateDonation(propertyDonationRequest);
+        donationValidation.validateCreate(propertyDonationRequest);
         validateMandatory(propertyDonationRequest);
         validateFormat(propertyDonationRequest);
     }

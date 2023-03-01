@@ -25,7 +25,7 @@ otp:
     expire: 10
 secret-key: 01234##56789@@hayat$$donations
 server:
-  port: 8082
+  port: 8083
 
 eureka:
   instance:

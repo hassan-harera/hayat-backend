@@ -1,4 +1,4 @@
-package com.harera.hayat.donations.model.medicine;
+package com.harera.hayat.framework.model.medicine;
 
 import com.harera.hayat.framework.model.BaseEntity;
 import lombok.Getter;

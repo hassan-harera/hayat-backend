@@ -1,22 +1,29 @@
 package com.harera.hayat.donations.service.medicine;
 
-import com.harera.hayat.donations.model.Donation;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.medicine.*;
+import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.medicine.MedicineDonation;
+import com.harera.hayat.donations.model.medicine.MedicineDonationRequest;
+import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
+import com.harera.hayat.donations.model.medicine.MedicineDonationUpdateRequest;
 import com.harera.hayat.donations.repository.medicine.MedicineDonationRepository;
-import com.harera.hayat.donations.repository.medicine.MedicineRepository;
-import com.harera.hayat.donations.repository.medicine.MedicineUnitRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.model.city.City;
+import com.harera.hayat.framework.model.medicine.Medicine;
+import com.harera.hayat.framework.model.medicine.MedicineUnit;
 import com.harera.hayat.framework.model.user.User;
 import com.harera.hayat.framework.repository.city.CityRepository;
+import com.harera.hayat.framework.repository.repository.MedicineRepository;
+import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
 import io.jsonwebtoken.JwtException;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Service
 public class MedicineDonationService implements BaseService {
@@ -46,22 +53,18 @@ public class MedicineDonationService implements BaseService {
                     MedicineDonationRequest medicineDonationRequest) {
         donationValidation.validateCreate(medicineDonationRequest);
 
-        Donation donation = modelMapper.map(medicineDonationRequest, Donation.class);
-        donation.setCategory(DonationCategory.MEDICINE);
-        donation.setCity(getCity(medicineDonationRequest.getCityId()));
-        donation.setDonationDate(OffsetDateTime.now());
-        donation.setUser(getRequestUser());
-
         MedicineDonation medicineDonation =
                         modelMapper.map(medicineDonationRequest, MedicineDonation.class);
-        medicineDonation.setMedicineUnit(getUnit(medicineDonationRequest.getUnitId()));
+        medicineDonation.setCategory(DonationCategory.MEDICINE);
+        medicineDonation.setCity(getCity(medicineDonationRequest.getCityId()));
+        medicineDonation.setDonationDate(OffsetDateTime.now());
+        // TODO: 28/02/23 get user from token
+        medicineDonation.setMedicineUnit(
+                        getUnit(medicineDonationRequest.getMedicineUnitId()));
         medicineDonation.setMedicine(
                         getMedicine(medicineDonationRequest.getMedicineId()));
         medicineDonationRepository.save(medicineDonation);
-        MedicineDonationResponse response =
-                        modelMapper.map(medicineDonation, MedicineDonationResponse.class);
-        modelMapper.map(donation, response);
-        return response;
+        return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
     }
 
     private Medicine getMedicine(long medicineId) {
@@ -79,11 +82,42 @@ public class MedicineDonationService implements BaseService {
                         () -> new EntityNotFoundException(City.class, cityId));
     }
 
-    private User getUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication()
-                        .getPrincipal();
-        if (principal instanceof User user)
-            return user;
-        throw new JwtException("Invalid token");
+    public MedicineDonationResponse get(Long id) {
+        return modelMapper.map(
+                        medicineDonationRepository.findById(id)
+                                        .orElseThrow(() -> new EntityNotFoundException(
+                                                        MedicineDonation.class, id)),
+                        MedicineDonationResponse.class);
+    }
+
+    public List<MedicineDonationResponse> list(int size, int page) {
+        return medicineDonationRepository.findAll(Pageable.ofSize(size).withPage(page))
+                        .map(medicineDonation -> modelMapper.map(medicineDonation,
+                                        MedicineDonationResponse.class))
+                        .toList();
+    }
+
+    public MedicineDonationResponse update(Long id,
+                    MedicineDonationUpdateRequest request) {
+        donationValidation.validateUpdate(id, request);
+
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+        modelMapper.map(request, medicineDonation);
+
+        medicineDonation.setCategory(DonationCategory.MEDICINE);
+        // TODO: 28/02/23 send request to ai model
+        medicineDonation.setState(DonationState.PENDING);
+
+        // TODO: 28/02/23 get user from token
+        medicineDonation.setCity(getCity(request.getCityId()));
+
+        medicineDonation.setMedicineUnit(getUnit(request.getMedicineUnitId()));
+        medicineDonation.setMedicine(getMedicine(request.getMedicineId()));
+
+        medicineDonationRepository.save(medicineDonation);
+        return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
+
     }
 }

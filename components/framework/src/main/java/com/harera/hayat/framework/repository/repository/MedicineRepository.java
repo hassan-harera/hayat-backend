@@ -1,6 +1,6 @@
-package com.harera.hayat.donations.repository.medicine;
+package com.harera.hayat.framework.repository.repository;
 
-import com.harera.hayat.donations.model.medicine.Medicine;
+import com.harera.hayat.framework.model.medicine.Medicine;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

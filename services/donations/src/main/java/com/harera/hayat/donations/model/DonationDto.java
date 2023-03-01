@@ -15,8 +15,10 @@ import java.util.List;
 @Getter
 public class DonationDto extends BaseEntityDto {
 
+    @JsonProperty(value = "title")
     private String title;
 
+    @JsonProperty(value = "description")
     private String description;
 
     @JsonProperty(value = "donation_date")
@@ -25,9 +27,11 @@ public class DonationDto extends BaseEntityDto {
     @JsonProperty(value = "donation_expiration_date")
     private OffsetDateTime donationExpirationDate;
 
+    @JsonProperty(value = "category")
     private DonationCategory category;
 
-    private DonationState state = DonationState.PENDING;
+    @JsonProperty(value = "status")
+    private DonationState status;
 
     @JsonProperty("communication_method")
     private CommunicationMethod communicationMethod;
@@ -35,9 +39,12 @@ public class DonationDto extends BaseEntityDto {
     @JsonProperty("city_id")
     private Long cityId;
 
+    @JsonProperty(value = "city")
     private CityDto city;
 
+    @JsonProperty(value = "user")
     private UserDto user;
 
+    @JsonProperty(value = "images")
     private List<DonationImageDto> images;
 }

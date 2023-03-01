@@ -37,7 +37,7 @@ public final class ErrorCode {
     public static final String FORMAT_USER_NAME_LENGTH = "username_003";
     public static final String FORMAT_USER_NAME_INVALID_CHARS = "username_004";
     public static final String FORMAT_USER_PASSWORD = "password_002";
-    public static final String NOT_FOUND_CITY_ID = "city_001";
+    public static final String NOT_FOUND_CITY = "city_001";
     public static final String NOT_FOUND_STATE_ID = "state_001";
     public static final String MANDATORY_MEDICINE_UNIT_ID = "medicine_unit_001";
     public static final String MANDATORY_CITY_ID = "city_002";
@@ -61,12 +61,7 @@ public final class ErrorCode {
     public static final String FORMAT_DONATION_EXPIRATION_DATE = "donation_009";
     public static final String FORMAT_DONATION_AMOUNT = "donation_010";
 
-    public static final String MANDATORY_MEDICINE_DONATION_AMOUNT =
-                    "medicine_donation_001";
-    public static final String MANDATORY_MEDICINE_DONATION_MEDICINE_EXPIRATION_DATE =
-                    "medicine_donation_002";
-    public static final String MANDATORY_MEDICINE_DONATION_MEDICINE =
-                    "medicine_donation_003";
+
 
     public static final String MANDATORY_FOOD_DONATION_AMOUNT = "food_donation_001";
     public static final String MANDATORY_FOOD_DONATION_FOOD_EXPIRATION_DATE =
@@ -108,6 +103,20 @@ public final class ErrorCode {
     public static final String EXPIRED_OTP = "otp_002";
     public static final String MANDATORY_SIGNUP_OTP = "signup_004";
     public static final String FORMAT_SIGNUP_OTP = "signup_005";
+
+    public static final String MANDATORY_MEDICINE_DONATION_AMOUNT =
+            "medicine_donation_001";
+    public static final String MANDATORY_MEDICINE_DONATION_MEDICINE_EXPIRATION_DATE =
+            "medicine_donation_002";
+    public static final String MANDATORY_MEDICINE_DONATION_MEDICINE =
+            "medicine_donation_003";
+    public static final String MANDATORY_MEDICINE_DONATION_UNIT = "medicine_donation_004";
+    public static final String FORMAT_MEDICINE_DONATION_AMOUNT = "medicine_donation_005";
+    public static final String FORMAT_MEDICINE_DONATION_EXPIRATION_DATE = "medicine_donation_006";
+
+    public static final String NOT_FOUND_MEDICINE_UNIT = "medicine_unit_002";
+    public static final String NOT_FOUND_MEDICINE = "medicine_001";
+    public static final String NOT_FOUND_FOOD_DONATION = "food_donation_005";
 
     private ErrorCode() {
     }

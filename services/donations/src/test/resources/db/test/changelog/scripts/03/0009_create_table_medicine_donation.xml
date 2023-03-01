@@ -1,0 +1,29 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="03_0009" author="hharera@pocketsolutions.net">
+        <sql>
+            create table medicine_donation
+            (
+            id bigint primary key auto_increment,
+            active boolean default true,
+            title varchar(100),
+            description varchar(600),
+            category varchar(50),
+            communication_method varchar(50),
+            state varchar(50),
+            donation_date datetime,
+            expiration_date datetime,
+            medicine_expiration_date datetime,
+            amount float,
+            unit_id bigint,
+            category_id bigint,
+            medicine_id bigint,
+            user_id bigint,
+            city_id bigint
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

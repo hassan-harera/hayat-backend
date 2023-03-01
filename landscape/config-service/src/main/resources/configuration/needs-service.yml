@@ -13,7 +13,7 @@ otp:
     expire: 10
 secret-key: 01234##56789@@hayat$$donations
 server:
-  port: 8083
+  port: 8082
 spring:
   application:
     name: needs-service

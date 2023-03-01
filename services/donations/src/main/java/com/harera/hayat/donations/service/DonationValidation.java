@@ -12,7 +12,12 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 @Service
 public class DonationValidation {
 
-    public void validateDonation(DonationDto donationDto) {
+    public void validateCreate(DonationDto donationDto) {
+        validateMandatory(donationDto);
+        validateFormat(donationDto);
+    }
+
+    public void validateUpdate(DonationDto donationDto) {
         validateMandatory(donationDto);
         validateFormat(donationDto);
     }
