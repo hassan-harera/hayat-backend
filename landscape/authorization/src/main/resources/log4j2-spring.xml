@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <RollingFile name="hibernateFileLogger" fileName="logs/shared-service-hibernate.log"
-                     filePattern="logs/shared-service-hibernate-%d{yyyy-MM-dd}.log">
+        <RollingFile name="hibernateFileLogger" fileName="logs/authorization-service-hibernate.log"
+                     filePattern="logs/authorization-service-hibernate-%d{yyyy-MM-dd}.log">
             <PatternLayout
                     pattern="%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%tn}{bright,blue}] %style{%C{1}}{bright,yellow}[%style{%L}{bright,yellow}]: %msg%n"/>
             <Policies>
@@ -10,8 +10,8 @@
                 <SizeBasedTriggeringPolicy size="15MB"/>
             </Policies>
         </RollingFile>
-        <RollingFile name="sharedServiceFileLogger" fileName="logs/shared-service.log"
-                     filePattern="logs/shared-service-%d{yyyy-MM-dd}.log">
+        <RollingFile name="authorizationServiceFileLogger" fileName="logs/authorization-service.log"
+                     filePattern="logs/authorization-service-%d{yyyy-MM-dd}.log">
             <PatternLayout
                     pattern="%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%tn}{bright,blue}] %style{%C{1}}{bright,yellow}[%style{%L}{bright,yellow}]: %msg%n"/>
             <Policies>
@@ -34,7 +34,7 @@
             <AppenderRef ref="hibernateFileLogger"/>
         </Logger>
         <Logger name="com.harera" level="debug" additivity="false">
-            <AppenderRef ref="sharedServiceFileLogger"/>
+            <AppenderRef ref="authorizationServiceFileLogger"/>
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>

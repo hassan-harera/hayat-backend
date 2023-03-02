@@ -14,6 +14,15 @@
             <PatternLayout
                     pattern="%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%tn}{bright,blue}] %style{%C{1}}{bright,yellow}[%style{%L}{bright,yellow}]: %msg%n"/>
         </Console>
+        <RollingFile name="gatewayFileLogger" fileName="logs/gateway.log"
+                     filePattern="logs/gateway-%d{yyyy-MM-dd}.log">
+            <PatternLayout
+                    pattern="%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%tn}{bright,blue}] %style{%C{1}}{bright,yellow}[%style{%L}{bright,yellow}]: %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="15MB"/>
+            </Policies>
+        </RollingFile>
     </Appenders>
 
     <Loggers>
@@ -24,8 +33,8 @@
         <Logger name="org.hibernate.SQL" level="DEBUG" additivity="false">
             <AppenderRef ref="hibernateFileLogger"/>
         </Logger>
-        <Logger name="com.harera" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
+        <Logger name="com.harera" level="trace" additivity="false">
+            <AppenderRef ref="gatewayFileLogger"/>
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
