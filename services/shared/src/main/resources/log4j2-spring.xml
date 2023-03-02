@@ -10,6 +10,15 @@
                 <SizeBasedTriggeringPolicy size="15MB"/>
             </Policies>
         </RollingFile>
+        <RollingFile name="sharedServiceFileLogger" fileName="logs/shared-service.log"
+                     filePattern="logs/shared-service-%d{yyyy-MM-dd}.log">
+            <PatternLayout
+                    pattern="%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%tn}{bright,blue}] %style{%C{1}}{bright,yellow}[%style{%L}{bright,yellow}]: %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="15MB"/>
+            </Policies>
+        </RollingFile>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout
                     pattern="%style{%d{ISO8601}}{white} %highlight{%-5level }[%style{%tn}{bright,blue}] %style{%C{1}}{bright,yellow}[%style{%L}{bright,yellow}]: %msg%n"/>
@@ -25,7 +34,7 @@
             <AppenderRef ref="hibernateFileLogger"/>
         </Logger>
         <Logger name="com.harera" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
+            <AppenderRef ref="sharedServiceFileLogger"/>
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
