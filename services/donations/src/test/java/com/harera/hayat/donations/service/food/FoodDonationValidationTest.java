@@ -3,6 +3,7 @@ package com.harera.hayat.donations.service.food;
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.food.FoodDonationRequest;
 import com.harera.hayat.donations.model.food.FoodDonationUpdateRequest;
+import com.harera.hayat.donations.repository.food.FoodDonationRepository;
 import com.harera.hayat.donations.service.DonationValidation;
 import com.harera.hayat.framework.exception.FieldFormatException;
 import com.harera.hayat.framework.exception.MandatoryFieldException;
@@ -22,12 +23,15 @@ class FoodDonationValidationTest {
 
     @Mock
     private DonationValidation donationValidation;
+    @Mock
+    private FoodDonationRepository foodDonationRepository;
 
     private FoodDonationValidation foodDonationValidation;
 
     @BeforeEach
     void setUp() {
-        foodDonationValidation = new FoodDonationValidation(donationValidation);
+        foodDonationValidation = new FoodDonationValidation(donationValidation,
+                        foodDonationRepository);
     }
 
     @Test

@@ -12,14 +12,11 @@ import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.medicine.Medicine;
 import com.harera.hayat.framework.model.medicine.MedicineUnit;
-import com.harera.hayat.framework.model.user.User;
 import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.repository.repository.MedicineRepository;
 import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
-import io.jsonwebtoken.JwtException;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -108,7 +105,7 @@ public class MedicineDonationService implements BaseService {
 
         medicineDonation.setCategory(DonationCategory.MEDICINE);
         // TODO: 28/02/23 send request to ai model
-        medicineDonation.setState(DonationState.PENDING);
+        medicineDonation.setStatus(DonationState.PENDING);
 
         // TODO: 28/02/23 get user from token
         medicineDonation.setCity(getCity(request.getCityId()));

@@ -5,3 +5,5 @@ databaseChangeLog:
       path: db/test/changelog/scripts/02
   - includeAll:
       path: db/test/changelog/scripts/03
+  - includeAll:
+      path: db/test/changelog/scripts/04
