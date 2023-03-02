@@ -1,20 +1,37 @@
 package com.harera.hayat.donations.service;
 
 import com.harera.hayat.donations.model.DonationDto;
+import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.exception.FieldFormatException;
 import com.harera.hayat.framework.exception.MandatoryFieldException;
+import com.harera.hayat.framework.model.city.City;
+import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.util.ErrorCode;
 import com.harera.hayat.framework.util.FieldFormat;
 import org.springframework.stereotype.Service;
 
+import static com.harera.hayat.framework.util.ErrorCode.NOT_FOUND_CITY;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class DonationValidation {
 
+    private final CityRepository cityRepository;
+
+    public DonationValidation(CityRepository cityRepository) {
+        this.cityRepository = cityRepository;
+    }
+
     public void validateCreate(DonationDto donationDto) {
         validateMandatory(donationDto);
         validateFormat(donationDto);
+        validateExisting(donationDto);
+    }
+
+    private void validateExisting(DonationDto donationDto) {
+        if (!cityRepository.existsById(donationDto.getCityId()))
+            throw new EntityNotFoundException(City.class, donationDto.getCityId(),
+                            NOT_FOUND_CITY);
     }
 
     public void validateUpdate(DonationDto donationDto) {

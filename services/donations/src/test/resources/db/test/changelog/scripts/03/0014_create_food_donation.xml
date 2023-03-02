@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="03_0014" author="hharera@pocketsolutions.net">
+    <changeSet id="03_0014" author="hharera@hharera.net">
         <sql>
             create table food_donation
             (
@@ -12,7 +12,7 @@
             title varchar(100),
             description varchar(800),
             donation_date datetime,
-            expiration_date datetime,
+            donation_expiration_date datetime,
             food_expiration_date datetime,
             state varchar(50),
             category varchar(50),

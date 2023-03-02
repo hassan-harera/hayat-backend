@@ -118,6 +118,11 @@ public final class ErrorCode {
     public static final String NOT_FOUND_MEDICINE = "medicine_001";
     public static final String NOT_FOUND_FOOD_DONATION = "food_donation_005";
 
+    public static final String MANDATORY_BOOK_DONATION_TITLE = "book_donation_001";
+    public static final String FORMAT_BOOK_DONATION_TITLE = "book_donation_002";
+    public static final String MANDATORY_BOOK_DONATION_AMOUNT = "book_donation_003";
+    public static final String FORMAT_BOOK_DONATION_AMOUNT = "book_donation_004";
+
     private ErrorCode() {
     }
 }

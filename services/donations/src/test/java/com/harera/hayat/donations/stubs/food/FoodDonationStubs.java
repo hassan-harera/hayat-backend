@@ -30,7 +30,7 @@ public class FoodDonationStubs {
         foodDonation.setTitle(title);
         foodDonation.setCategory(category);
         foodDonation.setCity(city);
-        foodDonation.setState(state);
+        foodDonation.setStatus(state);
         return foodDonation;
     }
 

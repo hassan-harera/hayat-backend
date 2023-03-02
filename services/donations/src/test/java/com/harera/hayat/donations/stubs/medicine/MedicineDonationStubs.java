@@ -30,7 +30,7 @@ public class MedicineDonationStubs {
         medicineDonation.setTitle(title);
         medicineDonation.setCategory(category);
         medicineDonation.setCity(city);
-        medicineDonation.setState(state);
+        medicineDonation.setStatus(state);
         return medicineDonation;
     }
 

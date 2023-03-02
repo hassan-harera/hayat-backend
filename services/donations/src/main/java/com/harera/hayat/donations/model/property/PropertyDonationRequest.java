@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true,
-                value = { "id", "active", "user", "city", "date", "expiration_date" })
+                value = { "id", "active", "user", "city", "date", "donation_expiration_date" })
 public class PropertyDonationRequest extends PropertyDonationDto {
 
     private Long cityId;

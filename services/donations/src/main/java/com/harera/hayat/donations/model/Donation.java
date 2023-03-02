@@ -27,7 +27,7 @@ public class Donation extends BaseEntity {
     private OffsetDateTime donationDate;
 
     @Basic
-    @Column(name = "expiration_date")
+    @Column(name = "donation_expiration_date")
     private OffsetDateTime donationExpirationDate;
 
     @Column(name = "communication_method")
@@ -37,7 +37,7 @@ public class Donation extends BaseEntity {
     private DonationCategory category;
 
     @Column(name = "state")
-    private DonationState state;
+    private DonationState status;
 
     @ManyToOne(targetEntity = City.class)
     @JoinColumn(name = "city_id", referencedColumnName = "id")

@@ -50,7 +50,7 @@ public class FoodDonationValidation {
         if (foodDonationRequest.getFoodExpirationDate() == null) {
             throw new MandatoryFieldException(
                             ErrorCode.MANDATORY_FOOD_DONATION_FOOD_EXPIRATION_DATE,
-                            "expiration_date");
+                            "donation_expiration_date");
         }
     }
 

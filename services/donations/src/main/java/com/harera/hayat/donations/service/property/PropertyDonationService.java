@@ -39,7 +39,7 @@ public class PropertyDonationService implements BaseService {
                         modelMapper.map(propertyDonationRequest, PropertyDonation.class);
         assignCity(propertyDonation, propertyDonationRequest.getCityId());
         propertyDonation.setUser(getRequestUser());
-        propertyDonation.setState(DonationState.PENDING);
+        propertyDonation.setStatus(DonationState.PENDING);
         propertyDonation.setCategory(DonationCategory.PROPERTY);
         propertyDonationRepository.save(propertyDonation);
         return modelMapper.map(propertyDonation, PropertyDonationResponse.class);

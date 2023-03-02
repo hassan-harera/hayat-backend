@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0017" author="hharera@pocketsolutions.net">
+    <changeSet id="0017" author="hharera@hharera.net">
         <sql>
             INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('15 مايو',1,1,'15 May',1);
             INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الازبكية',2,1,'Al Azbakeyah',1);

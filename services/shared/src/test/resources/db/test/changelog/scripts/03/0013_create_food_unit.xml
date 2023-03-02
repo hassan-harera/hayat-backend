@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="03_0013" author="hharera@pocketsolutions.net">
+    <changeSet id="03_0013" author="hharera@hharera.net">
         <sql>
             create table food_unit
             (

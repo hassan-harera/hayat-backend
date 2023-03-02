@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0015" author="hharera@pocketsolutions.net">
+    <changeSet id="0015" author="hharera@hharera.net">
         <sql>
             INSERT INTO country(id,arabic_name,english_name,active) VALUES (1,'مصر','Egypt',1);
         </sql>
