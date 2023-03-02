@@ -55,7 +55,7 @@ public class FoodDonationValidation {
     }
 
     public void validateUpdate(Long id, FoodDonationUpdateRequest request) {
-        donationValidation.validateCreate(request);
+        donationValidation.validateUpdate(request);
         validateMandatory(request);
         validateFormat(request);
         validateUpdateExisting(id, request);
