@@ -33,14 +33,6 @@ eureka:
     fetch-registry: true
     registryFetchIntervalSeconds: 5
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
   instance:
     preferIpAddress: true
-
-logging:
-  level:
-    org:
-      springframework:
-        web:
-          filter:
-            org.springframework.web.filter.AbstractRequestLoggingFilter: INFO

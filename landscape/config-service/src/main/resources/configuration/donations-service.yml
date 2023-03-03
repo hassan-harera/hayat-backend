@@ -53,6 +53,6 @@ spring:
     enabled: false
 
 eureka:
-  instance:
-    hostname: localhost
-    nonSecurePort: 8761
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/

@@ -9,7 +9,7 @@ jwt:
     secret:
       key: 01234##56789@@hayat$$donations
 keycloak:
-  auth-server-url: http://localhost:8181
+  auth-server-url: ${KEYCLOAK_SERVICE_URL}
   bearer-only: true
   credentials:
     username: authorization-service
@@ -28,9 +28,9 @@ server:
   port: 8083
 
 eureka:
-  instance:
-    hostname: localhost
-    nonSecurePort: 8761
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
 
 spring:
   application:
@@ -39,11 +39,11 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver
     password: harera
-    url: jdbc:mysql://localhost:3306/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${DB_HOST}:3306/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: root
   data:
     redis:
-      host: localhost
+      host: ${REDIS_HOST}
       lettuce:
         pool:
           max-active: 8

@@ -7,12 +7,17 @@ services:
     build:
       context: ./landscape/gateway
       dockerfile: Dockerfile
-    network_mode: "host"
     ports:
-      - "8443:8443"
+      - "8080:8443"
     depends_on:
       - discovery-service
+    env_file:
+      - .env
     environment:
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CONFIG_SERVICE_URI=http://config-service:8111
       - AUTHORIZATION_SERVICE_URL=${AUTHORIZATION_SERVICE_URL}
       - DONATIONS_SERVICE_URL=${DONATIONS_SERVICE_URL}
       - NEEDS_SERVICE_URL=${NEEDS_SERVICE_URL}
@@ -30,7 +35,11 @@ services:
     build:
       context: ./landscape/config-service
       dockerfile: Dockerfile
-    network_mode: "host"
+    environment:
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CONFIG_SERVICE_URI=http://config-service:8111
     ports:
       - "8111:8111"
     depends_on:
@@ -48,7 +57,12 @@ services:
     build:
       context: ./landscape/discovery-service
       dockerfile: Dockerfile
-    network_mode: "host"
+    environment:
+      - EUREKA_HOST=discovery-service
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CONFIG_SERVICE_URI=http://config-service:8111
     ports:
       - "8761:8761"
   authorization-service:
@@ -66,7 +80,11 @@ services:
       - SMS_PASSWORD=${SMS_PASSWORD}
       - SMS_SENDER=${SMS_SENDER}
       - SMS_LANGUAGE=${SMS_LANGUAGE}
-    network_mode: "host"
+      - KEYCLOAK_SERVICE_URL=http://keycloak:8181
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CONFIG_SERVICE_URI=http://config-service:8111
     ports:
       - "8083:8083"
     depends_on:
@@ -82,9 +100,12 @@ services:
       dockerfile: Dockerfile
     restart: on-failure
     environment:
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CONFIG_SERVICE_URI=http://config-service:8111
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
-    network_mode: "host"
     ports:
       - "8084:8084"
     depends_on:
@@ -100,9 +121,12 @@ services:
       dockerfile: Dockerfile
     restart: on-failure
     environment:
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CONFIG_SERVICE_URI=http://config-service:8111
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
-    network_mode: "host"
     ports:
       - "8082:8082"
     depends_on:
@@ -118,9 +142,12 @@ services:
       dockerfile: Dockerfile
     restart: on-failure
     environment:
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - CONFIG_SERVICE_URI=http://config-service:8111
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
-    network_mode: "host"
     ports:
       - "8085:8085"
     depends_on:
@@ -131,7 +158,6 @@ services:
   redis:
     container_name: "hayat_redis"
     image: redis:latest
-    network_mode: "host"
     ports:
       - "6379:6379"
   db:
@@ -140,7 +166,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-    network_mode: "host"
     volumes:
       - hayat_db:/var/lib/mysql
     ports:
@@ -151,7 +176,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
-    network_mode: "host"
     command: [ "start-dev", "--http-port=8181" ]
     volumes:
       - hayat_keycloak:/var/lib/keycloak
@@ -161,3 +185,8 @@ volumes:
   hayat_db:
   hayat_keycloak:
   hayat_mongodb:
+networks:
+  hayat_internal:
+    internal: true
+  host:
+    external: true
