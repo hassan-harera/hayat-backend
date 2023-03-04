@@ -5,6 +5,24 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
     <changeSet id="03_0014" author="hharera@hharera.net">
         <sql>
+            create table if not exists food_category
+            (
+            id bigint primary key auto_increment,
+            active boolean default true,
+            arabic_name varchar(50),
+            english_name text(50),
+            description varchar(150)
+            );
+
+            create table food_unit
+            (
+            id bigint primary key auto_increment,
+            active boolean default true,
+            arabic_name varchar(50),
+            english_name text(50),
+            description varchar(150)
+            );
+
             create table food_donation
             (
             id bigint primary key auto_increment,

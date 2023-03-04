@@ -3,9 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="03_0009" author="hharera@hharera.net">
+    <changeSet id="04_0004" author="hharera@hharera.net">
         <sql>
-            create table medicine_unit
+            create table clothing_condition
             (
             id bigint primary key auto_increment,
             active boolean default 1,
@@ -13,26 +13,31 @@
             english_name varchar(100)
             );
 
-            create table medicine_category
+            create table clothing_category
             (
             id bigint primary key auto_increment,
-            active boolean,
+            active boolean default 1,
             arabic_name varchar(100),
             english_name varchar(100)
             );
 
-            create table medicine
+            create table clothing_size
             (
             id bigint primary key auto_increment,
             active boolean default 1,
-            arabic_name varchar(255),
-            english_name varchar(255),
-            category_id bigint,
-            unit_id bigint,
-            info varchar(100)
+            arabic_name varchar(100),
+            english_name varchar(100)
             );
 
-            create table medicine_donation
+            create table clothing_season
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100)
+            );
+
+            create table clothing_donation
             (
             id bigint primary key auto_increment,
             active boolean default true,
@@ -43,11 +48,11 @@
             status varchar(50),
             donation_date datetime,
             donation_expiration_date datetime,
-            medicine_expiration_date datetime,
-            amount float,
-            unit_id bigint,
-            category_id bigint,
-            medicine_id bigint,
+            quantity int,
+            clothing_condition_id bigint,
+            clothing_size_id bigint,
+            clothing_category_id bigint,
+            clothing_season_id bigint,
             user_id bigint,
             city_id bigint
             );

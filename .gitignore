@@ -34,3 +34,7 @@ build/
 /.env
 /database
 /logs/
+
+
+*.log
+*.env

@@ -3,9 +3,17 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0001" author="hharera@hharera.net">
+    <changeSet id="0002" author="hharera@hharera.net">
         <sql>
             create table if not exists possession_condition (
+            id bigint auto_increment
+            primary key,
+            active tinyint(1) default 1,
+            arabic_name varchar(100) null,
+            english_name varchar(100) null
+            );
+
+            create table if not exists possession_category (
             id bigint auto_increment
             primary key,
             active tinyint(1) default 1,

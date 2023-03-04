@@ -123,6 +123,13 @@ public final class ErrorCode {
     public static final String MANDATORY_BOOK_DONATION_AMOUNT = "book_donation_003";
     public static final String FORMAT_BOOK_DONATION_AMOUNT = "book_donation_004";
 
+    public static final String NOT_FOUND_CLOTHING_CONDITION = "clothing_condition_001";
+    public static final String FORMAT_CLOTHING_DONATION_QUANTITY = "clothing_donation_001";
+    public static final String MANDATORY_CLOTHING_DONATION_QUANTITY = "clothing_donation_002";
+    public static final String MANDATORY_CLOTHING_DONATION_CONDITION = "clothing_donation_003";
+    public static final String NOT_FOUND_CLOTHING_DONATION = "clothing_donation_004";
+
+
     private ErrorCode() {
     }
 }
