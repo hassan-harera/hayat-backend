@@ -15,13 +15,14 @@ import com.harera.hayat.framework.model.food.FoodCategory;
 import com.harera.hayat.framework.model.food.FoodUnit;
 import lombok.RequiredArgsConstructor;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import java.time.OffsetDateTime;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class FoodDonationControllerIT extends ApplicationIT {
@@ -58,19 +59,19 @@ class FoodDonationControllerIT extends ApplicationIT {
                             FoodDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCode().value());
+            Assertions.assertEquals(200, responseEntity.getStatusCode().value());
 
             response = responseEntity.getBody();
-            Assert.assertNotNull(response);
+            Assertions.assertNotNull(response);
 
-            Assert.assertNotNull(response.getId());
-            Assert.assertEquals(request.getTitle(), response.getTitle());
-            Assert.assertEquals(request.getDescription(), response.getDescription());
-            Assert.assertEquals(request.getAmount(), response.getAmount());
-            Assert.assertEquals(request.getCommunicationMethod(),
+            Assertions.assertNotNull(response.getId());
+            Assertions.assertEquals(request.getTitle(), response.getTitle());
+            Assertions.assertEquals(request.getDescription(), response.getDescription());
+            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(request.getCityId(), response.getCity().getId());
-            Assert.assertEquals(request.getUnitId(), response.getUnit().getId());
+            Assertions.assertEquals(request.getCityId(), response.getCity().getId());
+            Assertions.assertEquals(request.getUnitId(), response.getUnit().getId());
             assertTrue(request.getFoodExpirationDate()
                             .isEqual(response.getFoodExpirationDate()));
 
@@ -111,18 +112,18 @@ class FoodDonationControllerIT extends ApplicationIT {
                                             null, FoodDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCodeValue());
+            Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
 
             FoodDonationResponse response = responseEntity.getBody();
-            Assert.assertNotNull(response);
+            Assertions.assertNotNull(response);
 
-            Assert.assertEquals(request.getTitle(), response.getTitle());
-            Assert.assertEquals(request.getDescription(), response.getDescription());
-            Assert.assertEquals(request.getAmount(), response.getAmount());
-            Assert.assertEquals(request.getCommunicationMethod(),
+            Assertions.assertEquals(request.getTitle(), response.getTitle());
+            Assertions.assertEquals(request.getDescription(), response.getDescription());
+            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(request.getCityId(), response.getCity().getId());
-            Assert.assertEquals(request.getUnitId(), response.getUnit().getId());
+            Assertions.assertEquals(request.getCityId(), response.getCity().getId());
+            Assertions.assertEquals(request.getUnitId(), response.getUnit().getId());
             assertTrue(request.getFoodExpirationDate()
                             .isEqual(response.getFoodExpirationDate()));
         } finally {
@@ -151,19 +152,19 @@ class FoodDonationControllerIT extends ApplicationIT {
                                             null, FoodDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCodeValue());
+            Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
 
             FoodDonationResponse response = responseEntity.getBody();
-            Assert.assertNotNull(response);
+            Assertions.assertNotNull(response);
 
-            Assert.assertEquals(foodDonation.getTitle(), response.getTitle());
-            Assert.assertEquals(foodDonation.getDescription(), response.getDescription());
-            Assert.assertEquals(foodDonation.getCommunicationMethod(),
+            Assertions.assertEquals(foodDonation.getTitle(), response.getTitle());
+            Assertions.assertEquals(foodDonation.getDescription(), response.getDescription());
+            Assertions.assertEquals(foodDonation.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(foodDonation.getCity().getId(),
+            Assertions.assertEquals(foodDonation.getCity().getId(),
                             response.getCity().getId());
-            Assert.assertEquals(foodDonation.getAmount(), response.getAmount());
-            Assert.assertEquals(foodDonation.getUnit().getId(),
+            Assertions.assertEquals(foodDonation.getAmount(), response.getAmount());
+            Assertions.assertEquals(foodDonation.getUnit().getId(),
                             response.getUnit().getId());
             assertTrue(foodDonation.getFoodExpirationDate().toLocalDate()
                             .isEqual(response.getFoodExpirationDate().toLocalDate()));

@@ -1,7 +1,12 @@
 package com.harera.hayat.donations.service.property;
 
+import com.harera.hayat.donations.model.property.PropertyDonation;
+import com.harera.hayat.donations.model.property.PropertyDonationDto;
 import com.harera.hayat.donations.model.property.PropertyDonationRequest;
+import com.harera.hayat.donations.model.property.PropertyDonationUpdateRequest;
+import com.harera.hayat.donations.repository.property.PropertyDonationRepository;
 import com.harera.hayat.donations.service.DonationValidation;
+import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.exception.FieldFormatException;
 import com.harera.hayat.framework.exception.MandatoryFieldException;
 import com.harera.hayat.framework.util.ErrorCode;
@@ -13,9 +18,12 @@ import java.time.OffsetDateTime;
 public class PropertyDonationValidation {
 
     private final DonationValidation donationValidation;
+    private final PropertyDonationRepository propertyDonationRepository;
 
-    public PropertyDonationValidation(DonationValidation donationValidation) {
+    public PropertyDonationValidation(DonationValidation donationValidation,
+                    PropertyDonationRepository propertyDonationRepository) {
         this.donationValidation = donationValidation;
+        this.propertyDonationRepository = propertyDonationRepository;
     }
 
     public void validateCreate(PropertyDonationRequest propertyDonationRequest) {
@@ -24,7 +32,7 @@ public class PropertyDonationValidation {
         validateFormat(propertyDonationRequest);
     }
 
-    private void validateMandatory(PropertyDonationRequest propertyDonationRequest) {
+    private void validateMandatory(PropertyDonationDto propertyDonationRequest) {
         if (propertyDonationRequest.getRooms() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_PROPERTY_DONATION_ROOMS,
                             "rooms");
@@ -55,7 +63,7 @@ public class PropertyDonationValidation {
         }
     }
 
-    private void validateFormat(PropertyDonationRequest propertyDonationRequest) {
+    private void validateFormat(PropertyDonationDto propertyDonationRequest) {
         if (propertyDonationRequest.getRooms() < 1
                         || propertyDonationRequest.getRooms() > 100) {
             throw new FieldFormatException(ErrorCode.FORMAT_PROPERTY_DONATION_ROOMS,
@@ -92,6 +100,21 @@ public class PropertyDonationValidation {
             throw new FieldFormatException(
                             ErrorCode.FORMAT_PROPERTY_DONATION_AVAILABLE_TO,
                             "available_to");
+        }
+    }
+
+    public void validateUpdate(Long id,
+                    PropertyDonationUpdateRequest propertyDonationUpdateRequest) {
+        donationValidation.validateUpdate(propertyDonationUpdateRequest);
+        validateMandatory(propertyDonationUpdateRequest);
+        validateFormat(propertyDonationUpdateRequest);
+        validateExisting(id);
+    }
+
+    private void validateExisting(Long id) {
+        if (!propertyDonationRepository.existsById(id)) {
+            throw new EntityNotFoundException(PropertyDonation.class, id,
+                            ErrorCode.NOT_FOUND_PROPERTY_DONATION);
         }
     }
 }

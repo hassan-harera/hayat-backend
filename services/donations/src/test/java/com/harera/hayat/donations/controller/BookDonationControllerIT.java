@@ -14,6 +14,7 @@ import com.harera.hayat.donations.util.RequestUtil;
 import com.harera.hayat.framework.model.city.City;
 import lombok.RequiredArgsConstructor;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,17 +48,17 @@ class BookDonationControllerIT extends ApplicationIT {
                             request, null, BookDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCode().value());
+            Assertions.assertEquals(200, responseEntity.getStatusCode().value());
 
             BookDonationResponse response = responseEntity.getBody();
-            Assert.assertNotNull(response);
-            Assert.assertNotNull(response.getId());
-            Assert.assertEquals(request.getTitle(), response.getTitle());
-            Assert.assertEquals(request.getDescription(), response.getDescription());
-            Assert.assertEquals(request.getAmount(), response.getAmount());
-            Assert.assertEquals(request.getCommunicationMethod(),
+            Assertions.assertNotNull(response);
+            Assertions.assertNotNull(response.getId());
+            Assertions.assertEquals(request.getTitle(), response.getTitle());
+            Assertions.assertEquals(request.getDescription(), response.getDescription());
+            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(request.getCityId(), response.getCity().getId());
+            Assertions.assertEquals(request.getCityId(), response.getCity().getId());
 
             BookDonation bookDonation = bookDonationStubs.get(response.getId());
             dataUtil.delete(bookDonation);
@@ -93,17 +94,17 @@ class BookDonationControllerIT extends ApplicationIT {
                                             null, BookDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCodeValue());
+            Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
 
             BookDonationResponse response = responseEntity.getBody();
-            Assert.assertNotNull(response);
+            Assertions.assertNotNull(response);
 
-            Assert.assertEquals(request.getTitle(), response.getTitle());
-            Assert.assertEquals(request.getDescription(), response.getDescription());
-            Assert.assertEquals(request.getAmount(), response.getAmount());
-            Assert.assertEquals(request.getCommunicationMethod(),
+            Assertions.assertEquals(request.getTitle(), response.getTitle());
+            Assertions.assertEquals(request.getDescription(), response.getDescription());
+            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(request.getCityId(), response.getCity().getId());
+            Assertions.assertEquals(request.getCityId(), response.getCity().getId());
         } finally {
             // Cleanup
             dataUtil.delete(city, bookDonation);
@@ -128,18 +129,18 @@ class BookDonationControllerIT extends ApplicationIT {
                                             null, BookDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCodeValue());
+            Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
 
             BookDonationResponse response = responseEntity.getBody();
-            Assert.assertNotNull(response);
+            Assertions.assertNotNull(response);
 
-            Assert.assertEquals(bookDonation.getTitle(), response.getTitle());
-            Assert.assertEquals(bookDonation.getDescription(), response.getDescription());
-            Assert.assertEquals(bookDonation.getCommunicationMethod(),
+            Assertions.assertEquals(bookDonation.getTitle(), response.getTitle());
+            Assertions.assertEquals(bookDonation.getDescription(), response.getDescription());
+            Assertions.assertEquals(bookDonation.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(bookDonation.getCity().getId(),
+            Assertions.assertEquals(bookDonation.getCity().getId(),
                             response.getCity().getId());
-            Assert.assertEquals(bookDonation.getAmount(), response.getAmount());
+            Assertions.assertEquals(bookDonation.getAmount(), response.getAmount());
         } finally {
             // Cleanup
             dataUtil.delete(city, bookDonation);

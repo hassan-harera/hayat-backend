@@ -14,7 +14,7 @@
             donation_date datetime,
             donation_expiration_date datetime,
             food_expiration_date datetime,
-            state varchar(50),
+            status varchar(50),
             category varchar(50),
             communication_method varchar(50),
             amount float,

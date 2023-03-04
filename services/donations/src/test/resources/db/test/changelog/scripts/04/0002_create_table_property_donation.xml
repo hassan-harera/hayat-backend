@@ -3,9 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="03_0009" author="hharera@hharera.net">
+    <changeSet id="04_0002" author="hharera@hharera.net">
         <sql>
-            create table medicine_donation
+            create table property_donation
             (
             id bigint primary key auto_increment,
             active boolean default true,
@@ -16,11 +16,12 @@
             status varchar(50),
             donation_date datetime,
             donation_expiration_date datetime,
-            medicine_expiration_date datetime,
-            amount float,
-            unit_id bigint,
-            category_id bigint,
-            medicine_id bigint,
+            rooms int,
+            bathrooms int,
+            kitchens int,
+            people_capacity int,
+            available_from datetime,
+            available_to datetime,
             user_id bigint,
             city_id bigint
             );

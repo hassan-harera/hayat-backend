@@ -36,7 +36,7 @@ public class Donation extends BaseEntity {
     @Column(name = "category")
     private DonationCategory category;
 
-    @Column(name = "state")
+    @Column(name = "status")
     private DonationState status;
 
     @ManyToOne(targetEntity = City.class)

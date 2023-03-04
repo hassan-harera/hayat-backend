@@ -17,14 +17,15 @@ import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.medicine.Medicine;
 import com.harera.hayat.framework.model.medicine.MedicineUnit;
 import lombok.RequiredArgsConstructor;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import java.time.OffsetDateTime;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class MedicineDonationControllerIT extends ApplicationIT {
@@ -65,18 +66,18 @@ class MedicineDonationControllerIT extends ApplicationIT {
                             MedicineDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCode().value());
+            Assertions.assertEquals(200, responseEntity.getStatusCode().value());
 
             response = responseEntity.getBody();
-            Assert.assertNotNull(response);
-            Assert.assertNotNull(response.getId());
-            Assert.assertEquals(request.getTitle(), response.getTitle());
-            Assert.assertEquals(request.getDescription(), response.getDescription());
-            Assert.assertEquals(request.getAmount(), response.getAmount());
-            Assert.assertEquals(request.getCommunicationMethod(),
+            Assertions.assertNotNull(response);
+            Assertions.assertNotNull(response.getId());
+            Assertions.assertEquals(request.getTitle(), response.getTitle());
+            Assertions.assertEquals(request.getDescription(), response.getDescription());
+            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(request.getCityId(), response.getCity().getId());
-            Assert.assertEquals(request.getMedicineUnitId(), response.getMedicineUnit().getId());
+            Assertions.assertEquals(request.getCityId(), response.getCity().getId());
+            Assertions.assertEquals(request.getMedicineUnitId(), response.getMedicineUnit().getId());
             assertTrue(request.getMedicineExpirationDate()
                             .isEqual(response.getMedicineExpirationDate()));
 
@@ -121,18 +122,18 @@ class MedicineDonationControllerIT extends ApplicationIT {
                             MedicineDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCodeValue());
+            Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
 
             MedicineDonationResponse response = responseEntity.getBody();
-            Assert.assertNotNull(response);
+            Assertions.assertNotNull(response);
 
-            Assert.assertEquals(request.getTitle(), response.getTitle());
-            Assert.assertEquals(request.getDescription(), response.getDescription());
-            Assert.assertEquals(request.getAmount(), response.getAmount());
-            Assert.assertEquals(request.getCommunicationMethod(),
+            Assertions.assertEquals(request.getTitle(), response.getTitle());
+            Assertions.assertEquals(request.getDescription(), response.getDescription());
+            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(request.getCityId(), response.getCity().getId());
-            Assert.assertEquals(request.getMedicineUnitId(), response.getMedicineUnit().getId());
+            Assertions.assertEquals(request.getCityId(), response.getCity().getId());
+            Assertions.assertEquals(request.getMedicineUnitId(), response.getMedicineUnit().getId());
             assertTrue(request.getMedicineExpirationDate()
                             .isEqual(response.getMedicineExpirationDate()));
         } finally {
@@ -161,20 +162,20 @@ class MedicineDonationControllerIT extends ApplicationIT {
                                             null, MedicineDonationResponse.class);
 
             // Then
-            Assert.assertEquals(200, responseEntity.getStatusCodeValue());
+            Assertions.assertEquals(200, responseEntity.getStatusCodeValue());
 
             MedicineDonationResponse response = responseEntity.getBody();
-            Assert.assertNotNull(response);
+            Assertions.assertNotNull(response);
 
-            Assert.assertEquals(medicineDonation.getTitle(), response.getTitle());
-            Assert.assertEquals(medicineDonation.getDescription(),
+            Assertions.assertEquals(medicineDonation.getTitle(), response.getTitle());
+            Assertions.assertEquals(medicineDonation.getDescription(),
                             response.getDescription());
-            Assert.assertEquals(medicineDonation.getCommunicationMethod(),
+            Assertions.assertEquals(medicineDonation.getCommunicationMethod(),
                             response.getCommunicationMethod());
-            Assert.assertEquals(medicineDonation.getCity().getId(),
+            Assertions.assertEquals(medicineDonation.getCity().getId(),
                             response.getCity().getId());
-            Assert.assertEquals(medicineDonation.getAmount(), response.getAmount());
-            Assert.assertEquals(medicineDonation.getMedicineUnit().getId(),
+            Assertions.assertEquals(medicineDonation.getAmount(), response.getAmount());
+            Assertions.assertEquals(medicineDonation.getMedicineUnit().getId(),
                             response.getMedicineUnit().getId());
             assertTrue(medicineDonation.getMedicineExpirationDate().toLocalDate()
                             .isEqual(response.getMedicineExpirationDate().toLocalDate()));
