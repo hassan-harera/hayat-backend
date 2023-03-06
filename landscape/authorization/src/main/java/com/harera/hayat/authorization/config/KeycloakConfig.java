@@ -43,6 +43,7 @@ public class KeycloakConfig {
                 .realm(realm)
                 .serverUrl(serverUrl)
                 .clientId(clientId)
+                .clientSecret(clientSecret)
                 .username(username)
                 .password(password)
                 .build();

@@ -12,10 +12,10 @@ keycloak:
   auth-server-url: ${KEYCLOAK_SERVICE_URL}
   bearer-only: true
   credentials:
-    username: authorization-service
-    password: authorization-service
-    client-id: authorization-service
-    secret: authorization-service
+    username: ${KEYCLOAK_USER}
+    password: ${KEYCLOAK_PASSWORD}
+    client-id: ${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
+    secret: ${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
   public-client: true
   realm: master
   resource: authorization-service
