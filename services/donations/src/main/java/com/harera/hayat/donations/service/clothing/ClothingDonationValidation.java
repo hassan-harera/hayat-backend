@@ -4,7 +4,6 @@ import com.harera.hayat.donations.model.clothing.ClothingDonation;
 import com.harera.hayat.donations.model.clothing.ClothingDonationDto;
 import com.harera.hayat.donations.model.clothing.ClothingDonationRequest;
 import com.harera.hayat.donations.model.clothing.ClothingDonationUpdateRequest;
-import com.harera.hayat.donations.repository.clothing.ClothingConditionRepository;
 import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository;
 import com.harera.hayat.donations.service.DonationValidation;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
@@ -18,20 +17,16 @@ public class ClothingDonationValidation {
 
     private final DonationValidation donationValidation;
     private final ClothingDonationRepository clothingDonationRepository;
-    private final ClothingConditionRepository clothingConditionRepository;
 
     public ClothingDonationValidation(DonationValidation donationValidation,
-                    ClothingDonationRepository clothingDonationRepository,
-                    ClothingConditionRepository clothingConditionRepository) {
+                    ClothingDonationRepository clothingDonationRepository) {
         this.donationValidation = donationValidation;
         this.clothingDonationRepository = clothingDonationRepository;
-        this.clothingConditionRepository = clothingConditionRepository;
     }
 
     public void validateCreate(ClothingDonationRequest clothingDonationRequest) {
         donationValidation.validateCreate(clothingDonationRequest);
         validateMandatory(clothingDonationRequest);
-        validateCreateExisting(clothingDonationRequest);
         validateFormat(clothingDonationRequest);
     }
 
@@ -40,15 +35,6 @@ public class ClothingDonationValidation {
         validateMandatory(request);
         validateFormat(request);
         validateUpdateExisting(id);
-    }
-
-    private void validateCreateExisting(ClothingDonationRequest clothingDonationRequest) {
-        if (!clothingConditionRepository
-                        .existsById(clothingDonationRequest.getClothingConditionId())) {
-            throw new EntityNotFoundException(ClothingDonation.class,
-                            clothingDonationRequest.getClothingConditionId(),
-                            ErrorCode.NOT_FOUND_CLOTHING_CONDITION);
-        }
     }
 
     private void validateFormat(ClothingDonationDto clothingDonationRequest) {
@@ -65,15 +51,14 @@ public class ClothingDonationValidation {
                             ErrorCode.MANDATORY_CLOTHING_DONATION_QUANTITY, "quantity");
         }
 
-        if (clothingDonationRequest.getClothingConditionId() == null) {
+        if (clothingDonationRequest.getCondition() == null) {
             throw new MandatoryFieldException(
                             ErrorCode.MANDATORY_CLOTHING_DONATION_CONDITION,
                             "clothing_condition");
         }
     }
 
-    private void validateUpdateExisting(Long id)
-                    throws EntityNotFoundException {
+    private void validateUpdateExisting(Long id) throws EntityNotFoundException {
         if (!clothingDonationRepository.existsById(id)) {
             throw new EntityNotFoundException(ClothingDonation.class, id,
                             ErrorCode.NOT_FOUND_CLOTHING_DONATION);

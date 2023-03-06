@@ -10,23 +10,14 @@ jwt:
       key: 01234##56789@@hayat$$donations
 keycloak:
   auth-server-url: ${KEYCLOAK_SERVICE_URL}
-  bearer-only: true
+  realm: ${KEYCLOAK_REALM}
   credentials:
-    username: authorization-service
-    password: authorization-service
-    client-id: authorization-service
-    secret: authorization-service
-  public-client: true
-  realm: master
-  resource: authorization-service
-  ssl-required: external
-otp:
-  token:
-    expire: 10
-secret-key: 01234##56789@@hayat$$donations
+    username: ${KEYCLOAK_USER}
+    password: ${KEYCLOAK_PASSWORD}
+    client-id: ${KEYCLOAK_CLIENT_ID}
+    secret: ${KEYCLOAK_SECRET}
 server:
   port: 8083
-
 eureka:
   client:
     service-url:

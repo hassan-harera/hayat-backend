@@ -5,6 +5,10 @@ import com.harera.hayat.donations.model.DonationCategory;
 import com.harera.hayat.donations.model.DonationState;
 import com.harera.hayat.donations.model.clothing.*;
 import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository;
+import com.harera.hayat.framework.model.ClothingCondition;
+import com.harera.hayat.framework.model.ClothingType;
+import com.harera.hayat.framework.model.ClothingSeason;
+import com.harera.hayat.framework.model.ClothingSize;
 import com.harera.hayat.framework.model.city.City;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +23,11 @@ public class ClothingDonationStubs {
     private final ClothingDonationRepository clothingDonationRepository;
 
     public ClothingDonation create(String title, String description,
-                    OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
-                    DonationCategory category, DonationState status,
-                    CommunicationMethod communicationMethod, int quantity,
-                    ClothingCondition condition, ClothingGender gender,
-                    ClothingSize clothingSize, ClothingSeason clothingSeason, City city) {
+                                   OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
+                                   DonationCategory category, DonationState status,
+                                   CommunicationMethod communicationMethod, int quantity,
+                                   ClothingCondition condition, ClothingType gender,
+                                   ClothingSize clothingSize, ClothingSeason clothingSeason, City city) {
         ClothingDonation clothingDonation = new ClothingDonation();
         clothingDonation.setId(0L);
         clothingDonation.setTitle(title);
@@ -36,7 +40,7 @@ public class ClothingDonationStubs {
         clothingDonation.setCity(city);
         clothingDonation.setQuantity(quantity);
         clothingDonation.setClothingCondition(condition);
-        clothingDonation.setClothingGender(gender);
+        clothingDonation.setClothingType(gender);
         clothingDonation.setClothingSize(clothingSize);
         clothingDonation.setClothingSeason(clothingSeason);
         return clothingDonation;
@@ -46,7 +50,7 @@ public class ClothingDonationStubs {
                     OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
                     DonationCategory category, DonationState status,
                     CommunicationMethod communicationMethod, int quantity,
-                    ClothingCondition condition, ClothingGender gender,
+                    ClothingCondition condition, ClothingType gender,
                     ClothingSize clothingSize, ClothingSeason clothingSeason, City city) {
         ClothingDonation clothingDonation = create(title, description, donationDate,
                         donationExpirationDate, category, status, communicationMethod,
