@@ -17,11 +17,12 @@ services:
       - EUREKA_URL=http://discovery-service:8761
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - CONFIG_SERVICE_URI=http://config-service:8111
+      - CONFIG_SERVICE_URI=${CONFIG_SERVICE_URI}
       - AUTHORIZATION_SERVICE_URL=${AUTHORIZATION_SERVICE_URL}
       - DONATIONS_SERVICE_URL=${DONATIONS_SERVICE_URL}
       - NEEDS_SERVICE_URL=${NEEDS_SERVICE_URL}
       - SHARED_SERVICE_URL=${SHARED_SERVICE_URL}
+      - ACTIVE_PROFILE=${ACTIVE_PROFILE}
     healthcheck:
       test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
       interval: 20s
@@ -181,6 +182,29 @@ services:
       - hayat_keycloak:/var/lib/keycloak
     ports:
       - "8181:8080"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    volumes:
+      - ./platform/grafana/datasource.yml:/var/lib/grafana/datasource.yml
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./platform/prometheus:/etc/prometheus
+
 volumes:
   hayat_db:
   hayat_keycloak:

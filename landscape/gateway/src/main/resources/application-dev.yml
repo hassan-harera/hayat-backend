@@ -19,7 +19,6 @@ spring:
             client-id: needs-service
             authorization-grant-type: authorization_code
             scope: openid
-  cloud:
     gateway:
       routes:
         - id: donations-service
@@ -38,18 +37,10 @@ spring:
           uri: ${AUTHORIZATION_SERVICE_URL:http://localhost:8083}
           predicates:
             - Path=/api/v1/auth/**, /api/v1/oauth/**, /api/v1/otp/**
-  profiles:
-    active: ${ACTIVE_PROFILE:dev}
 
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
-    registryFetchIntervalSeconds: 5
-    service-url:
-      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
-  instance:
-    preferIpAddress: true
+    enabled: false
 
 management:
   endpoints:
