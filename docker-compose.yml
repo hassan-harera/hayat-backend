@@ -171,15 +171,18 @@ services:
       - hayat_db:/var/lib/mysql
     ports:
       - "3306:3306"
+
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     container_name: "hayat_keycloak"
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-    command: [ "start-dev", "--http-port=8181" ]
+      - KEYCLOAK_IMPORT=./platform/keycloak/keycloak.json
+      - KEYCLOAK_ADMIN=${KEYCLOAK_USER}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_PASSWORD}
+    command: [ "start-dev", "--import-realm", "--http-port=8181" ]
     volumes:
-      - hayat_keycloak:/var/lib/keycloak
+      - ./platform/keycloak:/opt/keycloak/data/import
+    network_mode: "host"
     ports:
       - "8181:8080"
 
