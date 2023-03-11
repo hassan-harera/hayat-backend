@@ -21,12 +21,10 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.cors().disable().httpBasic().disable().csrf().disable()
-                        .sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                        .authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
-                        .anyRequest().authenticated().and()
-                        .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                        .build();
+        return http.sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
+                .and().oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+                .build();
     }
 }
