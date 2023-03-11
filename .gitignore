@@ -39,3 +39,5 @@ build/
 *.log
 *.env
 /platform/keycloak/
+/server.crt.pem
+/server.key.pem

@@ -31,7 +31,6 @@ spring:
   liquibase:
     change-log: classpath:db/main/changelog/changelog-main.yaml
     clear-checksums: true
-    enabled: false
 
 eureka:
   client:

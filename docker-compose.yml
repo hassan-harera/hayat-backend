@@ -44,6 +44,21 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SMS_ENV=${SMS_ENV}
+      - SMS_USERNAME=${SMS_USERNAME}
+      - SMS_PASSWORD=${SMS_PASSWORD}
+      - SMS_SENDER=${SMS_SENDER}
+      - SMS_LANGUAGE=${SMS_LANGUAGE}
+      - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
+      - KEYCLOAK_AUTHORIZATION_CLIENT_ID=${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
+      - KEYCLOAK_AUTHORIZATION_CLIENT_SECRET=${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
     ports:
       - "8111:8111"
     depends_on:
@@ -77,10 +92,14 @@ services:
     build:
       context: ./landscape/authorization
       dockerfile: Dockerfile
-    restart: on-failure
+    restart: unless-stopped
     env_file:
       - .env
     environment:
+      - CONFIG_SERVICE_URI=http://config-service:8111
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
@@ -94,13 +113,8 @@ services:
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - KEYCLOAK_AUTHORIZATION_CLIENT_ID=${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
       - KEYCLOAK_AUTHORIZATION_CLIENT_SECRET=${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
-      - KEYCLOAK_SECRET=${KEYCLOAK_SECRET}
       - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
       - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
-      - EUREKA_URL=http://discovery-service:8761
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - CONFIG_SERVICE_URI=http://config-service:8111
     ports:
       - "8083:8083"
     depends_on:
@@ -190,6 +204,7 @@ services:
   redis:
     container_name: "hayat_redis"
     image: redis:latest
+    command: redis-server --appendonly yes --replica-read-only no
     ports:
       - "6379:6379"
 
@@ -210,20 +225,19 @@ services:
     image: quay.io/keycloak/keycloak:latest
     container_name: "hayat_keycloak"
     environment:
-      - KEYCLOAK_IMPORT=./platform/keycloak/keycloak.json
       - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
-      #      - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt.pem
-      #      - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key.pem
       - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
-    command: [ "start-dev", "--import-realm", "--http-port=8181" ]
-    #    networks:
-    #      - hayat_internal
+      - KEYCLOAK_IMPORT=./platform/keycloak/keycloak.json
+      - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt.pem
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key.pem
+    command: [ "start-dev", "--http-port=8181" ]
     volumes:
       - ./server.crt.pem:/opt/keycloak/conf/server.crt.pem
       - ./server.key.pem:/opt/keycloak/conf/server.key.pem
       - ./platform/keycloak:/opt/keycloak/data/import
     ports:
       - "8181:8181"
+      - "8443:8443"
 
   grafana:
     image: grafana/grafana:latest
