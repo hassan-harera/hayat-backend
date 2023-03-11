@@ -237,7 +237,7 @@ services:
       - ./platform/keycloak:/opt/keycloak/data/import
     ports:
       - "8181:8181"
-      - "8443:8443"
+      - "8444:8443"
 
   grafana:
     image: grafana/grafana:latest
