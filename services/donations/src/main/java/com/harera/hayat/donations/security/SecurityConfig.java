@@ -19,8 +19,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
-                .requestMatchers(OPEN_APIS).permitAll()
-                .anyRequest().authenticated()
+//                .requestMatchers(OPEN_APIS).permitAll()
+//                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and().oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt).build();
     }
 }

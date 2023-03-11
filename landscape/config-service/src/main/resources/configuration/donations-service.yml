@@ -1,19 +1,10 @@
 donation:
   food:
     expiration_in_days: 45
-jwt:
-  token:
-    expire: 36000000
-    refresh:
-      expire: 864000000
-    secret:
-      key: 01234##56789@@hayat$$donations
-otp:
-  token:
-    expire: 10
-secret-key: 01234##56789@@hayat$$donations
+
 server:
   port: 8084
+
 spring:
   application:
     name: donations-service
@@ -26,8 +17,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://0.0.0.0:8181/realms/master
-          jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
+          issuer-uri: ${KEYCLOAK_SERVICE_URL}/realms/${KEYCLOAK_REALM}
+          jwk-set-uri: ${KEYCLOAK_SERVICE_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -55,4 +46,4 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+      defaultZone: ${EUREKA_URL}/eureka/

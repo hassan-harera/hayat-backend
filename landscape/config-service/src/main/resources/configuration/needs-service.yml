@@ -1,17 +1,3 @@
-donation:
-  food:
-    expiration_in_days: 45
-jwt:
-  token:
-    expire: 36000000
-    refresh:
-      expire: 864000000
-    secret:
-      key: 01234##56789@@hayat$$donations
-otp:
-  token:
-    expire: 10
-secret-key: 01234##56789@@hayat$$donations
 server:
   port: 8082
 spring:
@@ -26,13 +12,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://0.0.0.0:8181/realms/master
-          jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
-      client:
-        provider:
-          keycloak:
-            issuer-uri: http://0.0.0.0:8181/realms/master
-            jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
+          issuer-uri: ${KEYCLOAK_SERVICE_URL}/realms/master
+          jwk-set-uri: ${KEYCLOAK_SERVICE_URL}/realms/master/protocol/openid-connect/certs
         registration:
           keycloak:
             client-id: needs-service
@@ -60,6 +41,7 @@ spring:
   liquibase:
     change-log: classpath:db/main/changelog/changelog-main.yaml
     clear-checksums: true
+    enabled: false
 
 eureka:
   client:

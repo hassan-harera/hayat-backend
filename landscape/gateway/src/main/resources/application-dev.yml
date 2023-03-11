@@ -12,8 +12,8 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://0.0.0.0:8181/realms/master
-            jwk-set-uri: http://0.0.0.0:8181/realms/master/protocol/openid-connect/certs
+            issuer-uri: ${KEYCLOAK_SERVICE_URL}/realms/${KEYCLOAK_REALM}
+            jwk-set-uri: ${KEYCLOAK_SERVICE_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
         registration:
           keycloak:
             client-id: needs-service

@@ -7,15 +7,15 @@ jwt:
     refresh:
       expire: 864000000
     secret:
-      key: 01234##56789@@hayat$$donations
+      key: ${SECRET_KEY}
 keycloak:
   auth-server-url: ${KEYCLOAK_SERVICE_URL}
   realm: ${KEYCLOAK_REALM}
   credentials:
-    username: ${KEYCLOAK_USER}
-    password: ${KEYCLOAK_PASSWORD}
-    client-id: ${KEYCLOAK_CLIENT_ID}
-    secret: ${KEYCLOAK_SECRET}
+    username: ${KEYCLOAK_ADMIN}
+    password: ${KEYCLOAK_ADMIN_PASSWORD}
+    client-id: ${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
+    secret: ${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
 server:
   port: 8083
 eureka:
@@ -30,19 +30,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver
     password: harera
-    url: jdbc:mysql://${DB_HOST}:3306/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: root
-  data:
-    redis:
-      host: ${REDIS_HOST}
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          max-wait: -1
-          min-idle: 0
-      port: 6379
-      timeout: 2000
   hibernate:
     connection:
       charSet: UTF-8
@@ -58,19 +47,21 @@ spring:
         format_sql: false
   liquibase:
     change-log: classpath:db/main/changelog/changelog-main.yaml
-    clearCheckSums: true
+    clear-checksums: true
+    enabled: false
   main:
     allow-bean-definition-overriding: true
-  redis:
-    host: redis
-    lettuce:
-      pool:
-        max-active: 8
-        max-idle: 8
-        max-wait: -1
-        min-idle: 0
-    port: 6379
-    timeout: 2000
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          max-wait: -1
+          min-idle: 0
+      port: 6379
+      timeout: 2000
 
 sms:
   config:

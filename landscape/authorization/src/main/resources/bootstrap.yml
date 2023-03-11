@@ -10,5 +10,6 @@ spring:
         multiplier: 1.5
         max-interval: 1000
         initial-interval: 1000
+      profile: ${ACTIVE_PROFILE}
   main:
     allow-bean-definition-overriding: true

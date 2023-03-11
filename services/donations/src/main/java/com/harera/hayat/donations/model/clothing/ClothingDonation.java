@@ -18,19 +18,11 @@ public class ClothingDonation extends Donation {
     @Column(name = "quantity")
     private int quantity;
 
-    @ManyToOne
-    @JoinColumn(name = "clothing_condition_id", referencedColumnName = "id")
-    private ClothingCondition clothingCondition;
+    private Long clothingConditionId;
 
-    @ManyToOne
-    @JoinColumn(name = "clothing_season_id", referencedColumnName = "id")
-    private ClothingSeason clothingSeason;
+    private Long clothingSeasonId;
 
-    @ManyToOne
-    @JoinColumn(name = "clothing_size_id", referencedColumnName = "id")
-    private ClothingSize clothingSize;
+    private Long clothingSizeId;
 
-    @ManyToOne
-    @JoinColumn(name = "clothing_category_id", referencedColumnName = "id")
-    private ClothingType clothingType;
+    private Long clothingTypeId;
 }

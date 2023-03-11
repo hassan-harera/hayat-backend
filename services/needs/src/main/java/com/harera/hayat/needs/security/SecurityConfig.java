@@ -22,9 +22,9 @@ public class SecurityConfig {
             smc.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         });
         http.authorizeHttpRequests(ahrc -> {
-            ahrc.requestMatchers(OPEN_APIS).permitAll();
-            ahrc.requestMatchers("/api/**").access(AccessController::checkAccess);
-            ahrc.anyRequest().fullyAuthenticated(); //
+            ahrc.anyRequest().permitAll();
+//            ahrc.requestMatchers("/api/**").access(AccessController::checkAccess);
+//            ahrc.anyRequest().fullyAuthenticated(); //
         });
         http.oauth2ResourceServer().jwt();
         return http.build();
