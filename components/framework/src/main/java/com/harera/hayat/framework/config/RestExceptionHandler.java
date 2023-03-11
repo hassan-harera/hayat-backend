@@ -244,6 +244,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
+    @ExceptionHandler({SignupException.class})
+    protected ResponseEntity<Object> signupException(SignupException ex) {
+        log.error(ex);
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED);
+        apiError.setMessage(ex.getMessage());
+        apiError.setDisplayMessage(ex.getMessage());
+        apiError.setDebugMessage(ex.getMessage());
+        return buildResponseEntity(apiError);
+    }
+
     private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
         return new ResponseEntity<>(apiError, apiError.getStatus());
     }
