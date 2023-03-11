@@ -34,7 +34,7 @@
             <AppenderRef ref="hibernateFileLogger"/>
         </Logger>
         <Logger name="com.harera" level="debug" additivity="false">
-            <AppenderRef ref="authorizationServiceFileLogger"/>
+            <AppenderRef ref="Console"/>
         </Logger>
         <Root level="info">
             <AppenderRef ref="Console"/>
