@@ -59,5 +59,9 @@ spring:
           min-idle: 0
       port: 6377
       timeout: 2000
+    mongodb:
+      host: localhost
+      port: 27000
+      database: hayat
 springdoc:
   enable-spring-security: false

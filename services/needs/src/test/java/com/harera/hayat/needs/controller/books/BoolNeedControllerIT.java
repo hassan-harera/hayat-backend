@@ -22,7 +22,7 @@ import com.harera.hayat.needs.util.RequestUtil;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-class PossessionNeedControllerIT extends ApplicationIT {
+class BoolNeedControllerIT extends ApplicationIT {
 
     private final RequestUtil requestUtil;
     private final BookNeedStubs bookNeedStubs;

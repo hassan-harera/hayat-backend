@@ -1,10 +1,5 @@
 package com.harera.hayat.needs.service.book;
 
-import java.time.LocalDateTime;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-
 import com.harera.hayat.framework.exception.MandatoryFieldException;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.repository.city.CityRepository;
@@ -15,6 +10,13 @@ import com.harera.hayat.needs.model.books.BookNeedRequest;
 import com.harera.hayat.needs.model.books.BookNeedResponse;
 import com.harera.hayat.needs.repository.books.BookNeedRepository;
 import com.harera.hayat.needs.util.ErrorCode;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
 
 @Service
 public class BookNeedService {
@@ -24,10 +26,10 @@ public class BookNeedService {
     private final ModelMapper modelMapper;
     private final BookNeedRepository bookNeedRepository;
 
-    public BookNeedService(CityRepository cityRepository, CityRepository cityRepository1,
+    public BookNeedService(CityRepository cityRepository,
                     BookNeedValidation bookNeedValidation, ModelMapper modelMapper,
                     BookNeedRepository bookNeedRepository) {
-        this.cityRepository = cityRepository1;
+        this.cityRepository = cityRepository;
         this.bookNeedValidation = bookNeedValidation;
         this.modelMapper = modelMapper;
         this.bookNeedRepository = bookNeedRepository;
@@ -58,14 +60,19 @@ public class BookNeedService {
         bookNeed.setStatus(NeedState.PENDING);
         // TODO: send to AI model to process the request
         // TODO: set user from request header
-        bookNeed = bookNeedRepository.save(bookNeed);
 
-        return modelMapper.map(bookNeed, BookNeedResponse.class);
+        var bookNeedResponse = bookNeedRepository.save(bookNeed);
+        return modelMapper.map(bookNeedResponse, BookNeedResponse.class);
     }
 
     private City getCity(Long cityId) {
         return cityRepository.findById(cityId)
                         .orElseThrow(() -> new MandatoryFieldException(
                                         ErrorCode.MANDATORY_NEED_CITY_ID, "city_id"));
+    }
+
+    public List<BookNeedResponse> list() {
+        List<BookNeed> all = bookNeedRepository.findAll();
+        return mapAll(all, BookNeedResponse.class);
     }
 }

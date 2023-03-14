@@ -1,11 +1,14 @@
 version: "3.8"
 
 services:
+
   redis:
-    container_name: "hayat_redis"
+    container_name: "hayat_redis_test"
     image: redis:latest
+    network_mode: "host"
     ports:
       - "6633:6379"
+
   db:
     image: mysql:8.0
     container_name: "hayat_mysql"
@@ -14,3 +17,11 @@ services:
       - MYSQL_DATABASE=hayat
     ports:
       - "3366:3306"
+
+  mongo:
+    image: mongo:latest
+    container_name: "hayat_mongodb_test"
+    env_file:
+      - .env
+    ports:
+      - "27000:27017"

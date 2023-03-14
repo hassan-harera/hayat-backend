@@ -1,20 +1,19 @@
 package com.harera.hayat.needs.controller.books;
 
-import static org.springframework.http.ResponseEntity.ok;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.harera.hayat.needs.model.books.BookNeedRequest;
 import com.harera.hayat.needs.model.books.BookNeedResponse;
 import com.harera.hayat.needs.service.book.BookNeedService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
+
+@Tag(name = "Book - Need", description = "Book Need API")
 @RestController
 @RequestMapping("/api/v1/needs/book")
 public class BookNeedController {
@@ -35,5 +34,13 @@ public class BookNeedController {
     public ResponseEntity<BookNeedResponse> create(
                     @RequestBody BookNeedRequest bookNeedRequest) {
         return ok(bookNeedService.create(bookNeedRequest));
+    }
+
+    @Operation(summary = "List", description = "List book needs", responses = {
+            @ApiResponse(responseCode = "200", description = "success|ok"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized") })
+    @GetMapping
+    public ResponseEntity<List<BookNeedResponse>> list() {
+        return ok(bookNeedService.list());
     }
 }
