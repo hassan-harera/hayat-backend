@@ -1,0 +1,73 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: authorization-service
+  security:
+    jackson:
+      serialization:
+        write-dates-as-timestamps: false
+      deserialization:
+        accept-single-value-as-array: true
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: harera
+    url: jdbc:mysql://localhost:3306/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: root
+  hibernate:
+    connection:
+      charSet: UTF-8
+      characterEncoding: utf8
+      useUnicode: true
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: false
+  liquibase:
+    change-log: classpath:db/main/changelog/changelog-main.yaml
+    clear-checksums: true
+    enabled: false
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: hayat
+eureka:
+  client:
+    enabled: false
+needs:
+  possession:
+    expiration_days: 45
+
+keycloak:
+  auth-server-url: http://localhost:8181
+  realm: hayat
+  credentials:
+    username: authorization
+    password: authorization
+    client-id: authorization-client
+    secret: authorization-secret
+jwt:
+  token:
+    expire: 36000000
+    refresh:
+      expire: 864000000
+    secret:
+      key: secret
+sms:
+  config:
+    environment: ${SMS_ENV}
+    username: ${SMS_USERNAME}
+    password: ${SMS_PASSWORD}
+    sender: ${SMS_SENDER}
+    language: ${SMS_LANGUAGE}
+  schemaless:
+    config:
+      url: https://smsmisr.com/api/SMS/
+  schema:
+    config:
+      url: https://smsmisr.com/api/vSMS/

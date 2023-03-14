@@ -221,6 +221,19 @@ services:
     ports:
       - ${DB_PORT}:3306
 
+  mongo:
+    image: mongo:latest
+    container_name: "hayat_mongodb"
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    volumes:
+      - hayat_mongodb:/data/db
+    ports:
+      - ${MONGO_PORT}:27017
+
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     container_name: "hayat_keycloak"

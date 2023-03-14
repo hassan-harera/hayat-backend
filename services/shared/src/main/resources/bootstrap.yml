@@ -10,5 +10,6 @@ spring:
         multiplier: 1.5
         max-interval: 5000
         initial-interval: 1000
-  liquibase:
-    change-log: classpath:db/main/changelog/changelog-main.yaml
+      enabled: ${CONFIG_SERVICE_ENABLED}
+  profiles:
+    active: ${ACTIVE_PROFILE}
