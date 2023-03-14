@@ -7,11 +7,12 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${ISSUER_URI}/realms/master
-          jwk-set-uri: ${ISSUER_URI}/realms/master/protocol/openid-connect/certs
+          issuer-uri: ${KEYCLOAK_SERVICE_URL}/realms/${KEYCLOAK_REALM}
+          jwk-set-uri: ${KEYCLOAK_SERVICE_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: ${DB_PASSWORD}
+    password: harera
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: root
   hibernate:
@@ -19,8 +20,17 @@ spring:
       charSet: UTF-8
       characterEncoding: utf8
       useUnicode: true
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: false
   liquibase:
     change-log: classpath:db/main/changelog/changelog-main.yaml
+    clear-checksums: true
 
 eureka:
   client:

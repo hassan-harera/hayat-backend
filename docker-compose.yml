@@ -1,14 +1,16 @@
 version: "3.8"
 
 services:
+
   gateway:
     container_name: "hayat_gateway_service"
     image: hayat_gateway_service:latest
+    restart: always
     build:
       context: ./landscape/gateway
       dockerfile: Dockerfile
     ports:
-      - "8080:8443"
+      - "8080:8080"
     depends_on:
       - discovery-service
     env_file:
@@ -33,6 +35,7 @@ services:
   config-service:
     container_name: "hayat_config_service"
     image: hayat_config_service:latest
+    restart: always
     build:
       context: ./landscape/config-service
       dockerfile: Dockerfile
@@ -41,6 +44,21 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - SMS_ENV=${SMS_ENV}
+      - SMS_USERNAME=${SMS_USERNAME}
+      - SMS_PASSWORD=${SMS_PASSWORD}
+      - SMS_SENDER=${SMS_SENDER}
+      - SMS_LANGUAGE=${SMS_LANGUAGE}
+      - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
+      - KEYCLOAK_AUTHORIZATION_CLIENT_ID=${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
+      - KEYCLOAK_AUTHORIZATION_CLIENT_SECRET=${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
     ports:
       - "8111:8111"
     depends_on:
@@ -55,6 +73,7 @@ services:
   discovery-service:
     container_name: "hayat_discovery_service"
     image: hayat_discovery_service:latest
+    restart: always
     build:
       context: ./landscape/discovery-service
       dockerfile: Dockerfile
@@ -66,26 +85,36 @@ services:
       - CONFIG_SERVICE_URI=http://config-service:8111
     ports:
       - "8761:8761"
+
   authorization-service:
     container_name: "hayat_authorization_service"
     image: hayat_authorization_service:latest
     build:
       context: ./landscape/authorization
       dockerfile: Dockerfile
-    restart: on-failure
+    restart: unless-stopped
+    env_file:
+      - .env
     environment:
+      - CONFIG_SERVICE_URI=http://config-service:8111
+      - EUREKA_URL=http://discovery-service:8761
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
       - SMS_ENV=${SMS_ENV}
       - SMS_USERNAME=${SMS_USERNAME}
       - SMS_PASSWORD=${SMS_PASSWORD}
       - SMS_SENDER=${SMS_SENDER}
       - SMS_LANGUAGE=${SMS_LANGUAGE}
-      - KEYCLOAK_SERVICE_URL=http://keycloak:8181
-      - EUREKA_URL=http://discovery-service:8761
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - CONFIG_SERVICE_URI=http://config-service:8111
+      - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
+      - KEYCLOAK_AUTHORIZATION_CLIENT_ID=${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
+      - KEYCLOAK_AUTHORIZATION_CLIENT_SECRET=${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
     ports:
       - "8083:8083"
     depends_on:
@@ -93,6 +122,7 @@ services:
       - redis
       - discovery-service
       - config-service
+
   donations-service:
     container_name: "hayat_donations_service"
     image: hayat_donations_service:latest
@@ -105,8 +135,12 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - "8084:8084"
     depends_on:
@@ -114,6 +148,7 @@ services:
       - redis
       - discovery-service
       - config-service
+
   needs-service:
     container_name: "hayat_needs_service"
     image: hayat_needs_service:latest
@@ -126,8 +161,12 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - "8082:8082"
     depends_on:
@@ -135,6 +174,7 @@ services:
       - redis
       - discovery-service
       - config-service
+
   shared-service:
     container_name: "hayat_shared_service"
     image: hayat_shared_service:latest
@@ -147,8 +187,12 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - DB_HOST=${DB_HOST}
       - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - "8085:8085"
     depends_on:
@@ -156,32 +200,44 @@ services:
       - redis
       - discovery-service
       - config-service
+
   redis:
     container_name: "hayat_redis"
     image: redis:latest
+    command: redis-server --appendonly yes --replica-read-only no
     ports:
       - "6379:6379"
+
   db:
     image: mysql:8.0
     container_name: "hayat_mysql"
+    env_file:
+      - .env
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - hayat_db:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - ${DB_PORT}:3306
+
   keycloak:
     image: quay.io/keycloak/keycloak:latest
     container_name: "hayat_keycloak"
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - KEYCLOAK_IMPORT=./platform/keycloak/keycloak.json
+      - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt.pem
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key.pem
     command: [ "start-dev", "--http-port=8181" ]
     volumes:
-      - hayat_keycloak:/var/lib/keycloak
+      - ./server.crt.pem:/opt/keycloak/conf/server.crt.pem
+      - ./server.key.pem:/opt/keycloak/conf/server.key.pem
+      - ./platform/keycloak:/opt/keycloak/data/import
     ports:
-      - "8181:8080"
+      - "8181:8181"
+      - "8444:8443"
 
   grafana:
     image: grafana/grafana:latest

@@ -93,6 +93,7 @@ public class KeycloakServiceImpl implements KeycloakService {
         try {
             keycloak.realm(realm).users().create(userRepresentation);
         } catch (Exception ex) {
+            log.error(ex);
             throw new SignupException("Error while processing creating");
         }
     }
