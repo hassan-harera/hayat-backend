@@ -3,6 +3,7 @@ package com.harera.hayat.needs.service.book;
 import com.harera.hayat.framework.exception.MandatoryFieldException;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.repository.city.CityRepository;
+import com.harera.hayat.framework.util.ObjectMapperUtils;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedState;
 import com.harera.hayat.needs.model.books.BookNeed;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
 
 @Service
 public class BookNeedService {
@@ -73,6 +73,6 @@ public class BookNeedService {
 
     public List<BookNeedResponse> list() {
         List<BookNeed> all = bookNeedRepository.findAll();
-        return mapAll(all, BookNeedResponse.class);
+        return ObjectMapperUtils.mapAll(all, BookNeedResponse.class);
     }
 }

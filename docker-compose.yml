@@ -25,12 +25,6 @@ services:
       - NEEDS_SERVICE_URL=${NEEDS_SERVICE_URL}
       - SHARED_SERVICE_URL=${SHARED_SERVICE_URL}
       - ACTIVE_PROFILE=${ACTIVE_PROFILE}
-    healthcheck:
-      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
-      interval: 20s
-      timeout: 5s
-      retries: 5
-      start_period: 40s
 
   config-service:
     container_name: "hayat_config_service"
@@ -39,36 +33,15 @@ services:
     build:
       context: ./landscape/config-service
       dockerfile: Dockerfile
+    env_file:
+      - .env
     environment:
       - EUREKA_URL=http://discovery-service:8761
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - CONFIG_SERVICE_URI=http://config-service:8111
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - SMS_ENV=${SMS_ENV}
-      - SMS_USERNAME=${SMS_USERNAME}
-      - SMS_PASSWORD=${SMS_PASSWORD}
-      - SMS_SENDER=${SMS_SENDER}
-      - SMS_LANGUAGE=${SMS_LANGUAGE}
-      - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
-      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
-      - KEYCLOAK_AUTHORIZATION_CLIENT_ID=${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
-      - KEYCLOAK_AUTHORIZATION_CLIENT_SECRET=${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
-      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
-      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
     ports:
       - "8111:8111"
     depends_on:
-      - discovery-service
-    healthcheck:
-      test: "curl --fail --silent localhost:8761/actuator/health | grep UP || exit 1"
-      interval: 20s
-      timeout: 5s
-      retries: 5
-      start_period: 40s
+      discovery-service:
+        condition: service_started
 
   discovery-service:
     container_name: "hayat_discovery_service"
@@ -97,6 +70,8 @@ services:
       - .env
     environment:
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - CONFIG_SERVICE_ENABLED=true
+      - ACTIVE_PROFILE=prod
       - EUREKA_URL=http://discovery-service:8761
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -118,10 +93,12 @@ services:
     ports:
       - "8083:8083"
     depends_on:
-      - db
-      - redis
-      - discovery-service
-      - config-service
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      redis:
+        condition: service_started
 
   donations-service:
     container_name: "hayat_donations_service"
@@ -144,10 +121,12 @@ services:
     ports:
       - "8084:8084"
     depends_on:
-      - db
-      - redis
-      - discovery-service
-      - config-service
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      redis:
+        condition: service_started
 
   needs-service:
     container_name: "hayat_needs_service"
@@ -161,6 +140,8 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - CONFIG_SERVICE_ENABLED=true
+      - ACTIVE_PROFILE=prod
       - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - DB_HOST=${DB_HOST}
@@ -170,10 +151,14 @@ services:
     ports:
       - "8082:8082"
     depends_on:
-      - db
-      - redis
-      - discovery-service
-      - config-service
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      redis:
+        condition: service_started
+      mongo:
+        condition: service_started
 
   shared-service:
     container_name: "hayat_shared_service"
@@ -182,11 +167,15 @@ services:
       context: ./services/shared
       dockerfile: Dockerfile
     restart: on-failure
+    env_file:
+      - .env
     environment:
       - EUREKA_URL=http://discovery-service:8761
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - CONFIG_SERVICE_ENABLED=true
+      - ACTIVE_PROFILE=prod
       - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - DB_HOST=${DB_HOST}
@@ -196,10 +185,12 @@ services:
     ports:
       - "8085:8085"
     depends_on:
-      - db
-      - redis
-      - discovery-service
-      - config-service
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      redis:
+        condition: service_started
 
   redis:
     container_name: "hayat_redis"
@@ -259,12 +250,16 @@ services:
       - prometheus
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     environment:
-      - GF_AUTH_ANONYMOUS_ENABLED=true
-      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
-      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_SECURITY_ADMIN_USER=${GF_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD}
     volumes:
-      - ./platform/grafana/datasource.yml:/var/lib/grafana/datasource.yml
+      - ./platform/grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./platform/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./platform/grafana/grafana.ini:/etc/grafana/grafana.ini
 
   prometheus:
     image: prom/prometheus:latest

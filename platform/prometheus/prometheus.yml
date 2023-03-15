@@ -1,9 +1,29 @@
 global:
-  scrape_interval: 2s
+  scrape_interval: 1s
 
 scrape_configs:
   - job_name: 'gateway-service'
-    scrape_interval: 2s
+    scrape_interval: 1s
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets: [ 'gateway:8080' ]
+  - job_name: 'authorization-service'
+    scrape_interval: 1s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'authorization-service:8083' ]
+  - job_name: 'needs-service'
+    scrape_interval: 1s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'needs-service:8082' ]
+  - job_name: 'donations-service'
+    scrape_interval: 1s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'donations-service:8084' ]
+  - job_name: 'shared-service'
+    scrape_interval: 1s
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: [ 'shared-service:8085' ]

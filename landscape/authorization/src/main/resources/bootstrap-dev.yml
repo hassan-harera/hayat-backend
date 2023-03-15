@@ -71,3 +71,27 @@ sms:
   schema:
     config:
       url: https://smsmisr.com/api/vSMS/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        all: true
+        http.server.requests: true
+  tracing:
+    sampling:
+      probability: 1.0
+  prometheus:
+    metrics:
+      export:
+        step: 10s
