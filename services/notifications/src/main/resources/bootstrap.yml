@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: notifications-service
+  cloud:
+    config:
+      uri: ${CONFIG_SERVICE_URI}
+      fail-fast: true
+      retry:
+        max-attempts: 5
+        multiplier: 1.5
+        max-interval: 5000
+        initial-interval: 1000
+      enabled: ${CONFIG_SERVICE_ENABLED}
+  profiles:
+    active: ${ACTIVE_PROFILE}

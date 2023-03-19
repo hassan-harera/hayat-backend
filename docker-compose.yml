@@ -274,6 +274,18 @@ services:
     volumes:
       - ./platform/prometheus:/etc/prometheus
 
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:management
+    env_file:
+      - .env
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
+    ports:
+      - ${RABBITMQ_PORT}:5672
+      - ${RABBITMQ_MANAGEMENT_PORT}:15672
+
 volumes:
   hayat_db:
   hayat_keycloak:

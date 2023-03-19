@@ -1,0 +1,76 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: notifications-service
+  security:
+    jackson:
+      serialization:
+        write-dates-as-timestamps: false
+      deserialization:
+        accept-single-value-as-array: true
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: harera
+    url: jdbc:mysql://localhost:3306/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: root
+  hibernate:
+    connection:
+      charSet: UTF-8
+      characterEncoding: utf8
+      useUnicode: true
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: false
+  liquibase:
+    change-log: classpath:db/main/changelog/changelog-main.yaml
+    clear-checksums: true
+    enabled: false
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: hayat
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+
+queue:
+  donations:
+    accepted: accepted_donations
+
+
+firebase:
+  auth:
+    provider:
+      cert:
+        url: https://www.googleapis.com/oauth2/v1/certs
+    uri: https://accounts.google.com/o/oauth2/auth
+  client:
+    cert:
+      url: https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-rhnb3%40clinico-baed0.iam.gserviceaccount.com
+    email: firebase-adminsdk-rhnb3@clinico-baed0.iam.gserviceaccount.com
+    id: ${FIREBASE_CLIENT_ID}
+  private:
+    key: ${FIREBASE_PRIVATE_KEY}
+    key.id: ${FIREBASE_PRIVATE_KEY_ID}
+  project:
+    id: ${FIREBASE_PROJECT_ID}
+  token:
+    uri: https://oauth2.googleapis.com/token
+  type: service_account
+
+eureka:
+  client:
+    enabled: false
+needs:
+  possession:
+    expiration_days: 45
+

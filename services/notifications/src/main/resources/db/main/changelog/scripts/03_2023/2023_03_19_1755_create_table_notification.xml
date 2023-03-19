@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="2023_03_19_1755" author="hharera@hayat.social">
+        <sql>
+            create table notification
+            (
+            id bigint auto_increment primary key,
+            active bit default 1,
+            user_id bigint null,
+            device_token varchar(500) null,
+            title varchar(100) null,
+            body varchar(1000) null,
+            issued_at datetime null,
+            sent_at datetime null
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
