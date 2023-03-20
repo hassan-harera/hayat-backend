@@ -3,7 +3,7 @@ package com.harera.hayat.donations.controller;
 import com.harera.hayat.donations.ApplicationIT;
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.food.*;
 import com.harera.hayat.donations.stubs.city.CityStubs;
 import com.harera.hayat.donations.util.DataUtil;
@@ -11,10 +11,8 @@ import com.harera.hayat.donations.util.RequestUtil;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.donations.stubs.food.FoodDonationStubs;
 import com.harera.hayat.donations.stubs.food.FoodUnitStubs;
-import com.harera.hayat.framework.model.food.FoodCategory;
 import com.harera.hayat.framework.model.food.FoodUnit;
 import lombok.RequiredArgsConstructor;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,7 +92,7 @@ class FoodDonationControllerIT extends ApplicationIT {
 
         FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
                         OffsetDateTime.now(), "title", DonationCategory.FOOD,
-                        "description", city, DonationState.PENDING);
+                        "description", city, DonationStatus.PENDING);
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(city.getId());
@@ -143,7 +141,7 @@ class FoodDonationControllerIT extends ApplicationIT {
 
         FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
                         OffsetDateTime.now(), "title", DonationCategory.FOOD,
-                        "description", city, DonationState.PENDING);
+                        "description", city, DonationStatus.PENDING);
 
         try {
             // When

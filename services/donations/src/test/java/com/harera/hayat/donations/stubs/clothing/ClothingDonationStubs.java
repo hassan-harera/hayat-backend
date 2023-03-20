@@ -2,7 +2,7 @@ package com.harera.hayat.donations.stubs.clothing;
 
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.clothing.*;
 import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository;
 import com.harera.hayat.framework.model.ClothingCondition;
@@ -24,7 +24,7 @@ public class ClothingDonationStubs {
 
     public ClothingDonation create(String title, String description,
                                    OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
-                                   DonationCategory category, DonationState status,
+                                   DonationCategory category, DonationStatus status,
                                    CommunicationMethod communicationMethod, int quantity,
                                    ClothingCondition condition, ClothingType gender,
                                    ClothingSize clothingSize, ClothingSeason clothingSeason, City city) {
@@ -48,7 +48,7 @@ public class ClothingDonationStubs {
 
     public ClothingDonation insert(String title, String description,
                     OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
-                    DonationCategory category, DonationState status,
+                    DonationCategory category, DonationStatus status,
                     CommunicationMethod communicationMethod, int quantity,
                     ClothingCondition condition, ClothingType gender,
                     ClothingSize clothingSize, ClothingSeason clothingSeason, City city) {

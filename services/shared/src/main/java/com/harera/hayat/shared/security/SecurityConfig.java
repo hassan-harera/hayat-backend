@@ -2,6 +2,7 @@ package com.harera.hayat.shared.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
@@ -20,11 +21,21 @@ public class SecurityConfig {
             "/swagger-ui.html", "/webjars/**", "/swagger-resources/**" };
 
     @Bean
+    @Profile("prod")
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.sessionManagement()
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                         .authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
                         .and().oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                         .build();
+    }
+
+    @Bean
+    @Profile("dev")
+    public SecurityFilterChain devFilterChain(HttpSecurity http) throws Exception {
+        http.cors().disable().formLogin().disable().httpBasic().disable().csrf().disable()
+                .authorizeHttpRequests().requestMatchers("/**").permitAll()
+                .anyRequest().authenticated();
+        return http.build();
     }
 }

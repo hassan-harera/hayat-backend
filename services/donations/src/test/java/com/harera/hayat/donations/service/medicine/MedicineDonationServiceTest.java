@@ -45,7 +45,7 @@ class MedicineDonationServiceTest {
     void setUp() {
         medicineDonationService = new MedicineDonationService(medicineDonationValidation,
                         cityRepository, medicineUnitRepository, new NotNullableMapper(),
-                        medicineDonationRepository, medicineRepository);
+                        medicineDonationRepository, medicineRepository, cloudFileService);
     }
 
     @Test
@@ -54,7 +54,7 @@ class MedicineDonationServiceTest {
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setMedicineUnitId(1L);
         request.setMedicineId(1L);
         request.setTitle("title");
@@ -94,7 +94,7 @@ class MedicineDonationServiceTest {
         request.setDonationDate(OffsetDateTime.now());
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -118,7 +118,7 @@ class MedicineDonationServiceTest {
         request.setDonationDate(OffsetDateTime.now());
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -152,7 +152,7 @@ class MedicineDonationServiceTest {
         request.setDonationDate(OffsetDateTime.now());
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -181,7 +181,7 @@ class MedicineDonationServiceTest {
         request.setCityId(1L);
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -205,7 +205,7 @@ class MedicineDonationServiceTest {
                         medicineDonationResponse.getMedicineExpirationDate());
         assertEquals(request.getMedicineExpirationDate(),
                         medicineDonationResponse.getMedicineExpirationDate());
-        assertEquals(request.getAmount(), medicineDonationResponse.getAmount());
+        assertEquals(request.getQuantity(), medicineDonationResponse.getQuantity());
 
         verify(medicineDonationRepository, times(1)).save(any());
     }

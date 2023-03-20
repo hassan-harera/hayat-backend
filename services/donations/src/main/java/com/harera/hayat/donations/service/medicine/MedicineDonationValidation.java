@@ -108,11 +108,11 @@ public class MedicineDonationValidation {
                                             .getMedicineExpirationDate().toString());
         }
 
-        if (medicineDonationRequest.getAmount() < 0
-                        || medicineDonationRequest.getAmount() > 100000) {
+        if (medicineDonationRequest.getQuantity() < 0
+                        || medicineDonationRequest.getQuantity() > 100000) {
             throw new FieldLimitException(ErrorCode.FORMAT_MEDICINE_DONATION_AMOUNT,
-                            "amount",
-                            String.valueOf(medicineDonationRequest.getAmount()));
+                            "quantity",
+                            String.valueOf(medicineDonationRequest.getQuantity()));
         }
 
         if (medicineDonationRequest.getMedicineExpirationDate()
@@ -134,11 +134,11 @@ public class MedicineDonationValidation {
                                             .getMedicineExpirationDate().toString());
         }
 
-        if (medicineDonationRequest.getAmount() < 0
-                        || medicineDonationRequest.getAmount() > 100000) {
+        if (medicineDonationRequest.getQuantity() < 0
+                        || medicineDonationRequest.getQuantity() > 100000) {
             throw new FieldLimitException(ErrorCode.FORMAT_MEDICINE_DONATION_AMOUNT,
-                            "amount",
-                            String.valueOf(medicineDonationRequest.getAmount()));
+                            "quantity",
+                            String.valueOf(medicineDonationRequest.getQuantity()));
         }
 
         if (medicineDonationRequest.getMedicineExpirationDate()
@@ -151,9 +151,9 @@ public class MedicineDonationValidation {
     }
 
     private void validateMandatory(MedicineDonationDto medicineDonationRequest) {
-        if (medicineDonationRequest.getAmount() == null) {
+        if (medicineDonationRequest.getQuantity() == null) {
             throw new MandatoryFieldException(
-                            ErrorCode.MANDATORY_MEDICINE_DONATION_AMOUNT, "amount");
+                            ErrorCode.MANDATORY_MEDICINE_DONATION_AMOUNT, "quantity");
         }
 
         if (medicineDonationRequest.getMedicineUnitId() == null) {

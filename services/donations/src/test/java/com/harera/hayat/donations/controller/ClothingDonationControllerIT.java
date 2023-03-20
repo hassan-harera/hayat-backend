@@ -3,7 +3,7 @@ package com.harera.hayat.donations.controller;
 import com.harera.hayat.donations.ApplicationIT;
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.clothing.ClothingDonation;
 import com.harera.hayat.donations.model.clothing.ClothingDonationRequest;
 import com.harera.hayat.donations.model.clothing.ClothingDonationResponse;
@@ -44,7 +44,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         request.setDonationDate(OffsetDateTime.now());
         request.setDonationExpirationDate(OffsetDateTime.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationState.ACCEPTED);
+        request.setStatus(DonationStatus.ACCEPTED);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setQuantity(5);
@@ -84,7 +84,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         City city = cityStubs.insert("arabic_name", "english_name");
         ClothingDonation clothingDonation = clothingDonationStubs.insert("title",
                         "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationState.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
                         CommunicationMethod.CHAT, 5, null, null, null, null, city);
         ClothingDonationRequest request = new ClothingDonationRequest();
         request.setId(0L);
@@ -93,7 +93,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         request.setDonationDate(OffsetDateTime.now());
         request.setDonationExpirationDate(OffsetDateTime.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationState.ACCEPTED);
+        request.setStatus(DonationStatus.ACCEPTED);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setQuantity(8);
@@ -131,7 +131,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         City city = cityStubs.insert("arabic_name", "english_name");
         ClothingDonation clothingDonation = clothingDonationStubs.insert("title",
                         "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationState.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
                         CommunicationMethod.CHAT, 5, null, null, null, null, city);
 
         try {

@@ -1,7 +1,7 @@
 package com.harera.hayat.donations.service.property;
 
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.property.PropertyDonation;
 import com.harera.hayat.donations.model.property.PropertyDonationRequest;
 import com.harera.hayat.donations.model.property.PropertyDonationResponse;
@@ -48,7 +48,7 @@ public class PropertyDonationService implements BaseService {
         PropertyDonation propertyDonation =
                         modelMapper.map(propertyDonationRequest, PropertyDonation.class);
 
-        propertyDonation.setStatus(DonationState.PENDING);
+        propertyDonation.setStatus(DonationStatus.PENDING);
         propertyDonation.setCategory(DonationCategory.PROPERTY);
         propertyDonation.setDonationDate(OffsetDateTime.now());
         propertyDonation.setDonationExpirationDate(OffsetDateTime.now().plusDays(expirationDays));

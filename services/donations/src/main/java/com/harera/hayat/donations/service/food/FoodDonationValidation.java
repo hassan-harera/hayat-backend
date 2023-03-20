@@ -33,7 +33,7 @@ public class FoodDonationValidation {
         if (foodDonationRequest.getAmount() < 0
                         || foodDonationRequest.getAmount() > 10000) {
             throw new FieldFormatException(ErrorCode.FORMAT_FOOD_DONATION_AMOUNT,
-                            "amount",
+                            "quantity",
                             foodDonationRequest.getAmount().toString());
         }
     }
@@ -41,7 +41,7 @@ public class FoodDonationValidation {
     private void validateMandatory(FoodDonationDto foodDonationRequest) {
         if (foodDonationRequest.getAmount() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_FOOD_DONATION_AMOUNT,
-                            "amount");
+                            "quantity");
         }
         if (foodDonationRequest.getUnitId() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_FOOD_DONATION_UNIT,

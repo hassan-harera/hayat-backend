@@ -11,8 +11,8 @@ import java.time.OffsetDateTime;
 @Data
 public class MedicineDonationDto extends DonationDto {
 
-    @JsonProperty("amount")
-    private Float amount;
+    @JsonProperty("quantity")
+    private Float quantity;
 
     @JsonProperty("medicine_unit")
     private MedicineUnitDto medicineUnit;

@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.framework.service.CityService;
+import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedState;
 import com.harera.hayat.needs.model.possession.PossessionNeed;

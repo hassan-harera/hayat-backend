@@ -3,7 +3,7 @@ package com.harera.hayat.donations.controller;
 import com.harera.hayat.donations.ApplicationIT;
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.medicine.MedicineDonation;
 import com.harera.hayat.donations.model.medicine.MedicineDonationRequest;
 import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
@@ -51,7 +51,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setTitle("title");
         request.setDescription("description");
-        request.setAmount(2F);
+        request.setQuantity(2F);
         request.setCityId(city.getId());
         request.setMedicineUnitId(medicineUnit.getId());
         request.setMedicineId(medicine.getId());
@@ -73,7 +73,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
             Assertions.assertNotNull(response.getId());
             Assertions.assertEquals(request.getTitle(), response.getTitle());
             Assertions.assertEquals(request.getDescription(), response.getDescription());
-            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getQuantity(), response.getQuantity());
             Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             Assertions.assertEquals(request.getCityId(), response.getCity().getId());
@@ -103,13 +103,13 @@ class MedicineDonationControllerIT extends ApplicationIT {
 
         MedicineDonation medicineDonation = medicineDonationStubs.insert(medicineUnit, 1F,
                         OffsetDateTime.now(), "title", DonationCategory.FOOD,
-                        "description", city, DonationState.PENDING);
+                        "description", city, DonationStatus.PENDING);
 
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(city.getId());
         request.setMedicineUnitId(medicineUnit.getId());
         request.setMedicineId(medicine.getId());
-        request.setAmount(2F);
+        request.setQuantity(2F);
         request.setTitle("new_title");
         request.setDescription("new_desc");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -129,7 +129,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
 
             Assertions.assertEquals(request.getTitle(), response.getTitle());
             Assertions.assertEquals(request.getDescription(), response.getDescription());
-            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getQuantity(), response.getQuantity());
             Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             Assertions.assertEquals(request.getCityId(), response.getCity().getId());
@@ -153,7 +153,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
 
         MedicineDonation medicineDonation = medicineDonationStubs.insert(medicineUnit, 1F,
                         OffsetDateTime.now(), "title", DonationCategory.FOOD,
-                        "description", city, DonationState.PENDING);
+                        "description", city, DonationStatus.PENDING);
 
         try {
             // When
@@ -174,7 +174,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
                             response.getCommunicationMethod());
             Assertions.assertEquals(medicineDonation.getCity().getId(),
                             response.getCity().getId());
-            Assertions.assertEquals(medicineDonation.getAmount(), response.getAmount());
+            Assertions.assertEquals(medicineDonation.getQuantity(), response.getQuantity());
             Assertions.assertEquals(medicineDonation.getMedicineUnit().getId(),
                             response.getMedicineUnit().getId());
             assertTrue(medicineDonation.getMedicineExpirationDate().toLocalDate()

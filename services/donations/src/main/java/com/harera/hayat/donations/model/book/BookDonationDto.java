@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Data
 public class BookDonationDto extends DonationDto {
 
-    @JsonProperty(value = "amount")
+    @JsonProperty(value = "quantity")
     private Integer amount;
 
     @JsonProperty(value = "book_title")

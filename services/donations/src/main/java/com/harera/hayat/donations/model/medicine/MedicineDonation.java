@@ -1,6 +1,5 @@
 package com.harera.hayat.donations.model.medicine;
 
-
 import com.harera.hayat.donations.model.Donation;
 import com.harera.hayat.framework.model.medicine.Medicine;
 import com.harera.hayat.framework.model.medicine.MedicineUnit;
@@ -8,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 @Setter
@@ -16,11 +16,11 @@ import java.time.OffsetDateTime;
 @Table(name = "medicine_donation")
 public class MedicineDonation extends Donation {
 
-    @Column(name = "amount")
-    private Float amount;
+    @Column(name = "quantity")
+    private Float quantity;
 
     @ManyToOne
-    @JoinColumn(name = "unit_id", referencedColumnName = "id")
+    @JoinColumn(name = "medicine_unit_id", referencedColumnName = "id")
     private MedicineUnit medicineUnit;
 
     @Column(name = "medicine_expiration_date")

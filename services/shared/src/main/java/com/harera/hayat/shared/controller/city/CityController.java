@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.harera.hayat.framework.model.city.CityResponse;
-import com.harera.hayat.framework.service.CityService;
+import com.harera.hayat.framework.service.city.CityService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

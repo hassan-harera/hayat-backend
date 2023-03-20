@@ -28,6 +28,6 @@ public class FoodDonation extends Donation {
     private FoodCategory foodCategory;
 
     @Basic
-    @Column(name = "amount")
+    @Column(name = "quantity")
     private Float amount;
 }

@@ -1,13 +1,13 @@
 package com.harera.hayat.donations.service.book;
 
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.book.BookDonation;
 import com.harera.hayat.donations.model.book.BookDonationRequest;
 import com.harera.hayat.donations.model.book.BookDonationResponse;
 import com.harera.hayat.donations.model.book.BookDonationUpdateRequest;
 import com.harera.hayat.donations.repository.book.BookDonationRepository;
-import com.harera.hayat.framework.service.CityService;
+import com.harera.hayat.framework.service.city.CityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,7 +42,7 @@ public class BookDonationService {
         BookDonation bookDonation = modelMapper.map(request, BookDonation.class);
 
         bookDonation.setCategory(DonationCategory.BOOKS);
-        bookDonation.setStatus(DonationState.PENDING);
+        bookDonation.setStatus(DonationStatus.PENDING);
         bookDonation.setDonationDate(OffsetDateTime.now());
         bookDonation.setDonationExpirationDate(
                         OffsetDateTime.now().plusDays(bookDonationExpirationDays));

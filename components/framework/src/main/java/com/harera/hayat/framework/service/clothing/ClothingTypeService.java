@@ -1,4 +1,4 @@
-package com.harera.hayat.framework.service;
+package com.harera.hayat.framework.service.clothing;
 
 import com.harera.hayat.framework.model.ClothingType;
 import org.springframework.stereotype.Service;

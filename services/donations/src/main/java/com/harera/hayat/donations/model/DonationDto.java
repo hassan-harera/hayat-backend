@@ -31,7 +31,7 @@ public class DonationDto extends BaseEntityDto {
     private DonationCategory category;
 
     @JsonProperty(value = "status")
-    private DonationState status;
+    private DonationStatus status;
 
     @JsonProperty("communication_method")
     private CommunicationMethod communicationMethod;
@@ -45,6 +45,6 @@ public class DonationDto extends BaseEntityDto {
     @JsonProperty(value = "user")
     private UserDto user;
 
-    @JsonProperty(value = "images")
-    private List<DonationImageDto> images;
+    @JsonProperty(value = "image_url")
+    private String imageUrl;
 }

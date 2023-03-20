@@ -1,9 +1,7 @@
 package com.harera.hayat.shared.controller.clothing;
 
-import com.harera.hayat.framework.model.ClothingCondition;
 import com.harera.hayat.framework.model.ClothingType;
-import com.harera.hayat.framework.service.ClothingConditionService;
-import com.harera.hayat.framework.service.ClothingTypeService;
+import com.harera.hayat.framework.service.clothing.ClothingTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;

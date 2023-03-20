@@ -1,7 +1,7 @@
 package com.harera.hayat.donations.stubs.book;
 
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.book.BookDonation;
 import com.harera.hayat.donations.repository.book.BookDonationRepository;
 import com.harera.hayat.framework.model.city.City;
@@ -16,14 +16,14 @@ public class BookDonationStubs {
     private final BookDonationRepository bookDonationRepository;
 
     public BookDonation insert(Integer amount, String title, DonationCategory category,
-                    String description, City city, DonationState state) {
+                    String description, City city, DonationStatus state) {
         BookDonation bookDonation =
                         create(amount, title, category, description, city, state);
         return bookDonationRepository.save(bookDonation);
     }
 
     public BookDonation create(Integer amount, String title, DonationCategory category,
-                    String description, City city, DonationState state) {
+                    String description, City city, DonationStatus state) {
         BookDonation bookDonation = new BookDonation();
         bookDonation.setId(0L);
         bookDonation.setAmount(amount);

@@ -1,7 +1,7 @@
 package com.harera.hayat.donations.service.clothing;
 
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.clothing.ClothingDonation;
 import com.harera.hayat.donations.model.clothing.ClothingDonationRequest;
 import com.harera.hayat.donations.model.clothing.ClothingDonationResponse;
@@ -9,7 +9,7 @@ import com.harera.hayat.donations.model.clothing.ClothingDonationUpdateRequest;
 import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
-import com.harera.hayat.framework.service.CityService;
+import com.harera.hayat.framework.service.city.CityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -47,7 +47,7 @@ public class ClothingDonationService implements BaseService {
                         modelMapper.map(clothingDonationRequest, ClothingDonation.class);
 
         clothingDonation.setCategory(DonationCategory.CLOTHING);
-        clothingDonation.setStatus(DonationState.PENDING);
+        clothingDonation.setStatus(DonationStatus.PENDING);
         clothingDonation.setDonationDate(OffsetDateTime.now());
         clothingDonation.setDonationExpirationDate(
                         OffsetDateTime.now().plusDays(expirationDays));

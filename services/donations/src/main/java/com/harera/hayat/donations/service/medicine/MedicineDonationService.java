@@ -1,7 +1,7 @@
 package com.harera.hayat.donations.service.medicine;
 
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.medicine.MedicineDonation;
 import com.harera.hayat.donations.model.medicine.MedicineDonationRequest;
 import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
@@ -15,12 +15,16 @@ import com.harera.hayat.framework.model.medicine.MedicineUnit;
 import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.repository.repository.MedicineRepository;
 import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
+import com.harera.hayat.framework.service.file.CloudFileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+
+import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 
 @Service
 public class MedicineDonationService implements BaseService {
@@ -31,19 +35,22 @@ public class MedicineDonationService implements BaseService {
     private final ModelMapper modelMapper;
     private final MedicineDonationRepository medicineDonationRepository;
     private final MedicineRepository medicineRepository;
+    private final CloudFileService cloudFileService;
 
     public MedicineDonationService(MedicineDonationValidation donationValidation,
                     CityRepository cityRepository,
                     MedicineUnitRepository medicineUnitRepository,
                     ModelMapper modelMapper,
                     MedicineDonationRepository medicineDonationRepository,
-                    MedicineRepository medicineRepository) {
+                    MedicineRepository medicineRepository,
+                    CloudFileService cloudFileService) {
         this.donationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.medicineUnitRepository = medicineUnitRepository;
         this.modelMapper = modelMapper;
         this.medicineDonationRepository = medicineDonationRepository;
         this.medicineRepository = medicineRepository;
+        this.cloudFileService = cloudFileService;
     }
 
     public MedicineDonationResponse create(
@@ -60,6 +67,10 @@ public class MedicineDonationService implements BaseService {
                         getUnit(medicineDonationRequest.getMedicineUnitId()));
         medicineDonation.setMedicine(
                         getMedicine(medicineDonationRequest.getMedicineId()));
+
+        medicineDonation.setDonationDate(OffsetDateTime.now());
+        medicineDonation.setDonationExpirationDate(OffsetDateTime.now().plusDays(45));
+
         medicineDonationRepository.save(medicineDonation);
         return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
     }
@@ -104,17 +115,42 @@ public class MedicineDonationService implements BaseService {
         modelMapper.map(request, medicineDonation);
 
         medicineDonation.setCategory(DonationCategory.MEDICINE);
-        // TODO: 28/02/23 send request to ai model
-        medicineDonation.setStatus(DonationState.PENDING);
-
-        // TODO: 28/02/23 get user from token
+        medicineDonation.setStatus(DonationStatus.PENDING);
         medicineDonation.setCity(getCity(request.getCityId()));
-
         medicineDonation.setMedicineUnit(getUnit(request.getMedicineUnitId()));
         medicineDonation.setMedicine(getMedicine(request.getMedicineId()));
+
+        // TODO: 28/02/23 get user from token
+        // TODO: 28/02/23 send request to ai model
 
         medicineDonationRepository.save(medicineDonation);
         return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
 
+    }
+
+    public List<MedicineDonationResponse> search(String query, int page) {
+        page = Integer.max(page, 1) - 1;
+        return medicineDonationRepository
+                        .search(query, Pageable.ofSize(10).withPage(page)).stream()
+                        .map(medicineDonation -> modelMapper.map(medicineDonation,
+                                        MedicineDonationResponse.class))
+                        .toList();
+    }
+
+    public MedicineDonationResponse updateImage(Long id, MultipartFile file) {
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+
+        String imageUrl = cloudFileService.uploadFile(convertMultiPartToFile(file));
+        if (medicineDonation.getImageUrl() == null) {
+            medicineDonation.setImageUrl(imageUrl);
+        } else {
+            cloudFileService.deleteFile(medicineDonation.getImageUrl());
+            medicineDonation.setImageUrl(imageUrl);
+        }
+
+        medicineDonationRepository.save(medicineDonation);
+        return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
     }
 }

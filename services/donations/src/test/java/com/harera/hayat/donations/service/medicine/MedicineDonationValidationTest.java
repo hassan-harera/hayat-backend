@@ -8,7 +8,6 @@ import com.harera.hayat.donations.service.DonationValidation;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.exception.FieldLimitException;
 import com.harera.hayat.framework.exception.MandatoryFieldException;
-import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.repository.repository.MedicineRepository;
 import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
@@ -76,7 +75,7 @@ class MedicineDonationValidationTest {
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setAmount(15f);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
@@ -99,7 +98,7 @@ class MedicineDonationValidationTest {
         request.setCityId(1L);
         request.setMedicineUnitId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setAmount(15f);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
@@ -122,7 +121,7 @@ class MedicineDonationValidationTest {
         request.setCityId(1L);
         request.setMedicineUnitId(1L);
         request.setMedicineId(1L);
-        request.setAmount(15f);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
 
@@ -146,7 +145,7 @@ class MedicineDonationValidationTest {
 
         request.setMedicineUnitId(1L);
         request.setMedicineId(1L);
-        request.setAmount(-1F);
+        request.setQuantity(-1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -170,7 +169,7 @@ class MedicineDonationValidationTest {
         request.setDonationDate(OffsetDateTime.now());
         request.setMedicineUnitId(1L);
         request.setMedicineId(1L);
-        request.setAmount(1f);
+        request.setQuantity(1f);
         request.setTitle("a");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -190,7 +189,7 @@ class MedicineDonationValidationTest {
     void validateCreate_withNotExistedCity_shouldThrowEntityNotFoundException() {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setMedicineId(1L);
         request.setCityId(1L);
         request.setMedicineUnitId(1L);
@@ -213,7 +212,7 @@ class MedicineDonationValidationTest {
     void validateCreate_withNotExistedMedicine_shouldThrowEntityNotFoundException() {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setMedicineId(1L);
         request.setCityId(1L);
         request.setMedicineUnitId(1L);
@@ -237,7 +236,7 @@ class MedicineDonationValidationTest {
     void validateCreate_withNotExistedMedicineUnit_shouldThrowEntityNotFoundException() {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setMedicineId(1L);
         request.setCityId(1L);
         request.setMedicineUnitId(1L);
@@ -262,7 +261,7 @@ class MedicineDonationValidationTest {
     void validateCreate_withValidateRequest_thenVerifySuperMethod() {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
-        request.setAmount(1F);
+        request.setQuantity(1F);
         request.setMedicineId(1L);
         request.setCityId(1L);
         request.setMedicineUnitId(1L);
@@ -313,7 +312,7 @@ class MedicineDonationValidationTest {
         request.setMedicineUnitId(null);
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setAmount(15f);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setMedicineId(1L);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -339,7 +338,7 @@ class MedicineDonationValidationTest {
         request.setCityId(1L);
         request.setMedicineUnitId(1L);
         request.setMedicineId(1L);
-        request.setAmount(15f);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
 
@@ -362,7 +361,7 @@ class MedicineDonationValidationTest {
         request.setDonationDate(OffsetDateTime.now());
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
-        request.setAmount(-1F);
+        request.setQuantity(-1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);

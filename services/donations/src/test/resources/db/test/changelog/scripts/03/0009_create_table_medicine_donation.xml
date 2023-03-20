@@ -32,24 +32,23 @@
             info varchar(100)
             );
 
-            create table medicine_donation
-            (
-            id bigint primary key auto_increment,
-            active boolean default true,
-            title varchar(100),
-            description varchar(600),
-            category varchar(50),
-            communication_method varchar(50),
-            status varchar(50),
-            donation_date datetime,
-            donation_expiration_date datetime,
-            medicine_expiration_date datetime,
-            amount float,
-            unit_id bigint,
-            category_id bigint,
-            medicine_id bigint,
-            user_id bigint,
-            city_id bigint
+            create table if not exists medicine_donation(
+            id                       bigint auto_increment
+            primary key,
+            active                   tinyint(1) default 1 null,
+            title                    varchar(100)         null,
+            description              varchar(600)         null,
+            category                 varchar(50)          null,
+            status                   varchar(50)          null,
+            communication_method     varchar(50)          null,
+            donation_date            datetime             null,
+            donation_expiration_date datetime             null,
+            medicine_id              bigint               null,
+            quantity                 int                  null,
+            medicine_unit_id         bigint               null,
+            medicine_expiration_date datetime             null,
+            user_id                  bigint               null,
+            city_id                  bigint               null
             );
         </sql>
     </changeSet>

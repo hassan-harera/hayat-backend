@@ -31,13 +31,19 @@ public class Donation extends BaseEntity {
     private OffsetDateTime donationExpirationDate;
 
     @Column(name = "communication_method")
+    @Enumerated(EnumType.STRING)
     private CommunicationMethod communicationMethod;
 
     @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     private DonationCategory category;
 
     @Column(name = "status")
-    private DonationState status;
+    @Enumerated(EnumType.STRING)
+    private DonationStatus status;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @ManyToOne(targetEntity = City.class)
     @JoinColumn(name = "city_id", referencedColumnName = "id")

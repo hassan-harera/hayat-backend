@@ -3,7 +3,7 @@ package com.harera.hayat.donations.controller;
 import com.harera.hayat.donations.ApplicationIT;
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.book.BookDonation;
 import com.harera.hayat.donations.model.book.BookDonationRequest;
 import com.harera.hayat.donations.model.book.BookDonationResponse;
@@ -13,7 +13,6 @@ import com.harera.hayat.donations.util.DataUtil;
 import com.harera.hayat.donations.util.RequestUtil;
 import com.harera.hayat.framework.model.city.City;
 import lombok.RequiredArgsConstructor;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +76,7 @@ class BookDonationControllerIT extends ApplicationIT {
 
         BookDonation bookDonation =
                         bookDonationStubs.insert(1, "title", DonationCategory.FOOD,
-                                        "description", city, DonationState.PENDING);
+                                        "description", city, DonationStatus.PENDING);
 
         BookDonationRequest request = new BookDonationRequest();
         request.setCityId(city.getId());
@@ -120,7 +119,7 @@ class BookDonationControllerIT extends ApplicationIT {
 
         BookDonation bookDonation =
                         bookDonationStubs.insert(1, "title", DonationCategory.FOOD,
-                                        "description", city, DonationState.PENDING);
+                                        "description", city, DonationStatus.PENDING);
 
         try {
             // When

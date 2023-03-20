@@ -1,6 +1,6 @@
 package com.harera.hayat.donations.model;
 
-public enum DonationState {
+public enum DonationStatus {
     PENDING,
     ACCEPTED,
     REJECTED,

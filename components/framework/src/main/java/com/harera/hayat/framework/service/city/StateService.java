@@ -1,4 +1,4 @@
-package com.harera.hayat.framework.service;
+package com.harera.hayat.framework.service.city;
 
 
 import java.util.List;

@@ -30,7 +30,7 @@ public class BookDonationValidation {
         }
         if (request.getAmount() < 1 || request.getAmount() > 1000) {
             throw new MandatoryFieldException(ErrorCode.FORMAT_BOOK_DONATION_AMOUNT,
-                            "amount");
+                            "quantity");
         }
     }
 
@@ -41,7 +41,7 @@ public class BookDonationValidation {
         }
         if (request.getAmount() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_BOOK_DONATION_AMOUNT,
-                            "amount");
+                            "quantity");
         }
     }
 }
