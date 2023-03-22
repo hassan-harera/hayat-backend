@@ -10,6 +10,7 @@ import com.harera.hayat.framework.model.city.StateResponse;
 import com.harera.hayat.framework.repository.city.StateRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import static com.harera.hayat.framework.util.ErrorCode.NOT_FOUND_STATE_ID;
@@ -27,6 +28,7 @@ public class StateService {
         this.mapper = mapper;
     }
 
+    @Cacheable("states#id")
     public StateResponse get(long id) {
         State state = stateRepository.findById(id)
                         .orElseThrow(() -> new EntityNotFoundException(String.valueOf(id),
@@ -34,6 +36,7 @@ public class StateService {
         return mapper.map(state, StateResponse.class);
     }
 
+    @Cacheable("states")
     public List<StateResponse> list() {
         List<State> stateList = stateRepository.findAll();
         return stateList.stream().map(state -> mapper.map(state,

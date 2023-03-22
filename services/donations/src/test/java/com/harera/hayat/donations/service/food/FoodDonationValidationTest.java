@@ -39,7 +39,7 @@ class FoodDonationValidationTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setUnitId(1L);
+        request.setFoodUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
@@ -62,7 +62,7 @@ class FoodDonationValidationTest {
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setAmount(15f);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
@@ -83,8 +83,8 @@ class FoodDonationValidationTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setUnitId(1L);
-        request.setAmount(15f);
+        request.setFoodUnitId(1L);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
 
@@ -106,8 +106,8 @@ class FoodDonationValidationTest {
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
 
-        request.setUnitId(1L);
-        request.setAmount(-1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(-1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -131,7 +131,7 @@ class FoodDonationValidationTest {
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
-        request.setUnitId(1L);
+        request.setFoodUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
@@ -156,7 +156,7 @@ class FoodDonationValidationTest {
 
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setAmount(15f);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
@@ -179,8 +179,8 @@ class FoodDonationValidationTest {
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
-        request.setUnitId(1L);
-        request.setAmount(15f);
+        request.setFoodUnitId(1L);
+        request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
 
@@ -201,8 +201,8 @@ class FoodDonationValidationTest {
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setUnitId(1L);
-        request.setAmount(-1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(-1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);

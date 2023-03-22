@@ -24,8 +24,8 @@ public class FoodDonationStubs {
                     DonationStatus state) {
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(0L);
-        foodDonation.setUnit(unit);
-        foodDonation.setAmount(amount);
+        foodDonation.setFoodUnit(unit);
+        foodDonation.setQuantity(amount);
         foodDonation.setFoodExpirationDate(foodExpirationDate);
         foodDonation.setTitle(title);
         foodDonation.setCategory(category);

@@ -10,9 +10,11 @@ import java.time.OffsetDateTime;
 @Data
 public class FoodDonationDto extends DonationDto {
 
-    private FoodUnitDto unit;
+    @JsonProperty(value = "food_unit")
+    private FoodUnitDto foodUnit;
 
-    private Float amount;
+    @JsonProperty(value = "quantity")
+    private Float quantity;
 
     @JsonProperty(value = "food_expiration_date")
     private OffsetDateTime foodExpirationDate;
@@ -20,8 +22,8 @@ public class FoodDonationDto extends DonationDto {
     @JsonProperty(value = "city_id")
     private Long cityId;
 
-    @JsonProperty(value = "unit_id")
-    private Long unitId;
+    @JsonProperty(value = "food_unit_id")
+    private Long foodUnitId;
 
     @JsonProperty(value = "food_category_id")
     private Long foodCategoryId;

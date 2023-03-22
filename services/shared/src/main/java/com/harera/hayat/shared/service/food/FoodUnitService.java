@@ -5,6 +5,7 @@ import com.harera.hayat.framework.model.food.FoodUnit;
 import com.harera.hayat.framework.model.food.FoodUnitResponse;
 import com.harera.hayat.framework.repository.food.FoodUnitRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
@@ -21,12 +22,14 @@ public class FoodUnitService {
         this.modelMapper = modelMapper;
     }
 
+    @Cacheable("food_units#id")
     public FoodUnitResponse get(Long id) {
         FoodUnit foodUnit = foodUnitRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(FoodUnit.class, id));
         return modelMapper.map(foodUnit, FoodUnitResponse.class);
     }
 
+    @Cacheable("food_units")
     public List<FoodUnitResponse> list() {
         List<FoodUnit> foodUnitList = foodUnitRepository.findAll();
         List<FoodUnitResponse> list = new LinkedList<>();

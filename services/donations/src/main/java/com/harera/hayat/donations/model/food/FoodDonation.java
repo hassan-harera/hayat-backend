@@ -3,10 +3,10 @@ package com.harera.hayat.donations.model.food;
 import com.harera.hayat.donations.model.Donation;
 import com.harera.hayat.framework.model.food.FoodCategory;
 import com.harera.hayat.framework.model.food.FoodUnit;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
 @Setter
@@ -20,14 +20,14 @@ public class FoodDonation extends Donation {
     private OffsetDateTime foodExpirationDate;
 
     @ManyToOne
-    @JoinColumn(name = "unit_id", referencedColumnName = "id")
-    private FoodUnit unit;
+    @JoinColumn(name = "food_unit_id", referencedColumnName = "id")
+    private FoodUnit foodUnit;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JoinColumn(name = "food_category_id", referencedColumnName = "id")
     private FoodCategory foodCategory;
 
     @Basic
     @Column(name = "quantity")
-    private Float amount;
+    private Float quantity;
 }

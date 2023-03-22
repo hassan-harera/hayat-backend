@@ -14,14 +14,18 @@ import com.harera.hayat.framework.model.food.FoodUnit;
 import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.repository.food.FoodCategoryRepository;
 import com.harera.hayat.framework.repository.food.FoodUnitRepository;
+import com.harera.hayat.framework.service.file.CloudFileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 
 @Service
 public class FoodDonationService implements BaseService {
@@ -33,13 +37,15 @@ public class FoodDonationService implements BaseService {
     private final FoodDonationRepository foodDonationRepository;
     private final int foodDonationExpirationDays;
     private final FoodCategoryRepository foodCategoryRepository;
+    private final CloudFileService cloudFileService;
 
     public FoodDonationService(FoodDonationValidation donationValidation,
                     CityRepository cityRepository, ModelMapper modelMapper,
                     FoodUnitRepository foodUnitRepository,
                     FoodDonationRepository foodDonationRepository,
                     @Value("${donation.food.expiration_in_days}") int foodDonationExpirationDays,
-                               FoodCategoryRepository foodCategoryRepository) {
+                    FoodCategoryRepository foodCategoryRepository,
+                    CloudFileService cloudFileService) {
         this.foodDonationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.modelMapper = modelMapper;
@@ -47,6 +53,7 @@ public class FoodDonationService implements BaseService {
         this.foodDonationRepository = foodDonationRepository;
         this.foodDonationExpirationDays = foodDonationExpirationDays;
         this.foodCategoryRepository = foodCategoryRepository;
+        this.cloudFileService = cloudFileService;
     }
 
     public FoodDonationResponse create(FoodDonationRequest foodDonationRequest) {
@@ -60,7 +67,7 @@ public class FoodDonationService implements BaseService {
         foodDonation.setCity(getCity(foodDonationRequest.getCityId()));
         // TODO: connect to keycloak
         // donation.setUser(getRequestUser());
-        foodDonation.setUnit(getUnit(foodDonationRequest.getUnitId()));
+        foodDonation.setFoodUnit(getUnit(foodDonationRequest.getFoodUnitId()));
 
         foodDonationRepository.save(foodDonation);
         return modelMapper.map(foodDonation, FoodDonationResponse.class);
@@ -77,7 +84,7 @@ public class FoodDonationService implements BaseService {
         foodDonation.setCity(getCity(request.getCityId()));
         // TODO: connect to keycloak
         // foodDonation.setUser(getRequestUser());
-        foodDonation.setUnit(getUnit(request.getUnitId()));
+        foodDonation.setFoodUnit(getUnit(request.getFoodUnitId()));
         foodDonation.setFoodCategory(getCategory(request.getFoodCategoryId()));
 
         foodDonationRepository.save(foodDonation);
@@ -102,7 +109,7 @@ public class FoodDonationService implements BaseService {
     private FoodCategory getCategory(Long id) {
         if (id != null) {
             return foodCategoryRepository.findById(id).orElseThrow(
-                    () -> new EntityNotFoundException(FoodCategory.class, id));
+                            () -> new EntityNotFoundException(FoodCategory.class, id));
         }
         return null;
     }
@@ -122,6 +129,22 @@ public class FoodDonationService implements BaseService {
     public FoodDonationResponse get(Long id) {
         FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
                         () -> new EntityNotFoundException(FoodDonation.class, id));
+        return modelMapper.map(foodDonation, FoodDonationResponse.class);
+    }
+
+    public FoodDonationResponse updateImage(Long id, MultipartFile file) {
+        FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(FoodDonation.class, id));
+
+        String imageUrl = cloudFileService.uploadFile(convertMultiPartToFile(file));
+        if (foodDonation.getImageUrl() == null) {
+            foodDonation.setImageUrl(imageUrl);
+        } else {
+            cloudFileService.deleteFile(foodDonation.getImageUrl());
+            foodDonation.setImageUrl(imageUrl);
+        }
+
+        foodDonationRepository.save(foodDonation);
         return modelMapper.map(foodDonation, FoodDonationResponse.class);
     }
 }

@@ -3,12 +3,14 @@ package com.harera.hayat.donations.controller.food;
 import com.harera.hayat.donations.model.food.FoodDonationRequest;
 import com.harera.hayat.donations.model.food.FoodDonationResponse;
 import com.harera.hayat.donations.model.food.FoodDonationUpdateRequest;
+import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
 import com.harera.hayat.donations.service.food.FoodDonationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -60,5 +62,16 @@ public class FoodDonationController {
                                     description = "success|Ok"))
     public ResponseEntity<FoodDonationResponse> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(foodDonationService.get(id));
+    }
+
+    @PostMapping("/{id}/images")
+    @Operation(summary = "Update Image", description = "Update the donation image",
+                    tags = "Medicine-Donation",
+                    responses = @ApiResponse(responseCode = "200",
+                                    description = "success|Ok"))
+    public ResponseEntity<FoodDonationResponse> updateImage(
+                    @RequestPart(name = "file") MultipartFile file,
+                    @PathVariable("id") Long id) {
+        return ResponseEntity.ok(foodDonationService.updateImage(id, file));
     }
 }

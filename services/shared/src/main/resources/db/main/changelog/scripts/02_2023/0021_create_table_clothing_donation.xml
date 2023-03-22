@@ -5,14 +5,24 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
     <changeSet id="0021" author="hharera@hharera.net">
         <sql>
+            drop table if exists clothing_condition;
             create table clothing_condition
             (
             id bigint primary key auto_increment,
             active boolean default 1,
             arabic_name varchar(100),
-            english_name varchar(100)
+            english_name varchar(100),
+            shortcut varchar(10)
             );
 
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('جديد', 'New', 'NEW');
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('مستخدم', 'Used', 'USED');
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('مزيج', 'Mixed', 'MIXED');
+
+            drop table if exists clothing_category;
             create table clothing_category
             (
             id bigint primary key auto_increment,
@@ -21,22 +31,45 @@
             english_name varchar(100)
             );
 
+            drop table if exists clothing_size;
             create table clothing_size
             (
             id bigint primary key auto_increment,
             active boolean default 1,
             arabic_name varchar(100),
-            english_name varchar(100)
+            english_name varchar(100),
+            shortcut varchar(10)
             );
 
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('صغير', 'Small', 'S');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('متوسط', 'Medium', 'M');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('كبير', 'Large', 'L');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('كبير جدا', 'Extra Large', 'XL');
+
+            drop table if exists clothing_season;
             create table clothing_season
             (
             id bigint primary key auto_increment,
             active boolean default 1,
             arabic_name varchar(100),
-            english_name varchar(100)
+            english_name varchar(100),
+            shortcut varchar(10)
             );
 
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('صيف', 'Summer', 'SUMMER');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('شتاء', 'Winter', 'WINTER');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('ربيع', 'Spring', 'SPRING');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('خريف', 'Autumn', 'AUTUMN');
+
+            drop table if exists clothing_donation;
             create table clothing_donation
             (
             id bigint primary key auto_increment,
