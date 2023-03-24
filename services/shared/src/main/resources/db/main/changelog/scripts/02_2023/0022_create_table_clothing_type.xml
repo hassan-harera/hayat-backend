@@ -1,0 +1,94 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0021" author="hharera@hayat.social">
+        <sql>
+            drop table if exists clothing_condition;
+            create table if not exists clothing_condition
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100),
+            shortcut varchar(10)
+            );
+
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('جديد', 'New', 'NEW');
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('مستخدم', 'Used', 'USED');
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('مزيج', 'Mixed', 'MIXED');
+
+            drop table if exists clothing_category;
+            create table if not exists clothing_category
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100)
+            );
+
+            drop table if exists clothing_size;
+            create table if not exists clothing_size
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100),
+            shortcut varchar(10)
+            );
+
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('صغير', 'Small', 'S');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('متوسط', 'Medium', 'M');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('كبير', 'Large', 'L');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('كبير جدا', 'Extra Large', 'XL');
+
+            drop table if exists clothing_season;
+            create table if not exists clothing_season
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100),
+            shortcut varchar(10)
+            );
+
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('صيف', 'Summer', 'SUMMER');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('شتاء', 'Winter', 'WINTER');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('ربيع', 'Spring', 'SPRING');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('خريف', 'Autumn', 'AUTUMN');
+
+            drop table if exists clothing_donation;
+            create table if not exists clothing_donation
+            (
+            id bigint primary key auto_increment,
+            active boolean default true,
+            title varchar(100),
+            description varchar(600),
+            category varchar(50),
+            communication_method varchar(50),
+            status varchar(50),
+            donation_date datetime,
+            donation_expiration_date datetime,
+            quantity int,
+            clothing_condition_id bigint,
+            clothing_size_id bigint,
+            clothing_category_id bigint,
+            clothing_season_id bigint,
+            user_id bigint,
+            city_id bigint
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

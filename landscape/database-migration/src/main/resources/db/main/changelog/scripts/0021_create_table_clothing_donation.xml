@@ -1,0 +1,48 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0005" author="hharera@hayat.social">
+        <sql>
+            create table if not exists clothing_condition
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100),
+            shortcut varchar(10)
+            );
+
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('جديد', 'New', 'NEW');
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('مستخدم', 'Used', 'USED');
+            INSERT INTO clothing_condition(arabic_name, english_name, shortcut)
+            VALUES ('مزيج', 'Mixed', 'MIXED');
+
+            drop table if exists clothing_donation;
+            create table if not exists clothing_donation
+            (
+            id bigint primary key auto_increment,
+            active boolean default true,
+            title varchar(100),
+            description varchar(600),
+            category varchar(50),
+            communication_method varchar(50),
+            status varchar(50),
+            donation_date datetime,
+            donation_expiration_date datetime,
+            image_url varchar(2048),
+            quantity int,
+            clothing_condition_id bigint,
+            clothing_type_id bigint,
+            clothing_size_id bigint,
+            clothing_category_id bigint,
+            clothing_season_id bigint,
+            user_id bigint,
+            city_id bigint
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

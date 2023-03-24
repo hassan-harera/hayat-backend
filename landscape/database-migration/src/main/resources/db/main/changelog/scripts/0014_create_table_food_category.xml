@@ -3,17 +3,15 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0008" author="hharera@hharera.net">
+    <changeSet id="0014" author="hharera@hayat.social">
         <sql>
-            create table medicine
+            create table if not exists food_category
             (
             id bigint primary key auto_increment,
-            active boolean default 1,
-            arabic_name varchar(255),
-            english_name varchar(255),
-            category_id bigint,
-            unit_id bigint,
-            info varchar(100)
+            active boolean default true,
+            arabic_name varchar(50),
+            english_name text(50),
+            description varchar(150)
             );
         </sql>
     </changeSet>

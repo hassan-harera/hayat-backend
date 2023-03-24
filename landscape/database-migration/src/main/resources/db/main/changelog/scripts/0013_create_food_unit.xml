@@ -3,17 +3,15 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0000401" author="hharera@hharera.net">
+    <changeSet id="0013" author="hharera@hayat.social">
         <sql>
-            create table food_donation
+            create table if not exists food_unit
             (
             id bigint primary key auto_increment,
             active boolean default true,
-            amount float,
-            food_expiration_date datetime,
-            donation_id bigint,
-            unit_id bigint,
-            constraint foreign key (unit_id) references food_unit (id)
+            arabic_name varchar(50),
+            english_name text(50),
+            description varchar(150)
             );
         </sql>
     </changeSet>

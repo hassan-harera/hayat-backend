@@ -1,6 +1,8 @@
 package com.harera.hayat.framework.service.clothing;
 
-import com.harera.hayat.framework.model.ClothingSize;
+import com.harera.hayat.framework.model.clothing.ClothingSize;
+import com.harera.hayat.framework.repository.clothing.ClothingSizeRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,13 +10,14 @@ import java.util.List;
 @Service
 public class ClothingSizeService {
 
-    private static final List<ClothingSize> list = List.of(
-                    new ClothingSize("صغير", "Small", ClothingSize.Size.S),
-                    new ClothingSize("متوسط", "Medium", ClothingSize.Size.M),
-                    new ClothingSize("كبير", "Large", ClothingSize.Size.L),
-                    new ClothingSize("كبير جدا", "Extra Large", ClothingSize.Size.XL));
+    private final ClothingSizeRepository clothingSizeRepository;
 
+    public ClothingSizeService(ClothingSizeRepository clothingSizeRepository) {
+        this.clothingSizeRepository = clothingSizeRepository;
+    }
+
+    @Cacheable("clothing_sizes")
     public List<ClothingSize> list() {
-        return list;
+        return clothingSizeRepository.findAll();
     }
 }

@@ -1,14 +1,15 @@
-package com.harera.hayat.framework.model;
+package com.harera.hayat.framework.model.clothing;
 
 import com.harera.hayat.framework.model.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-public class ClothingSeason {
+@Setter
+@Getter
+@Entity
+@Table(name = "clothing_season")
+public class ClothingSeason extends BaseEntity {
 
     @Column(name = "arabic_name")
     private String arabicName;
@@ -16,6 +17,8 @@ public class ClothingSeason {
     @Column(name = "english_name")
     private String englishName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "shortcut")
     private Season season;
 
     public enum Season {

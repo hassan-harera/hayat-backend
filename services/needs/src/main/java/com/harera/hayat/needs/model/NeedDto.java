@@ -1,16 +1,16 @@
 package com.harera.hayat.needs.model;
 
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.harera.hayat.framework.model.BaseEntityDto;
+import com.harera.hayat.framework.model.BaseDocument;
 import com.harera.hayat.framework.model.city.CityDto;
 import com.harera.hayat.framework.model.user.UserDto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class NeedDto extends BaseEntityDto {
+@Setter
+@Getter
+public class NeedDto extends BaseDocument {
 
     @JsonProperty(value = "title")
     private String title;
@@ -19,19 +19,22 @@ public class NeedDto extends BaseEntityDto {
     private String description;
 
     @JsonProperty(value = "need_date")
-    private LocalDateTime needDate;
+    private String needDate;
 
     @JsonProperty(value = "need_expiration_date")
-    private LocalDateTime needExpirationDate;
+    private String needExpirationDate;
 
     @JsonProperty(value = "category")
     private NeedCategory category;
 
     @JsonProperty(value = "status")
-    private NeedState status;
+    private NeedStatus status;
 
     @JsonProperty("communication_method")
     private CommunicationMethod communicationMethod;
+
+    @JsonProperty(value = "image_url")
+    private String imageUrl;
 
     @JsonProperty("city")
     private CityDto city;

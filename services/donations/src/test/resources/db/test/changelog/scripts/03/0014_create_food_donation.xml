@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="03_0014" author="hharera@hharera.net">
+    <changeSet id="03_0014" author="hharera@hayat.social">
         <sql>
             create table if not exists food_category
             (
@@ -14,7 +14,7 @@
             description varchar(150)
             );
 
-            create table food_unit
+            create table if not exists food_unit
             (
             id bigint primary key auto_increment,
             active boolean default true,
@@ -23,7 +23,7 @@
             description varchar(150)
             );
 
-            create table food_donation
+            create table if not exists food_donation
             (
             id bigint primary key auto_increment,
             active boolean default true,

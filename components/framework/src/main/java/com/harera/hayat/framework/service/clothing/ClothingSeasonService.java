@@ -1,22 +1,23 @@
 package com.harera.hayat.framework.service.clothing;
 
-import com.harera.hayat.framework.model.ClothingSeason;
+import com.harera.hayat.framework.model.clothing.ClothingSeason;
+import com.harera.hayat.framework.repository.clothing.ClothingSeasonRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.harera.hayat.framework.model.ClothingSeason.Season.*;
-
 @Service
 public class ClothingSeasonService {
 
-    private static final List<ClothingSeason> list =
-                    List.of(new ClothingSeason("صيف", "Summer", SUMMER),
-                                    new ClothingSeason("شتاء", "Winter", WINTER),
-                                    new ClothingSeason("ربيع", "Spring", SPRING),
-                                    new ClothingSeason("خريف", "Autumn", AUTUMN));
+    private final ClothingSeasonRepository clothingSeasonRepository;
 
+    public ClothingSeasonService(ClothingSeasonRepository clothingSeasonRepository) {
+        this.clothingSeasonRepository = clothingSeasonRepository;
+    }
+
+    @Cacheable(value = "clothing_seasons")
     public List<ClothingSeason> list() {
-        return list;
+        return clothingSeasonRepository.findAll();
     }
 }

@@ -1,6 +1,6 @@
 package com.harera.hayat.shared.controller.clothing;
 
-import com.harera.hayat.framework.model.ClothingSize;
+import com.harera.hayat.framework.model.clothing.ClothingSize;
 import com.harera.hayat.framework.service.clothing.ClothingSizeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

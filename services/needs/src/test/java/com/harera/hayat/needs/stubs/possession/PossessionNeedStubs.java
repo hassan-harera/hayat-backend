@@ -8,7 +8,7 @@ import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.user.User;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
-import com.harera.hayat.needs.model.NeedState;
+import com.harera.hayat.needs.model.NeedStatus;
 import com.harera.hayat.needs.model.possession.PossessionCategory;
 import com.harera.hayat.needs.model.possession.PossessionCondition;
 import com.harera.hayat.needs.model.possession.PossessionNeed;
@@ -28,7 +28,7 @@ public class PossessionNeedStubs {
             LocalDateTime needDate,
             LocalDateTime needExpirationDate,
             NeedCategory category,
-            NeedState status,
+            NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
             User user,
@@ -57,7 +57,7 @@ public class PossessionNeedStubs {
             LocalDateTime needDate,
             LocalDateTime needExpirationDate,
             NeedCategory category,
-            NeedState status,
+            NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
             User user,

@@ -3,15 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0000" author="hharera@hharera.net">
+    <changeSet id="0006" author="hharera@hayat.social">
         <sql>
-            create table country
-            (
-            id bigint primary key auto_increment,
-            active boolean default 1,
-            arabic_name varchar(100),
-            english_name varchar(100)
-            );
+            INSERT INTO country(id,arabic_name,english_name,active) VALUES (1,'مصر','Egypt',1);
         </sql>
     </changeSet>
 </databaseChangeLog>

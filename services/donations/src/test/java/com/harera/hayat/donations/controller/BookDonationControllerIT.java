@@ -36,7 +36,7 @@ class BookDonationControllerIT extends ApplicationIT {
         BookDonationRequest request = new BookDonationRequest();
         request.setTitle("title");
         request.setDescription("description");
-        request.setAmount(2);
+        request.setQuantity(2);
         request.setBookTitle("book title");
         request.setCityId(city.getId());
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -54,7 +54,7 @@ class BookDonationControllerIT extends ApplicationIT {
             Assertions.assertNotNull(response.getId());
             Assertions.assertEquals(request.getTitle(), response.getTitle());
             Assertions.assertEquals(request.getDescription(), response.getDescription());
-            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getQuantity(), response.getQuantity());
             Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             Assertions.assertEquals(request.getCityId(), response.getCity().getId());
@@ -80,7 +80,7 @@ class BookDonationControllerIT extends ApplicationIT {
 
         BookDonationRequest request = new BookDonationRequest();
         request.setCityId(city.getId());
-        request.setAmount(2);
+        request.setQuantity(2);
         request.setBookTitle("new_title");
         request.setTitle("new_title");
         request.setDescription("new_desc");
@@ -100,7 +100,7 @@ class BookDonationControllerIT extends ApplicationIT {
 
             Assertions.assertEquals(request.getTitle(), response.getTitle());
             Assertions.assertEquals(request.getDescription(), response.getDescription());
-            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getQuantity(), response.getQuantity());
             Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             Assertions.assertEquals(request.getCityId(), response.getCity().getId());
@@ -139,7 +139,7 @@ class BookDonationControllerIT extends ApplicationIT {
                             response.getCommunicationMethod());
             Assertions.assertEquals(bookDonation.getCity().getId(),
                             response.getCity().getId());
-            Assertions.assertEquals(bookDonation.getAmount(), response.getAmount());
+            Assertions.assertEquals(bookDonation.getQuantity(), response.getQuantity());
         } finally {
             // Cleanup
             dataUtil.delete(city, bookDonation);

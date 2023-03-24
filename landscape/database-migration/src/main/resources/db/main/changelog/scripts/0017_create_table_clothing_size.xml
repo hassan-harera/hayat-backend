@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0005" author="hharera@hayat.social">
+        <sql>
+            create table if not exists clothing_size
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100),
+            shortcut varchar(10)
+            );
+
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('صغير', 'Small', 'S');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('متوسط', 'Medium', 'M');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('كبير', 'Large', 'L');
+            INSERT INTO clothing_size(arabic_name, english_name, shortcut)
+            VALUES ('كبير جدا', 'Extra Large', 'XL');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

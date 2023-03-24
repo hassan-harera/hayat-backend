@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class FieldLimitException extends FieldException {
 
-    public FieldLimitException(String code, String field, String value) {
-        super(String.format("Invalid %s: %s Limit", field, value), code, field);
+    public FieldLimitException(String code, String field, Object value) {
+        super(String.format("Invalid %s: %s Limit", field, value.toString()), code,
+                        field);
     }
 
     public FieldLimitException(String code, String field, String value, String limitFrom,

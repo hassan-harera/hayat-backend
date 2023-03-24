@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0005" author="hharera@hayat.social">
+        <sql>
+            create table if not exists clothing_category
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

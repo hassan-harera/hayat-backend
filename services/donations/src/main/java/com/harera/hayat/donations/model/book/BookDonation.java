@@ -14,7 +14,7 @@ import lombok.Setter;
 public class BookDonation extends Donation {
 
     @Column(name = "quantity")
-    private Integer amount;
+    private Integer quantity;
 
     @Column(name = "book_title")
     private String bookTitle;

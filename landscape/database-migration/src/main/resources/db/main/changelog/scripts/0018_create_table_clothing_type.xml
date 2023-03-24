@@ -1,0 +1,31 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0005" author="hharera@hayat.social">
+        <sql>
+            CREATE TABLE if not exists clothing_type
+            (
+            id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+            active       BIT DEFAULT 1 NOT NULL,
+            arabic_name  VARCHAR(50)   NULL,
+            english_name VARCHAR(50)   NULL,
+            shortcut     VARCHAR(50)   NULL
+            );
+
+            INSERT INTO clothing_type(active, arabic_name, english_name, shortcut)
+            VALUES (1, 'رجالي', 'Men', 'MEN');
+            INSERT INTO clothing_type(active, arabic_name, english_name, shortcut)
+            VALUES (1, 'حريمي', 'Women', 'WOMEN');
+            INSERT INTO clothing_type(active, arabic_name, english_name, shortcut)
+            VALUES (1, 'أطفال', 'Kids', 'KIDS');
+            INSERT INTO clothing_type(active, arabic_name, english_name, shortcut)
+            VALUES (1, 'اولادي', 'Boys', 'BOYS');
+            INSERT INTO clothing_type(active, arabic_name, english_name, shortcut)
+            VALUES (1, 'بناتي', 'Girls', 'GIRLS');
+            INSERT INTO clothing_type(active, arabic_name, english_name, shortcut)
+            VALUES (1, 'مزيج', 'Mixed', 'MIXED');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

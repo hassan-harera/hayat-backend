@@ -1,6 +1,7 @@
 package com.harera.hayat.shared.controller.medicine;
 
 import com.harera.hayat.framework.model.medicine.Medicine;
+import com.harera.hayat.framework.model.medicine.MedicineDto;
 import com.harera.hayat.framework.service.medicine.MedicineService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -23,7 +24,7 @@ public class MedicineController {
     @Operation(summary = "List", description = "List medicines", tags = { "Medicine" },
                     responses = { @ApiResponse(responseCode = "200",
                                     description = "success|Ok") })
-    public ResponseEntity<List<Medicine>> list(
+    public ResponseEntity<List<MedicineDto>> list(
                     @RequestParam(value = "page", defaultValue = "1") int page) {
         return ResponseEntity.ok(medicineService.list(page));
     }
@@ -33,18 +34,17 @@ public class MedicineController {
                     tags = { "Medicine" },
                     responses = { @ApiResponse(responseCode = "200",
                                     description = "success|Ok") })
-    public ResponseEntity<List<Medicine>> search(
+    public ResponseEntity<List<MedicineDto>> search(
                     @RequestParam(value = "q", defaultValue = "") String query,
                     @RequestParam(value = "page", defaultValue = "1") int page) {
         return ResponseEntity.ok(medicineService.search(query, page));
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get", description = "Get medicine units",
-                    tags = { "Medicine Unit" },
+    @Operation(summary = "Get", description = "Get medicine", tags = { "Medicine" },
                     responses = { @ApiResponse(responseCode = "200",
                                     description = "success|Ok") })
-    public ResponseEntity<Medicine> get(@PathVariable("id") long id) {
+    public ResponseEntity<MedicineDto> get(@PathVariable("id") long id) {
         return ResponseEntity.ok(medicineService.get(id));
     }
 }

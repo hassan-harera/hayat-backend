@@ -3,16 +3,14 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0001" author="hharera@hharera.net">
+    <changeSet id="0009" author="hharera@hayat.social">
         <sql>
-            create table state
+            create table if not exists medicine_unit
             (
             id bigint primary key auto_increment,
             active boolean default 1,
             arabic_name varchar(100),
-            english_name varchar(100),
-            country_id bigint,
-            foreign key (country_id) references country(id)
+            english_name varchar(100)
             );
         </sql>
     </changeSet>

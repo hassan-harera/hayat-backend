@@ -11,7 +11,7 @@ import com.harera.hayat.donations.stubs.city.CityStubs;
 import com.harera.hayat.donations.stubs.clothing.ClothingDonationStubs;
 import com.harera.hayat.donations.util.DataUtil;
 import com.harera.hayat.donations.util.RequestUtil;
-import com.harera.hayat.framework.model.ClothingCondition;
+import com.harera.hayat.framework.model.clothing.ClothingCondition;
 import com.harera.hayat.framework.model.city.City;
 import lombok.RequiredArgsConstructor;
 import org.junit.Assert;
@@ -48,7 +48,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setQuantity(5);
-        request.setCondition(ClothingCondition.Condition.NEW);
+        request.setClothingCondition(ClothingCondition.Condition.NEW);
 
         try {
             // When
@@ -97,7 +97,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setQuantity(8);
-        request.setCondition(ClothingCondition.Condition.NEW);
+        request.setClothingCondition(ClothingCondition.Condition.NEW);
 
         try {
             // When
