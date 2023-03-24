@@ -9,7 +9,7 @@ import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.user.User;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
-import com.harera.hayat.needs.model.NeedState;
+import com.harera.hayat.needs.model.NeedStatus;
 import com.harera.hayat.needs.model.books.BookNeed;
 import com.harera.hayat.needs.repository.books.BookNeedRepository;
 
@@ -27,7 +27,7 @@ public class BookNeedStubs {
             LocalDateTime needDate,
             LocalDateTime needExpirationDate,
             NeedCategory category,
-            NeedState status,
+            NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
             User user,
@@ -60,7 +60,7 @@ public class BookNeedStubs {
             LocalDateTime needDate,
             LocalDateTime needExpirationDate,
             NeedCategory category,
-            NeedState status,
+            NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
             User user,
@@ -80,7 +80,7 @@ public class BookNeedStubs {
         bookNeed.setCommunicationMethod(communicationMethod);
         bookNeed.setCity(city);
         bookNeed.setUser(user);
-        bookNeed.setBookName(bookName);
+        bookNeed.setBookTitle(bookName);
         bookNeed.setBookAuthor(bookAuthor);
         bookNeed.setBookPublisher(bookPublisher);
         bookNeed.setBookLanguage(bookLanguage);

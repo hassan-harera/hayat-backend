@@ -6,10 +6,8 @@ import com.harera.hayat.framework.model.medicine.MedicineUnitDto;
 import com.harera.hayat.needs.model.NeedDto;
 import lombok.Data;
 
-import java.time.OffsetDateTime;
-
 @Data
-public class MedicineDonationDto extends NeedDto {
+public class MedicineNeedDto extends NeedDto {
 
     @JsonProperty("quantity")
     private Float quantity;
@@ -19,13 +17,4 @@ public class MedicineDonationDto extends NeedDto {
 
     @JsonProperty("medicine")
     private MedicineDto medicine;
-
-    @JsonProperty(value = "city_id")
-    private Long cityId;
-
-    @JsonProperty(value = "medicine_unit_id")
-    private Long medicineUnitId;
-
-    @JsonProperty(value = "medicine_id")
-    private Long medicineId;
 }

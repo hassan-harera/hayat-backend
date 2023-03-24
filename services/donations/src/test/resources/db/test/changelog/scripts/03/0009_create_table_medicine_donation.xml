@@ -3,9 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="03_0009" author="hharera@hharera.net">
+    <changeSet id="03_0009" author="hharera@hayat.social">
         <sql>
-            create table medicine_unit
+            create table if not exists medicine_unit
             (
             id bigint primary key auto_increment,
             active boolean default 1,
@@ -13,7 +13,7 @@
             english_name varchar(100)
             );
 
-            create table medicine_category
+            create table if not exists medicine_category
             (
             id bigint primary key auto_increment,
             active boolean,
@@ -21,7 +21,7 @@
             english_name varchar(100)
             );
 
-            create table medicine
+            create table if not exists medicine
             (
             id bigint primary key auto_increment,
             active boolean default 1,

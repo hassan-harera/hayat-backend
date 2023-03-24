@@ -28,7 +28,7 @@ public class BookDonationValidation {
             throw new MandatoryFieldException(ErrorCode.FORMAT_BOOK_DONATION_TITLE,
                             "book_title");
         }
-        if (request.getAmount() < 1 || request.getAmount() > 1000) {
+        if (request.getQuantity() < 1 || request.getQuantity() > 1000) {
             throw new MandatoryFieldException(ErrorCode.FORMAT_BOOK_DONATION_AMOUNT,
                             "quantity");
         }
@@ -39,7 +39,7 @@ public class BookDonationValidation {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_BOOK_DONATION_TITLE,
                             "book_title");
         }
-        if (request.getAmount() == null) {
+        if (request.getQuantity() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_BOOK_DONATION_AMOUNT,
                             "quantity");
         }

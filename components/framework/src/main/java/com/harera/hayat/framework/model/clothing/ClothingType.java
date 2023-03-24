@@ -1,12 +1,16 @@
-package com.harera.hayat.framework.model;
+package com.harera.hayat.framework.model.clothing;
 
-import jakarta.persistence.Column;
+import com.harera.hayat.framework.model.BaseEntity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-public class ClothingType {
+@Setter
+@Getter
+@Entity
+@Table(name = "clothing_type")
+public class ClothingType extends BaseEntity {
 
     @Column(name = "arabic_name")
     private String arabicName;
@@ -14,6 +18,8 @@ public class ClothingType {
     @Column(name = "english_name")
     private String englishName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "shortcut")
     private Type type;
 
     public enum Type {

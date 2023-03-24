@@ -26,7 +26,7 @@ public class BookDonationStubs {
                     String description, City city, DonationStatus state) {
         BookDonation bookDonation = new BookDonation();
         bookDonation.setId(0L);
-        bookDonation.setAmount(amount);
+        bookDonation.setQuantity(amount);
         bookDonation.setTitle(title);
         bookDonation.setCategory(category);
         bookDonation.setCity(city);

@@ -8,18 +8,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Setter
 @Getter
-@Entity
-@Table(name = "possession_need")
+@Document("possession_need")
 public class PossessionNeed extends Need {
 
-    @ManyToOne
-    @JoinColumn(name = "possession_category_id", referencedColumnName = "id")
+    @Field(name = "possession_category")
     private PossessionCategory possessionCategory;
 
-    @ManyToOne
-    @JoinColumn(name = "possession_condition_id", referencedColumnName = "id")
+    @Field(name = "possession_condition")
     private PossessionCondition possessionCondition;
 }

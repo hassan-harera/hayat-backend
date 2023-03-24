@@ -1,13 +1,15 @@
-package com.harera.hayat.framework.model;
+package com.harera.hayat.framework.model.clothing;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import lombok.*;
+import com.harera.hayat.framework.model.BaseEntity;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@AllArgsConstructor
-public class ClothingCondition  {
+@Setter
+@Getter
+@Entity
+@Table(name = "clothing_condition")
+public class ClothingCondition extends BaseEntity {
 
     @Column(name = "arabic_name")
     private String arabicName;
@@ -15,6 +17,8 @@ public class ClothingCondition  {
     @Column(name = "english_name")
     private String englishName;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "shortcut")
     private Condition condition;
 
     public enum Condition {

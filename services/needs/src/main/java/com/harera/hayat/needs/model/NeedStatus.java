@@ -1,6 +1,6 @@
 package com.harera.hayat.needs.model;
 
-public enum NeedState {
+public enum NeedStatus {
     PENDING,
     ACCEPTED,
     REJECTED,

@@ -4,7 +4,12 @@ import com.harera.hayat.needs.model.medicine.MedicineNeed;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface MedicineNeedRepository extends MongoRepository<MedicineNeed, Long> {
+import java.util.List;
 
+@Repository
+public interface MedicineNeedRepository extends MongoRepository<MedicineNeed, String> {
+
+    int countById(String id);
+
+    List<MedicineNeed> searchByTitleRegexOrDescriptionRegex(String title, String description);
 }

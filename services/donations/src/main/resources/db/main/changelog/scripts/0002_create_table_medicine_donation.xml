@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0002" author="hharera@hharera.net">
+    <changeSet id="0002" author="hharera@hayat.social">
         <sql>
             create table if not exists medicine_donation (
             id                       bigint auto_increment primary key,
@@ -27,7 +27,7 @@
             constraint medicine_donation_medicine_unit_id_fk
             foreign key (medicine_unit_id) references medicine_unit (id),
             constraint medicine_donation_user_id_fk
-            foreign key (user_id) references user (id),
+            foreign key (user_id) references user_ (id),
             constraint medicine_donation_city_id_fk
             foreign key (city_id) references city (id)
             );

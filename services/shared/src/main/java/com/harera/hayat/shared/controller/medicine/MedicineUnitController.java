@@ -1,6 +1,7 @@
 package com.harera.hayat.shared.controller.medicine;
 
 import com.harera.hayat.framework.model.medicine.MedicineUnit;
+import com.harera.hayat.framework.model.medicine.MedicineUnitDto;
 import com.harera.hayat.framework.service.medicine.MedicineUnitService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -27,7 +28,7 @@ public class MedicineUnitController {
                     tags = { "Medicine Unit" },
                     responses = { @ApiResponse(responseCode = "200",
                                     description = "success|Ok") })
-    public ResponseEntity<List<MedicineUnit>> list() {
+    public ResponseEntity<List<MedicineUnitDto>> list() {
         return ResponseEntity.ok(medicineUnitService.list());
     }
 
@@ -36,7 +37,7 @@ public class MedicineUnitController {
                     tags = { "Medicine Unit" },
                     responses = { @ApiResponse(responseCode = "200",
                                     description = "success|Ok") })
-    public ResponseEntity<MedicineUnit> get(@PathVariable("id") long id) {
+    public ResponseEntity<MedicineUnitDto> get(@PathVariable("id") long id) {
         return ResponseEntity.ok(medicineUnitService.get(id));
     }
 }

@@ -192,6 +192,23 @@ services:
       redis:
         condition: service_started
 
+  database-service:
+    container_name: "hayat_database_service"
+    image: hayat_database_service:latest
+    build:
+      context: ./landscape/database-migration
+      dockerfile: Dockerfile
+    restart: on-failure
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8086:8086"
+
   redis:
     container_name: "hayat_redis"
     image: redis:latest

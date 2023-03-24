@@ -3,10 +3,10 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0021" author="hharera@hharera.net">
+    <changeSet id="0021" author="hharera@hayat.social">
         <sql>
             drop table if exists clothing_condition;
-            create table clothing_condition
+            create table if not exists clothing_condition
             (
             id bigint primary key auto_increment,
             active boolean default 1,
@@ -23,7 +23,7 @@
             VALUES ('مزيج', 'Mixed', 'MIXED');
 
             drop table if exists clothing_category;
-            create table clothing_category
+            create table if not exists clothing_category
             (
             id bigint primary key auto_increment,
             active boolean default 1,
@@ -32,7 +32,7 @@
             );
 
             drop table if exists clothing_size;
-            create table clothing_size
+            create table if not exists clothing_size
             (
             id bigint primary key auto_increment,
             active boolean default 1,
@@ -51,7 +51,7 @@
             VALUES ('كبير جدا', 'Extra Large', 'XL');
 
             drop table if exists clothing_season;
-            create table clothing_season
+            create table if not exists clothing_season
             (
             id bigint primary key auto_increment,
             active boolean default 1,
@@ -70,7 +70,7 @@
             VALUES ('خريف', 'Autumn', 'AUTUMN');
 
             drop table if exists clothing_donation;
-            create table clothing_donation
+            create table if not exists clothing_donation
             (
             id bigint primary key auto_increment,
             active boolean default true,

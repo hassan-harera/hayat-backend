@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0005" author="hharera@hayat.social">
+    <changeSet id="0019" author="hharera@hayat.social">
         <sql>
             create table if not exists clothing_category
             (

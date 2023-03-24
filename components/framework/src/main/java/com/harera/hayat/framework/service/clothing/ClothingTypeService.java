@@ -1,6 +1,8 @@
 package com.harera.hayat.framework.service.clothing;
 
-import com.harera.hayat.framework.model.ClothingType;
+import com.harera.hayat.framework.model.clothing.ClothingType;
+import com.harera.hayat.framework.repository.clothing.ClothingTypeRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,15 +10,14 @@ import java.util.List;
 @Service
 public class ClothingTypeService {
 
-    private static final List<ClothingType> list = List.of(
-                    new ClothingType("رجالي", "Men", ClothingType.Type.MEN),
-                    new ClothingType("حريمي", "Women", ClothingType.Type.WOMEN),
-                    new ClothingType("أطفال", "Kids", ClothingType.Type.KIDS),
-                    new ClothingType("اولادي", "Boys", ClothingType.Type.BOYS),
-                    new ClothingType("بناتي", "Girls", ClothingType.Type.GIRLS),
-                    new ClothingType("مزيج", "Mixed", ClothingType.Type.MIXED));
+    private final ClothingTypeRepository clothingTypeRepository;
 
+    public ClothingTypeService(ClothingTypeRepository clothingTypeRepository) {
+        this.clothingTypeRepository = clothingTypeRepository;
+    }
+
+    @Cacheable("clothing_types")
     public List<ClothingType> list() {
-        return list;
+        return clothingTypeRepository.findAll();
     }
 }

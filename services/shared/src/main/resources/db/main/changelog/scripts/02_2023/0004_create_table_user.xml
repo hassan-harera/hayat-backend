@@ -3,9 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0004" author="hharera@hharera.net">
+    <changeSet id="0004" author="hharera@hayat.social">
         <sql>
-            create table user_
+            create table if not exists user_
             (
             id bigint auto_increment primary key,
             active boolean default 1,
