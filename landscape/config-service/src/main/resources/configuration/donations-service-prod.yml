@@ -71,3 +71,14 @@ management:
     metrics:
       export:
         step: 10s
+
+s3:
+  endpoint:
+    url: ${S3_ENDPOINT_URL}
+  bucket:
+    name: ${S3_BUCKET_NAME}
+  access:
+    key:
+      id: ${S3_ACCESS_KEY_ID}
+  secret:
+    key: ${S3_SECRET_KEY}
