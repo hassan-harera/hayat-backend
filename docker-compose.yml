@@ -111,6 +111,8 @@ services:
       - EUREKA_URL=http://discovery-service:8761
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - CONFIG_SERVICE_ENABLED=true
+      - ACTIVE_PROFILE=prod
       - CONFIG_SERVICE_URI=http://config-service:8111
       - KEYCLOAK_SERVICE_URL=${KEYCLOAK_SERVICE_URL}
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
