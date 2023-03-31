@@ -261,7 +261,11 @@ services:
       - KEYCLOAK_IMPORT=./platform/keycloak/keycloak.json
       - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt.pem
       - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key.pem
-    command: [ "start-dev", "--http-port=8181" ]
+    command:
+      - "start-dev"
+      - "--http-port=8181"
+      - "--https-port=8443"
+      - "--https-certificate-file=/opt/keycloak/conf/server.crt.pem"
     volumes:
       - ./server.crt.pem:/opt/keycloak/conf/server.crt.pem
       - ./server.key.pem:/opt/keycloak/conf/server.key.pem
