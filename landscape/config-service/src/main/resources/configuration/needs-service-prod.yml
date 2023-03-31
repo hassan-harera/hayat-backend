@@ -4,11 +4,6 @@ spring:
   application:
     name: needs-service
   security:
-    jackson:
-      serialization:
-        write-dates-as-timestamps: false
-      deserialization:
-        accept-single-value-as-array: true
     oauth2:
       resourceserver:
         jwt:
