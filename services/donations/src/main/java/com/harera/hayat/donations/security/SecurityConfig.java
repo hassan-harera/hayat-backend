@@ -21,7 +21,7 @@ public class SecurityConfig {
             "/webjars/**", "/swagger-resources/**" };
 
     @Bean
-    @Profile("prod")
+    @Profile({"prod", "default"})
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.sessionManagement()
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
