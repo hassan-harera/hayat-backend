@@ -267,6 +267,7 @@ services:
     #      - "--https-port=8443"
     #      - "--https-certificate-file=/opt/keycloak/conf/server.crt.pem"
     volumes:
+      - hayat_keycloak:/opt/keycloak/data
       - ./server.crt.pem:/opt/keycloak/conf/server.crt.pem
       - ./server.key.pem:/opt/keycloak/conf/server.key.pem
       - ./platform/keycloak:/opt/keycloak/data/import
