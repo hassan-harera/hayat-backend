@@ -208,7 +208,6 @@ services:
     build:
       context: ./landscape/database-migration
       dockerfile: Dockerfile
-    restart: on-failure
     env_file:
       - .env
     environment:
