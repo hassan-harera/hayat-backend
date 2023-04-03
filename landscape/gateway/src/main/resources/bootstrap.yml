@@ -50,7 +50,7 @@ spring:
         - id: shared-service
           uri: ${SHARED_SERVICE_URL:http://localhost:8085}
           predicates:
-            - Path=/api/v1/cities/**, /api/v1/states/**, /api/v1/clothing/**, /api/v1/food/**, /api/v1/medicines/**, /api/v1/medicine/**
+            - Path=/api/v1/cities/**, /api/v1/states/**, /api/v1/clothing/**, /api/v1/food/**, /api/v1/medicines/**, /api/v1/medicine/units/**
           filters:
             - name: RequestRateLimiter
               args:
