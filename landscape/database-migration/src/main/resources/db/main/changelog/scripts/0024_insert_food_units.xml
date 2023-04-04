@@ -7,12 +7,16 @@
         <sql>
             insert into food_unit (arabic_name, english_name)
             values ('جرام', 'Gram'),
-            ('ملغ', 'Milligram'),
-            ('مل', 'Milliliter'),
-            ('جرام/ملغ', 'Gram/Milligram'),
-            ('جرام/مل', 'Gram/Milliliter'),
-            ('ملغ/مل', 'Milligram/Milliliter'),
-            ('جرام/ملغ/مل', 'Gram/Milligram/Milliliter');
+            ('كيلوغرام', 'Kilogram'),
+            ('رطل', 'Pound'),
+            ('لتر', 'Liter'),
+            ('مليلتر', 'Milliliter'),
+            ('كوب', 'Cup'),
+            ('قطعة', 'Piece'),
+            ('علبة', 'Can'),
+            ('علبة صغيرة', 'Small Can'),
+            ('علبة متوسطة', 'Medium Can'),
+            ('علبة كبيرة', 'Large Can');
         </sql>
     </changeSet>
 </databaseChangeLog>
