@@ -221,6 +221,7 @@ services:
   redis:
     container_name: "hayat_redis"
     image: redis:latest
+    restart: always
     command: redis-server --appendonly yes --replica-read-only no
     ports:
       - "6379:6379"
