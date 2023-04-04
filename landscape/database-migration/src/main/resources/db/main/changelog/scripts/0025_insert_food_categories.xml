@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0025" author="hharera@hayat.social">
+        <sql>
+            insert into food_category (arabic_name, english_name, description)
+            values ('لحوم', 'Fresh Produce', 'لحوم');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('خضار', 'vegetables', 'خضار ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('فاكهة', 'Fruits', 'فاكهة ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('بقوليات', 'Grains', 'بقوليات ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('حلويات', 'Sweets and desserts', 'حلويات ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('المشروبات', 'Beverages', 'المشروبات ');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('منتجات الألبان', 'Dairy products', 'منتجات الألبان');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('وجبات', 'Meals', 'وجبات');
+
+            insert into food_category (arabic_name, english_name, description)
+            values ('مخبوزات', 'Baked goods', 'مخبوزات');
+        </sql>
+    </changeSet>
+</databaseChangeLog>
