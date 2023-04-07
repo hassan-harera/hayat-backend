@@ -208,7 +208,6 @@ services:
     build:
       context: ./landscape/database-migration
       dockerfile: Dockerfile
-    restart: on-failure
     env_file:
       - .env
     environment:
@@ -222,6 +221,7 @@ services:
   redis:
     container_name: "hayat_redis"
     image: redis:latest
+    restart: always
     command: redis-server --appendonly yes --replica-read-only no
     ports:
       - "6379:6379"
@@ -281,8 +281,13 @@ services:
       - KC_DB_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt.pem
       - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key.pem
-    command: [ "start-dev", "--http-port=8181" ]
+    command:
+      - "start-dev"
+      - "--http-port=8181"
+    #      - "--https-port=8443"
+    #      - "--https-certificate-file=/opt/keycloak/conf/server.crt.pem"
     volumes:
+      - hayat_keycloak:/opt/keycloak/data
       - ./server.crt.pem:/opt/keycloak/conf/server.crt.pem
       - ./server.key.pem:/opt/keycloak/conf/server.key.pem
       - ./platform/keycloak:/opt/keycloak/data/import

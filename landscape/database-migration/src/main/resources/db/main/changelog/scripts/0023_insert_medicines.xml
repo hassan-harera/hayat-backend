@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0023" author="hharera@hayat.social">
+        <sql>
+            insert into medicine (arabic_name, english_name)
+            values ('سينا لاكس 20mg', 'سينا لاكس 20mg'),
+            ('بيساديل 5mg', 'بيساديل 5mg'),
+            ('مينالاكس 5mg', 'مينالاكس 5mg'),
+            ('امبورتال 10gm', 'امبورتال 10gm'),
+            ('لاكسولاك 3.35GM/5ML', 'لاكسولاك 3.35GM/5ML'),
+            ('سيدالاك 3.35GM/5ML', 'سيدالاك 3.35GM/5ML');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

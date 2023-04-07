@@ -1,0 +1,22 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0024" author="hharera@hayat.social">
+        <sql>
+            insert into food_unit (arabic_name, english_name)
+            values ('جرام', 'Gram'),
+            ('كيلوغرام', 'Kilogram'),
+            ('رطل', 'Pound'),
+            ('لتر', 'Liter'),
+            ('مليلتر', 'Milliliter'),
+            ('كوب', 'Cup'),
+            ('قطعة', 'Piece'),
+            ('علبة', 'Can'),
+            ('علبة صغيرة', 'Small Can'),
+            ('علبة متوسطة', 'Medium Can'),
+            ('علبة كبيرة', 'Large Can');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

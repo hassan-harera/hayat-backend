@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -21,12 +20,11 @@ public class SecurityConfig {
             "/webjars/**", "/swagger-resources/**" };
 
     @Bean
-    @Profile("prod")
+    @Profile({ "default", "prod" })
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                        .authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
-                        .and().oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
+        return http.authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
+                        .anyRequest().authenticated().and()
+                        .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                         .build();
     }
 

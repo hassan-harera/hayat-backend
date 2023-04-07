@@ -15,18 +15,18 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String[] OPEN_APIS = { "/api/v1/cities/**", "/api/v1/states/**",
-            "/actuator/**", "/api/v1/clothing/seasons/**", "/api/v1/clothing/sizes/**",
-            "/api/v1/clothing/conditions/**", "/api/v1/clothing/types/**",
-            "/api/v1/food/units/**", "/api/v1/food/categories/**",
-            "/api/v1/clothing/condition/**", "/v3/api-docs/**", "/swagger-ui/**",
-            "/swagger-ui.html", "/webjars/**", "/swagger-resources/**" };
+//    private static final String[] OPEN_APIS = { "/api/v1/cities/**", "/api/v1/states/**",
+//            "/actuator/**", "/api/v1/clothing/seasons/**", "/api/v1/clothing/sizes/**",
+//            "/api/v1/clothing/conditions/**", "/api/v1/clothing/types/**",
+//            "/api/v1/food/units/**", "/api/v1/food/categories/**",
+//            "/api/v1/clothing/condition/**", "/v3/api-docs/**", "/swagger-ui/**",
+//            "/swagger-ui.html", "/webjars/**", "/swagger-resources/**" };
 
     @Bean
     @Profile("prod")
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable().cors().and().formLogin().disable().httpBasic()
-                        .disable().authorizeHttpRequests().requestMatchers(OPEN_APIS)
+                        .disable().authorizeHttpRequests().requestMatchers("/**")
                         .permitAll().and()
                         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                         .build();
