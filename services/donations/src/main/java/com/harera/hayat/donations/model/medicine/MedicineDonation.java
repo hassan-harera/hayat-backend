@@ -7,8 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -24,7 +23,7 @@ public class MedicineDonation extends Donation {
     private MedicineUnit medicineUnit;
 
     @Column(name = "medicine_expiration_date")
-    private OffsetDateTime medicineExpirationDate;
+    private LocalDate medicineExpirationDate;
 
     @ManyToOne
     @JoinColumn(name = "medicine_id", referencedColumnName = "id")
