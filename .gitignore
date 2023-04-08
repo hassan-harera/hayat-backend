@@ -41,3 +41,4 @@ build/
 /platform/keycloak/
 /server.crt.pem
 /server.key.pem
+/k8s/configmap.yml

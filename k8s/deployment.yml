@@ -1,0 +1,286 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-service
+  template:
+    metadata:
+      labels:
+        app: gateway-service
+    spec:
+      containers:
+        - name: hayat-gateway-service
+          image: hayat_gateway_service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: EUREKA_URL
+              value: http://discovery-service:8761
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: CONFIG_SERVICE_URI
+              value: $(CONFIG_SERVICE_URI)
+            - name: AUTHORIZATION_SERVICE_URL
+              value: $(AUTHORIZATION_SERVICE_URL)
+            - name: DONATIONS_SERVICE_URL
+              value: $(DONATIONS_SERVICE_URL)
+            - name: NEEDS_SERVICE_URL
+              value: $(NEEDS_SERVICE_URL)
+            - name: SHARED_SERVICE_URL
+              value: $(SHARED_SERVICE_URL)
+            - name: ACTIVE_PROFILE
+              value: $(ACTIVE_PROFILE)
+          envFrom:
+            - configMapRef:
+                name: hayat-configmap
+      restartPolicy: Always
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-service
+spec:
+  selector:
+    matchLabels:
+      app: config-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: config-service
+    spec:
+      containers:
+        - name: hayat-config-service
+          image: hayat_config_service:latest
+          imagePullPolicy: Never
+          env:
+            - name: EUREKA_URL
+              value: http://discovery-service:8761
+          ports:
+            - containerPort: 8111
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discovery-service
+  template:
+    metadata:
+      labels:
+        app: discovery-service
+    spec:
+      containers:
+        - name: hayat-discovery-service
+          image: hayat_discovery_service:latest
+          imagePullPolicy: Never
+          env:
+            - name: EUREKA_HOST
+              value: discovery-service
+            - name: EUREKA_URL
+              value: http://discovery-service:8761
+          ports:
+            - containerPort: 8761
+          envFrom:
+            - configMapRef:
+                name: hayat-configmap
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authorization-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authorization-service
+  template:
+    metadata:
+      labels:
+        app: authorization-service
+    spec:
+      containers:
+        - name: hayat-authorization-service
+          image: hayat_authorization_service:latest
+          imagePullPolicy: Never
+          env:
+            - name: CONFIG_SERVICE_URI
+              value: http://config-service:8111
+            - name: CONFIG_SERVICE_ENABLED
+              value: "true"
+            - name: ACTIVE_PROFILE
+              value: prod
+            - name: EUREKA_URL
+              value: http://discovery-service:8761
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: DB_HOST
+              value: $(DB_HOST)
+            - name: DB_PORT
+              value: $(DB_PORT)
+            - name: DB_USER
+              value: $(DB_USER)
+            - name: DB_PASSWORD
+              value: $(DB_PASSWORD)
+            - name: SMS_ENV
+              value: $(SMS_ENV)
+            - name: SMS_USERNAME
+              value: $(SMS_USERNAME)
+            - name: SMS_PASSWORD
+              value: $(SMS_PASSWORD)
+            - name: SMS_SENDER
+              value: $(SMS_SENDER)
+            - name: SMS_LANGUAGE
+              value: $(SMS_LANGUAGE)
+            - name: KEYCLOAK_SERVICE_URL
+              value: $(KEYCLOAK_SERVICE_URL)
+            - name: KEYCLOAK_REALM
+              value: $(KEYCLOAK_REALM)
+            - name: KEYCLOAK_AUTHORIZATION_CLIENT_ID
+              value: $(KEYCLOAK_AUTHORIZATION_CLIENT_ID)
+            - name: KEYCLOAK_AUTHORIZATION_CLIENT_SECRET
+              value: $(KEYCLOAK_AUTHORIZATION_CLIENT_SECRET)
+            - name: KEYCLOAK_ADMIN
+              value: $(KEYCLOAK_ADMIN)
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: $(KEYCLOAK_ADMIN_PASSWORD)
+            - name: SECRET_KEY
+              value: $(SECRET_KEY)
+          ports:
+            - containerPort: 8083
+          envFrom:
+            - configMapRef:
+                name: hayat-configmap
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: donations-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: donations-service
+  template:
+    metadata:
+      labels:
+        app: donations-service
+    spec:
+      containers:
+        - name: hayat-donations-service
+          image: hayat_donations_service:latest
+          imagePullPolicy: Never
+          env:
+            - name: EUREKA_URL
+              value: http://discovery-service:8761
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
+            - name: CONFIG_SERVICE_ENABLED
+              value: "true"
+            - name: ACTIVE_PROFILE
+              value: prod
+            - name: CONFIG_SERVICE_URI
+              value: http://config-service:8111
+            - name: KEYCLOAK_SERVICE_URL
+              value: $(KEYCLOAK_SERVICE_URL)
+            - name: KEYCLOAK_REALM
+              value: $(KEYCLOAK_REALM)
+            - name: S3_ENDPOINT_URL
+              value: $(S3_ENDPOINT_URL)
+            - name: S3_ACCESS_KEY_ID
+              value: $(S3_ACCESS_KEY_ID)
+            - name: S3_SECRET_KEY
+              value: $(S3_SECRET_KEY)
+            - name: S3_BUCKET_NAME
+              value: $(S3_BUCKET_NAME)
+            - name: DB_HOST
+              value: $(DB_HOST)
+            - name: DB_PORT
+              value: $(DB_PORT)
+            - name: DB_USER
+              value: $(DB_USER)
+            - name: DB_PASSWORD
+              value: $(DB_PASSWORD)
+          ports:
+            - containerPort: 8084
+          envFrom:
+            - configMapRef:
+                name: hayat-configmap
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: needs-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: needs-service
+  template:
+    metadata:
+      labels:
+        app: needs-service
+    spec:
+      containers:
+        - name: hayat-needs-service
+          image: hayat_needs_service:latest
+          imagePullPolicy: Never
+          env:
+            - name: EUREKA_URL
+              value: "http://discovery-service:8761"
+            - name: REDIS_HOST
+              value: "redis"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: CONFIG_SERVICE_URI
+              value: "http://config-service:8111"
+            - name: CONFIG_SERVICE_ENABLED
+              value: "true"
+            - name: ACTIVE_PROFILE
+              value: "prod"
+            - name: KEYCLOAK_SERVICE_URL
+              value: "$(KEYCLOAK_SERVICE_URL)"
+            - name: KEYCLOAK_REALM
+              value: "$(KEYCLOAK_REALM)"
+            - name: S3_ENDPOINT_URL
+              value: "$(S3_ENDPOINT_URL)"
+            - name: S3_ACCESS_KEY_ID
+              value: "$(S3_ACCESS_KEY_ID)"
+            - name: S3_SECRET_KEY
+              value: "$(S3_SECRET_KEY)"
+            - name: S3_BUCKET_NAME
+              value: "$(S3_BUCKET_NAME)"
+            - name: DB_HOST
+              value: "$(DB_HOST)"
+            - name: DB_PORT
+              value: "$(DB_PORT)"
+            - name: DB_USER
+              value: "$(DB_USER)"
+            - name: DB_PASSWORD
+              value: "$(DB_PASSWORD)"
+          ports:
+            - containerPort: 8082
+          envFrom:
+            - configMapRef:
+                name: hayat-configmap
