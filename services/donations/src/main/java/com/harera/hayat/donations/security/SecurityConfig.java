@@ -22,8 +22,8 @@ public class SecurityConfig {
     @Bean
     @Profile({ "default", "prod" })
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.cors().and().authorizeHttpRequests().requestMatchers(OPEN_APIS)
-                        .permitAll().and()
+        return http.authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
+                        .anyRequest().authenticated().and().cors().and().csrf().disable()
                         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                         .build();
     }
