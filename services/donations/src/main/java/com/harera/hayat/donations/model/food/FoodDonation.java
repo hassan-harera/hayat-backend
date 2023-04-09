@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -17,7 +17,7 @@ public class FoodDonation extends Donation {
 
     @Basic
     @Column(name = "food_expiration_date")
-    private OffsetDateTime foodExpirationDate;
+    private LocalDate foodExpirationDate;
 
     @ManyToOne
     @JoinColumn(name = "food_unit_id", referencedColumnName = "id")
