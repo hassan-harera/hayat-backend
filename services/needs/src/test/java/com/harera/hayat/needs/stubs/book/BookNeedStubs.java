@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.model.user.User;
+import com.harera.hayat.framework.model.user.BaseUser;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
@@ -30,7 +30,7 @@ public class BookNeedStubs {
             NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
-            User user,
+            BaseUser user,
             String bookName,
             String bookAuthor,
             String bookPublisher,
@@ -63,7 +63,7 @@ public class BookNeedStubs {
             NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
-            User user,
+            BaseUser user,
             String bookName,
             String bookAuthor,
             String bookPublisher,

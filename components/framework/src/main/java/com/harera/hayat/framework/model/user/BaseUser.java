@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "user_")
-public class User extends BaseEntity {
+public class BaseUser extends BaseEntity {
 
     @Basic
     @Column(name = "phone_number")

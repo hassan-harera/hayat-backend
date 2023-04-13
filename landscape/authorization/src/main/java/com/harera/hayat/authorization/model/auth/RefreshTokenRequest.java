@@ -1,11 +1,10 @@
-package com.harera.hayat.authorization.model.oauth;
+package com.harera.hayat.authorization.model.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Data;
 
 @Data
-public class OauthLoginResponse {
+public class RefreshTokenRequest {
 
     @JsonProperty("token")
     private String token;

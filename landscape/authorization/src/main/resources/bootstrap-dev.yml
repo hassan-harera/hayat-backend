@@ -44,20 +44,20 @@ needs:
     expiration_days: 45
 
 keycloak:
-  auth-server-url: http://localhost:8181
-  realm: hayat
+  auth-server-url: ${KEYCLOAK_SERVICE_URL}
+  realm: ${KEYCLOAK_REALM}
   credentials:
-    username: authorization
-    password: authorization
-    client-id: authorization-client
-    secret: authorization-secret
+    username: ${KEYCLOAK_ADMIN}
+    password: ${KEYCLOAK_ADMIN_PASSWORD}
+    client-id: ${KEYCLOAK_AUTHORIZATION_CLIENT_ID}
+    secret: ${KEYCLOAK_AUTHORIZATION_CLIENT_SECRET}
 jwt:
   token:
     expire: 36000000
     refresh:
       expire: 864000000
     secret:
-      key: secret
+      key: ${SECRET_KEY}
 sms:
   config:
     environment: ${SMS_ENV}

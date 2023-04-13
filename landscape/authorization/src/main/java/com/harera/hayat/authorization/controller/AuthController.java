@@ -1,18 +1,16 @@
 package com.harera.hayat.authorization.controller;
 
-import static org.springframework.http.ResponseEntity.ok;
-
+import com.harera.hayat.authorization.model.auth.*;
+import com.harera.hayat.authorization.service.auth.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.harera.hayat.authorization.model.auth.*;
-import com.harera.hayat.authorization.service.AuthService;
-
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.extern.log4j.Log4j2;
+import static org.springframework.http.ResponseEntity.ok;
 
 @Log4j2
 @RestController
@@ -32,13 +30,28 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponse> signup(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<SignupResponse> signup(
+                    @RequestBody SignupRequest signupRequest) {
         return ok(authService.signup(signupRequest));
     }
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@RequestBody LogoutRequest logoutRequest) {
         authService.logout(logoutRequest);
+        return ok().build();
+    }
+
+    @PostMapping("/password/reset")
+    public ResponseEntity<Void> logout(
+                    @RequestBody ResetPasswordRequest resetPasswordRequest) {
+        authService.resetPassword(resetPasswordRequest);
+        return ok().build();
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<Void> refresh(
+                    @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        authService.refresh(refreshTokenRequest);
         return ok().build();
     }
 }

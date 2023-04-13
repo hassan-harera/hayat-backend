@@ -1,12 +1,11 @@
 package com.harera.hayat.needs.model;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 import com.harera.hayat.framework.model.BaseDocument;
 import com.harera.hayat.framework.model.city.CityDto;
 
-import com.harera.hayat.framework.model.user.UserDto;
+import com.harera.hayat.framework.model.user.BaseUserDto;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -43,5 +42,5 @@ public class Need extends BaseDocument {
     private CityDto city;
 
     @Field(name = "user")
-    private UserDto user;
+    private BaseUserDto user;
 }

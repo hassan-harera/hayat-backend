@@ -3,7 +3,7 @@ package com.harera.hayat.needs.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.framework.model.BaseDocument;
 import com.harera.hayat.framework.model.city.CityDto;
-import com.harera.hayat.framework.model.user.UserDto;
+import com.harera.hayat.framework.model.user.BaseUserDto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -43,5 +43,5 @@ public class NeedDto extends BaseDocument {
     private Long cityId;
 
     @JsonProperty("user")
-    private UserDto user;
+    private BaseUserDto user;
 }
