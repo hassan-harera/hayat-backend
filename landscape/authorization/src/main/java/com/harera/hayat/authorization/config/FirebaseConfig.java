@@ -17,12 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 @Configuration
 public class FirebaseConfig {
 
-    private final ResourceLoader resourceLoader;
-
-    public FirebaseConfig(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
-
     @Bean
     public FirebaseAuth firebaseAuth() throws IOException {
         return FirebaseAuth.getInstance(firebaseApp());
