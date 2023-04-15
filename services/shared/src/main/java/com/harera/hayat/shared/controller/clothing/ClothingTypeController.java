@@ -4,6 +4,7 @@ import com.harera.hayat.framework.model.clothing.ClothingType;
 import com.harera.hayat.framework.service.clothing.ClothingTypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 @RequestMapping("/api/v1/clothing/types")
+@Tag(name = "Clothing - Type")
 public class ClothingTypeController {
 
     private final ClothingTypeService clothingConditionService;
