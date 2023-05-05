@@ -41,3 +41,6 @@ build/
 /platform/keycloak/
 /server.crt.pem
 /server.key.pem
+/landscape/authorization/src/main/resources/hayateg.json
+/landscape/authorization/src/test/resources/hayateg.json
+/k8s/configmap.yml
