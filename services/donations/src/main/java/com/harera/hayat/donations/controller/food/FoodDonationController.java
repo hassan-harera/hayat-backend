@@ -3,7 +3,6 @@ package com.harera.hayat.donations.controller.food;
 import com.harera.hayat.donations.model.food.FoodDonationRequest;
 import com.harera.hayat.donations.model.food.FoodDonationResponse;
 import com.harera.hayat.donations.model.food.FoodDonationUpdateRequest;
-import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
 import com.harera.hayat.donations.service.food.FoodDonationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,8 +29,10 @@ public class FoodDonationController {
                     tags = "Food-Donation", responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<FoodDonationResponse> create(
-                    @RequestBody FoodDonationRequest foodDonationRequest) {
-        return ResponseEntity.ok(foodDonationService.create(foodDonationRequest));
+                    @RequestBody FoodDonationRequest foodDonationRequest,
+                    @RequestHeader("Authorization") String authorization) {
+        return ResponseEntity.ok(foodDonationService.create(foodDonationRequest,
+                        authorization.substring(7)));
     }
 
     @PutMapping("/{id}")

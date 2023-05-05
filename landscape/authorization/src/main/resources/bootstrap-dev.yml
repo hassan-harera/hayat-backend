@@ -44,8 +44,8 @@ needs:
     expiration_days: 45
 
 keycloak:
-  auth-server-url: ${KEYCLOAK_SERVICE_URL}
-  realm: ${KEYCLOAK_REALM}
+  auth-server-url: http://localhost:8181
+  realm: master
   credentials:
     username: ${KEYCLOAK_ADMIN}
     password: ${KEYCLOAK_ADMIN_PASSWORD}

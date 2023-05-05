@@ -28,7 +28,7 @@ import java.util.List;
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 
 @Service
-public class FoodDonationService implements BaseService {
+public class FoodDonationService extends BaseService {
 
     private final FoodDonationValidation foodDonationValidation;
     private final CityRepository cityRepository;
@@ -56,7 +56,8 @@ public class FoodDonationService implements BaseService {
         this.cloudFileService = cloudFileService;
     }
 
-    public FoodDonationResponse create(FoodDonationRequest foodDonationRequest) {
+    public FoodDonationResponse create(FoodDonationRequest foodDonationRequest,
+                    String authorization) {
         foodDonationValidation.validateCreate(foodDonationRequest);
 
         FoodDonation foodDonation =
@@ -65,8 +66,7 @@ public class FoodDonationService implements BaseService {
         foodDonation.setDonationDate(OffsetDateTime.now());
         foodDonation.setDonationExpirationDate(getDonationExpirationDate());
         foodDonation.setCity(getCity(foodDonationRequest.getCityId()));
-        // TODO: connect to keycloak
-        // donation.setUser(getRequestUser());
+        foodDonation.setUser(getUser(authorization));
         foodDonation.setFoodUnit(getUnit(foodDonationRequest.getFoodUnitId()));
 
         foodDonationRepository.save(foodDonation);
@@ -82,8 +82,6 @@ public class FoodDonationService implements BaseService {
         modelMapper.map(request, foodDonation);
 
         foodDonation.setCity(getCity(request.getCityId()));
-        // TODO: connect to keycloak
-        // foodDonation.setUser(getRequestUser());
         foodDonation.setFoodUnit(getUnit(request.getFoodUnitId()));
         foodDonation.setFoodCategory(getCategory(request.getFoodCategoryId()));
 

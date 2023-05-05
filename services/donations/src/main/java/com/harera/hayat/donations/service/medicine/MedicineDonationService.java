@@ -16,7 +16,9 @@ import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.repository.repository.MedicineRepository;
 import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
 import com.harera.hayat.framework.service.file.CloudFileService;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,8 +28,9 @@ import java.util.List;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 
+@Log4j2
 @Service
-public class MedicineDonationService implements BaseService {
+public class MedicineDonationService extends BaseService {
 
     private final MedicineDonationValidation donationValidation;
     private final CityRepository cityRepository;
@@ -37,6 +40,7 @@ public class MedicineDonationService implements BaseService {
     private final MedicineRepository medicineRepository;
     private final CloudFileService cloudFileService;
 
+    @Autowired
     public MedicineDonationService(MedicineDonationValidation donationValidation,
                     CityRepository cityRepository,
                     MedicineUnitRepository medicineUnitRepository,
@@ -54,7 +58,8 @@ public class MedicineDonationService implements BaseService {
     }
 
     public MedicineDonationResponse create(
-                    MedicineDonationRequest medicineDonationRequest) {
+                    MedicineDonationRequest medicineDonationRequest,
+                    String authorization) {
         donationValidation.validateCreate(medicineDonationRequest);
 
         MedicineDonation medicineDonation =
@@ -62,7 +67,7 @@ public class MedicineDonationService implements BaseService {
         medicineDonation.setCategory(DonationCategory.MEDICINE);
         medicineDonation.setCity(getCity(medicineDonationRequest.getCityId()));
         medicineDonation.setDonationDate(OffsetDateTime.now());
-        // TODO: 28/02/23 get user from token
+        medicineDonation.setUser(getUser(authorization));
         medicineDonation.setMedicineUnit(
                         getUnit(medicineDonationRequest.getMedicineUnitId()));
         medicineDonation.setMedicine(

@@ -30,9 +30,10 @@ public class MedicineDonationController {
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<MedicineDonationResponse> create(
-                    @RequestBody MedicineDonationRequest medicineDonationRequest) {
-        MedicineDonationResponse donationResponse =
-                        medicineDonationService.create(medicineDonationRequest);
+                    @RequestBody MedicineDonationRequest medicineDonationRequest,
+                    @RequestHeader("Authorization") String authorization) {
+        MedicineDonationResponse donationResponse = medicineDonationService
+                        .create(medicineDonationRequest, authorization.substring(7));
         return ResponseEntity.ok(donationResponse);
     }
 

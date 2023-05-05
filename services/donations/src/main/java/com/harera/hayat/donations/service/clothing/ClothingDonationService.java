@@ -24,7 +24,7 @@ import java.util.List;
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 
 @Service
-public class ClothingDonationService implements BaseService {
+public class ClothingDonationService extends BaseService {
 
     @Value("${donation.clothing.expiration_in_days:45}")
     private int expirationDays;
@@ -47,7 +47,8 @@ public class ClothingDonationService implements BaseService {
     }
 
     public ClothingDonationResponse create(
-                    ClothingDonationRequest clothingDonationRequest) {
+                    ClothingDonationRequest clothingDonationRequest,
+                    String authorization) {
         clothingDonationValidation.validateCreate(clothingDonationRequest);
 
         ClothingDonation clothingDonation =
@@ -58,8 +59,7 @@ public class ClothingDonationService implements BaseService {
         clothingDonation.setDonationDate(OffsetDateTime.now());
         clothingDonation.setDonationExpirationDate(
                         OffsetDateTime.now().plusDays(expirationDays));
-
-        // TODO: set user
+        clothingDonation.setUser(getUser(authorization));
         clothingDonation.setCity(citService.getCity(clothingDonationRequest.getCityId()));
         // TODO: send request to ai for processing
 

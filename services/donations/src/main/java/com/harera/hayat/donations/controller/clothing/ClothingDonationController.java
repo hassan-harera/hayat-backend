@@ -30,8 +30,10 @@ public class ClothingDonationController {
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<ClothingDonationResponse> create(
-                    @RequestBody ClothingDonationRequest clothingDonationRequest) {
-        return ResponseEntity.ok(clothingDonationService.create(clothingDonationRequest));
+                    @RequestBody ClothingDonationRequest clothingDonationRequest,
+                    @RequestHeader("Authorization") String authorization) {
+        return ResponseEntity.ok(clothingDonationService.create(clothingDonationRequest,
+                        authorization.substring(7)));
     }
 
     @PutMapping("/{id}")

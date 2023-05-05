@@ -4,11 +4,22 @@ spring:
   application:
     name: donations-service
   security:
-    jackson:
-      serialization:
-        write-dates-as-timestamps: false
-      deserialization:
-        accept-single-value-as-array: true
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8181/realms/master
+          jwk-set-uri: http://localhost:8181/realms/master/protocol/openid-connect/certs
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8181/realms/master
+            user-name-attribute: preferred_username
+            jwk-set-uri: http://localhost:8181/realms/master/protocol/openid-connect/certs
+        registration:
+          keycloak:
+            client-id: donations-service
+            authorization-grant-type: authorization_code
+            scope: openid
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     password: harera
