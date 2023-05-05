@@ -18,6 +18,7 @@ import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
 import com.harera.hayat.framework.util.ErrorCode;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Service
@@ -101,7 +102,7 @@ public class MedicineDonationValidation {
 
     private void validateCreateFormat(MedicineDonationDto medicineDonationRequest) {
         if (medicineDonationRequest.getMedicineExpirationDate()
-                        .isBefore(OffsetDateTime.now())) {
+                        .isBefore(LocalDate.now())) {
             throw new FieldLimitException(
                             ErrorCode.FORMAT_MEDICINE_DONATION_EXPIRATION_DATE,
                             "medicine expiration date", medicineDonationRequest
@@ -116,7 +117,7 @@ public class MedicineDonationValidation {
         }
 
         if (medicineDonationRequest.getMedicineExpirationDate()
-                        .isBefore(OffsetDateTime.now())) {
+                        .isBefore(LocalDate.now())) {
             throw new FieldLimitException(
                             ErrorCode.FORMAT_MEDICINE_DONATION_EXPIRATION_DATE,
                             "medicine expiration date", medicineDonationRequest
@@ -127,7 +128,7 @@ public class MedicineDonationValidation {
     private void validateUpdateFormat(
                     MedicineDonationUpdateRequest medicineDonationRequest) {
         if (medicineDonationRequest.getMedicineExpirationDate()
-                        .isBefore(OffsetDateTime.now())) {
+                        .isBefore(LocalDate.now())) {
             throw new FieldLimitException(
                             ErrorCode.FORMAT_MEDICINE_DONATION_EXPIRATION_DATE,
                             "medicine expiration date", medicineDonationRequest
@@ -142,7 +143,7 @@ public class MedicineDonationValidation {
         }
 
         if (medicineDonationRequest.getMedicineExpirationDate()
-                        .isBefore(OffsetDateTime.now())) {
+                        .isBefore(LocalDate.now())) {
             throw new FieldLimitException(
                             ErrorCode.FORMAT_MEDICINE_DONATION_EXPIRATION_DATE,
                             "medicine_expiration_date", medicineDonationRequest

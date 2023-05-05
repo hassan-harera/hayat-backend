@@ -21,7 +21,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
-public class PropertyDonationService implements BaseService {
+public class PropertyDonationService extends BaseService {
 
     @Value("${donation.property.page_size:10}")
     private int pageSize;

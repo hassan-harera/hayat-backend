@@ -1,15 +1,16 @@
-package com.harera.hayat.authorization.service;
+package com.harera.hayat.authorization.service.jwt;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.harera.hayat.authorization.service.auth.AuthValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import com.harera.hayat.authorization.model.user.AuthUser;
+import com.harera.hayat.authorization.model.user.User;
 import com.harera.hayat.authorization.model.user.Role;
 import com.harera.hayat.authorization.repository.TokenRepository;
 import com.harera.hayat.authorization.repository.UserRepository;
@@ -42,7 +43,7 @@ public class JwtService {
         this.tokenRepository = tokenRepository;
     }
 
-    private Map<String, Object> getClaims(AuthUser user) {
+    private Map<String, Object> getClaims(User user) {
         Map<String, Object> claims = new HashMap<>(2);
         claims.put("id", user.getId());
         claims.put("uid", user.getUid());
@@ -55,7 +56,7 @@ public class JwtService {
         return claims;
     }
 
-    public String generateToken(AuthUser user) {
+    public String generateToken(User user) {
         final String userSubject = String.valueOf(user.getId());
         final String token = createToken(userSubject, Long.valueOf(tokenExpire),
                         getClaims(user));
@@ -63,7 +64,7 @@ public class JwtService {
         return token;
     }
 
-    public String generateRefreshToken(AuthUser user) {
+    public String generateRefreshToken(User user) {
         final String token = createToken(user.getUsername(),
                         Long.valueOf(refreshTokenExpire), null);
         tokenRepository.addRefreshToken(user.getId(), token);

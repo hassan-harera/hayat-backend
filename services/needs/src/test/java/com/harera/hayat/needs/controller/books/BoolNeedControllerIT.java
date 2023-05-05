@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.model.user.UserDto;
+import com.harera.hayat.framework.model.user.BaseUserDto;
 import com.harera.hayat.needs.ApplicationIT;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
@@ -37,7 +37,7 @@ class BoolNeedControllerIT extends ApplicationIT {
         bookNeedRequest.setDescription("description");
         bookNeedRequest.setCommunicationMethod(CommunicationMethod.PHONE);
         bookNeedRequest.setCityId(city.getId());
-        bookNeedRequest.setUser(new UserDto());
+        bookNeedRequest.setUser(new BaseUserDto());
         bookNeedRequest.setBookName("bookName");
         bookNeedRequest.setBookAuthor("bookAuthor");
         bookNeedRequest.setBookPublisher("bookPublisher");

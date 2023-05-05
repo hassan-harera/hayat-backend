@@ -1,4 +1,4 @@
-package com.harera.hayat.authorization.model.user;
+package com.harera.hayat.framework.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.harera.hayat.framework.model.BaseEntityDto;
@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true, value = { "active" })
-public class UserDto extends BaseEntityDto {
+public class BaseUserDto extends BaseEntityDto {
 
     private String firstName;
     private String lastName;

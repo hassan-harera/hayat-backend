@@ -26,7 +26,7 @@ public class UserAuthority implements GrantedAuthority {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private AuthUser user;
+    private User user;
 
     @Override
     public String getAuthority() {

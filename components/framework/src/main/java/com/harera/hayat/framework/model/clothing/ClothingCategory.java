@@ -16,17 +16,4 @@ public class ClothingCategory extends BaseEntity {
 
     @Column(name = "english_name")
     private String englishName;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "shortcut")
-    private Type type;
-
-    public enum Type {
-        WOMEN,
-        MEN,
-        GIRLS,
-        BOYS,
-        KIDS,
-        MIXED,
-    }
 }

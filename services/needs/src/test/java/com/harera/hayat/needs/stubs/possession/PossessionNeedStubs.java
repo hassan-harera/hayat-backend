@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.model.user.User;
+import com.harera.hayat.framework.model.user.BaseUser;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
@@ -31,7 +31,7 @@ public class PossessionNeedStubs {
             NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
-            User user,
+            BaseUser user,
             PossessionCondition possessionCondition,
             PossessionCategory possessionCategory
     ) {
@@ -60,7 +60,7 @@ public class PossessionNeedStubs {
             NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
-            User user,
+            BaseUser user,
             PossessionCondition possessionCondition,
             PossessionCategory possessionCategory
     ) {

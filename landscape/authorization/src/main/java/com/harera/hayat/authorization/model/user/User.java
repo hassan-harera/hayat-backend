@@ -16,7 +16,7 @@ import lombok.Setter;
 @Getter
 @Entity
 @Table(name = "user_")
-public class AuthUser extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails {
 
     @Basic
     @Column(name = "phone_number")

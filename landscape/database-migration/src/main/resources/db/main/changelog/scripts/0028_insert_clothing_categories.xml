@@ -1,0 +1,42 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0028" author="hharera@hayat.social">
+        <sql>
+            insert into clothing_category (arabic_name, english_name) values ('سترة', 'Sweater');
+            insert into clothing_category (arabic_name, english_name) values ('قميص', 'Shirt');
+            insert into clothing_category (arabic_name, english_name) values ('جينز', 'Jeans');
+            insert into clothing_category (arabic_name, english_name) values ('القفازات', 'Gloves');
+            insert into clothing_category (arabic_name, english_name) values ('قبعة', 'Cap');
+            insert into clothing_category (arabic_name, english_name) values ('بدلة', 'Suit');
+            insert into clothing_category (arabic_name, english_name) values ('قميص هاواي', 'Hawaiian shirt');
+            insert into clothing_category (arabic_name, english_name) values ('القميص', 'Singlet');
+            insert into clothing_category (arabic_name, english_name) values ('شباشب', 'Flip flops');
+            insert into clothing_category (arabic_name, english_name) values ('السراويل القصيرة', 'Shorts');
+            insert into clothing_category (arabic_name, english_name) values ('كارديجان', 'Cardigan');
+            insert into clothing_category (arabic_name, english_name) values ('السترة', 'Jacket');
+            insert into clothing_category (arabic_name, english_name) values ('أحذية رياضية', 'Sport shoes');
+            insert into clothing_category (arabic_name, english_name) values ('قميص بلا اكمام', 'Sleeveless shirt');
+            insert into clothing_category (arabic_name, english_name) values ('بلوزة طويلة الأكمام', 'Long-sleeve top');
+            insert into clothing_category (arabic_name, english_name) values ('قميص بولو', 'Polo shirt');
+            insert into clothing_category (arabic_name, english_name) values ('رداء الحمام', 'Bathrobe');
+            insert into clothing_category (arabic_name, english_name) values ('سراويل البضائع', 'Cargo pants');
+            insert into clothing_category (arabic_name, english_name) values ('ملابس السباحة', 'Swimsuit');
+            insert into clothing_category (arabic_name, english_name) values ('بليزر', 'Blazer');
+            insert into clothing_category (arabic_name, english_name) values ('تي شيرت', 'T-shirt');
+            insert into clothing_category (arabic_name, english_name) values ('حزام', 'Belt');
+            insert into clothing_category (arabic_name, english_name) values ('سروال', 'Underpants');
+            insert into clothing_category (arabic_name, english_name) values ('جوارب', 'Socks');
+            insert into clothing_category (arabic_name, english_name) values ('مظلة', 'Umbrella');
+            insert into clothing_category (arabic_name, english_name) values ('وشاح', 'Scarf');
+            insert into clothing_category (arabic_name, english_name) values ('نظارة شمسيه', 'Sunglasses');
+            insert into clothing_category (arabic_name, english_name) values ('نظارات', 'Glasses');
+            insert into clothing_category (arabic_name, english_name) values ('أحذية', 'Boots');
+            insert into clothing_category (arabic_name, english_name) values ('محفظة', 'Wallet');
+            insert into clothing_category (arabic_name, english_name) values ('حقيبة يد', 'Handbag');
+            insert into clothing_category (arabic_name, english_name) values ('ساعة', 'Watch');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

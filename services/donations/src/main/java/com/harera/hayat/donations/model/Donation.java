@@ -2,7 +2,7 @@ package com.harera.hayat.donations.model;
 
 import com.harera.hayat.framework.model.BaseEntity;
 import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.model.user.User;
+import com.harera.hayat.framework.model.user.BaseUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,7 +49,7 @@ public class Donation extends BaseEntity {
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = BaseUser.class)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private BaseUser user;
 }

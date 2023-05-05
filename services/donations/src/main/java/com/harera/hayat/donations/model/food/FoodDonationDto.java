@@ -5,6 +5,7 @@ import com.harera.hayat.donations.model.DonationDto;
 import com.harera.hayat.framework.model.food.FoodUnitDto;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Data
@@ -17,7 +18,7 @@ public class FoodDonationDto extends DonationDto {
     private Float quantity;
 
     @JsonProperty(value = "food_expiration_date")
-    private OffsetDateTime foodExpirationDate;
+    private LocalDate foodExpirationDate;
 
     @JsonProperty(value = "city_id")
     private Long cityId;

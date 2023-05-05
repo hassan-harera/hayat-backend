@@ -45,7 +45,7 @@ class MedicineDonationServiceTest {
     void setUp() {
         medicineDonationService = new MedicineDonationService(medicineDonationValidation,
                         cityRepository, medicineUnitRepository, new NotNullableMapper(),
-                        medicineDonationRepository, medicineRepository, cloudFileService);
+                        medicineDonationRepository, medicineRepository, cloudFileService, securityContext);
     }
 
     @Test
@@ -77,7 +77,7 @@ class MedicineDonationServiceTest {
         when(medicineRepository.findById(1L)).thenReturn(Optional.of(medicine));
         when(medicineUnitRepository.findById(1L)).thenReturn(Optional.of(medicineUnit));
 
-        MedicineDonationResponse response = medicineDonationService.create(request);
+        MedicineDonationResponse response = medicineDonationService.create(request, authorization.substring(7));
 
         // then
         medicineDonationRepository.save(any());
@@ -107,7 +107,7 @@ class MedicineDonationServiceTest {
 
         // then
         assertThrows(EntityNotFoundException.class,
-                        () -> medicineDonationService.create(request));
+                        () -> medicineDonationService.create(request, authorization.substring(7)));
     }
 
     @Test
@@ -133,7 +133,7 @@ class MedicineDonationServiceTest {
 
         Exception ex = null;
         try {
-            medicineDonationService.create(request);
+            medicineDonationService.create(request, authorization.substring(7));
         } catch (Exception e) {
             ex = e;
 
@@ -163,7 +163,7 @@ class MedicineDonationServiceTest {
 
         Exception ex = null;
         try {
-            medicineDonationService.create(request);
+            medicineDonationService.create(request, authorization.substring(7));
         } catch (Exception e) {
             ex = e;
 
@@ -195,7 +195,7 @@ class MedicineDonationServiceTest {
                         .thenReturn(Optional.of(new MedicineUnit()));
 
         MedicineDonationResponse medicineDonationResponse =
-                        medicineDonationService.create(request);
+                        medicineDonationService.create(request, authorization.substring(7));
         // then
         assertEquals(request.getTitle(), medicineDonationResponse.getTitle());
         assertEquals(request.getDescription(), medicineDonationResponse.getDescription());

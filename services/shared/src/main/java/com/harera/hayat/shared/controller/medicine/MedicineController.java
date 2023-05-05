@@ -1,6 +1,5 @@
 package com.harera.hayat.shared.controller.medicine;
 
-import com.harera.hayat.framework.model.medicine.Medicine;
 import com.harera.hayat.framework.model.medicine.MedicineDto;
 import com.harera.hayat.framework.service.medicine.MedicineService;
 import io.swagger.v3.oas.annotations.Operation;

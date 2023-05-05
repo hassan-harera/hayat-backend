@@ -4,6 +4,7 @@ import com.harera.hayat.framework.model.clothing.ClothingCondition;
 import com.harera.hayat.framework.service.clothing.ClothingConditionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 @RequestMapping("/api/v1/clothing/conditions")
+@Tag(name = "Clothing - Condition")
 public class ClothingConditionController {
 
     private final ClothingConditionService clothingConditionService;

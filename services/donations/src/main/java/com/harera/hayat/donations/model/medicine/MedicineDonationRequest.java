@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Data
@@ -19,7 +20,4 @@ public class MedicineDonationRequest extends MedicineDonationDto {
 
     @JsonProperty(value = "medicine_id")
     private Long medicineId;
-
-    @JsonProperty(value = "medicine_expiration_date")
-    private OffsetDateTime medicineExpirationDate;
 }

@@ -28,8 +28,10 @@ public class BookDonationController {
                     tags = "Book-Donation", responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<BookDonationResponse> create(
-                    @RequestBody BookDonationRequest bookDonationRequest) {
-        return ResponseEntity.ok(bookDonationService.create(bookDonationRequest));
+                    @RequestBody BookDonationRequest bookDonationRequest,
+                    @RequestHeader("Authorization") String authorization) {
+        return ResponseEntity.ok(bookDonationService.create(bookDonationRequest,
+                        authorization.substring(7)));
     }
 
     @PutMapping("/{id}")

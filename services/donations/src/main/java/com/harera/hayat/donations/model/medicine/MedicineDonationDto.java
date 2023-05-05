@@ -6,6 +6,7 @@ import com.harera.hayat.framework.model.medicine.MedicineDto;
 import com.harera.hayat.framework.model.medicine.MedicineUnitDto;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
 @Data
@@ -18,7 +19,7 @@ public class MedicineDonationDto extends DonationDto {
     private MedicineUnitDto medicineUnit;
 
     @JsonProperty("medicine_expiration_date")
-    private OffsetDateTime medicineExpirationDate;
+    private LocalDate medicineExpirationDate;
 
     @JsonProperty("medicine")
     private MedicineDto medicine;
