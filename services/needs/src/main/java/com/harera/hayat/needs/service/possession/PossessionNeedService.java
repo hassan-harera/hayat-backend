@@ -10,12 +10,12 @@ import com.harera.hayat.needs.repository.possession.PossessionCategoryRepository
 import com.harera.hayat.needs.repository.possession.PossessionConditionRepository;
 import com.harera.hayat.needs.repository.possession.PossessionNeedRepository;
 import com.harera.hayat.needs.service.BaseService;
+import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 @Service
 public class PossessionNeedService implements BaseService {

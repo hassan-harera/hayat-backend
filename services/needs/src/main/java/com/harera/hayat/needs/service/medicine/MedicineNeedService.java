@@ -116,8 +116,8 @@ public class MedicineNeedService implements BaseService {
 
     public List<MedicineNeedResponse> search(String query, int page) {
         page = Integer.max(page, 1) - 1;
-        return medicineNeedRepository.searchByTitleRegexOrDescriptionRegex(query, query).stream()
-                        .map(medicineNeed -> modelMapper.map(medicineNeed,
+        return medicineNeedRepository.searchByTitleRegexOrDescriptionRegex(query, query)
+                        .stream().map(medicineNeed -> modelMapper.map(medicineNeed,
                                         MedicineNeedResponse.class))
                         .toList();
     }
