@@ -2,7 +2,7 @@ package com.harera.hayat.needs.service.blood;
 
 import com.harera.hayat.framework.exception.FieldFormatException;
 import com.harera.hayat.framework.exception.MandatoryFieldException;
-import com.harera.hayat.needs.model.need.BloodNeedRequest;
+import com.harera.hayat.needs.model.blood.BloodNeedRequest;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,6 +1,5 @@
-package com.harera.hayat.needs.model.need;
+package com.harera.hayat.needs.model.blood;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.needs.model.Need;
 import lombok.Getter;
 import lombok.Setter;

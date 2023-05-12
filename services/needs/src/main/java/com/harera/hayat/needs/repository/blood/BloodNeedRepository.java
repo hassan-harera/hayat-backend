@@ -1,6 +1,6 @@
 package com.harera.hayat.needs.repository.blood;
 
-import com.harera.hayat.needs.model.need.BloodNeed;
+import com.harera.hayat.needs.model.blood.BloodNeed;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

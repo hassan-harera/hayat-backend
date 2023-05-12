@@ -1,7 +1,7 @@
 package com.harera.hayat.needs.controller.blood;
 
-import com.harera.hayat.needs.model.need.BloodNeedRequest;
-import com.harera.hayat.needs.model.need.BloodNeedResponse;
+import com.harera.hayat.needs.model.blood.BloodNeedRequest;
+import com.harera.hayat.needs.model.blood.BloodNeedResponse;
 import com.harera.hayat.needs.service.blood.BloodNeedService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
