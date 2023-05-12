@@ -43,6 +43,7 @@ spring:
       port: ${MONGO_PORT}
       username: ${MONGO_ROOT_USER}
       password: ${MONGO_ROOT_PASSWORD}
+      database: hayat
 eureka:
   client:
     service-url:
