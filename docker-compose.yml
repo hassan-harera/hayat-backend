@@ -56,6 +56,11 @@ services:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
       - CONFIG_SERVICE_URI=http://config-service:8111
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_DB=${MONGO_DB}
+      - MONGO_ROOT_USER=${MONGO_ROOT_USER}
+      - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
     ports:
       - "8761:8761"
 
