@@ -141,6 +141,8 @@ services:
       context: ./services/needs
       dockerfile: Dockerfile
     restart: on-failure
+    env_file:
+      - .env
     environment:
       - EUREKA_URL=http://discovery-service:8761
       - REDIS_HOST=redis
@@ -158,6 +160,11 @@ services:
       - DB_PORT=${DB_PORT}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
+      - MONGO_HOST=${MONGO_HOST}
+      - MONGO_PORT=${MONGO_PORT}
+      - MONGO_DB=${MONGO_DB}
+      - MONGO_ROOT_USER=${MONGO_ROOT_USER}
+      - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
     ports:
       - "8082:8082"
     depends_on:
