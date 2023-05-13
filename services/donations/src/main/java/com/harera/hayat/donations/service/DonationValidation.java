@@ -1,5 +1,6 @@
 package com.harera.hayat.donations.service;
 
+import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationDto;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.exception.FieldFormatException;
@@ -10,6 +11,8 @@ import com.harera.hayat.framework.util.ErrorCode;
 import com.harera.hayat.framework.util.FieldFormat;
 import org.springframework.stereotype.Service;
 
+import static com.harera.hayat.donations.util.CommunicationRegexUtils.isValidTelegramLink;
+import static com.harera.hayat.donations.util.CommunicationRegexUtils.isValidWhatsappLink;
 import static com.harera.hayat.framework.util.ErrorCode.NOT_FOUND_CITY;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -45,6 +48,18 @@ public class DonationValidation {
             throw new FieldFormatException(ErrorCode.FORMAT_DONATION_TITLE, "title",
                             FieldFormat.TITLE_PATTERN);
         }
+
+        if (donationDto.getTelegramLink() != null
+                        && !isValidTelegramLink(donationDto.getTelegramLink())) {
+            throw new FieldFormatException("", "telegram_link",
+                            donationDto.getTelegramLink());
+        }
+
+        if (donationDto.getWhatsappLink() != null
+                        && !isValidWhatsappLink(donationDto.getWhatsappLink())) {
+            throw new FieldFormatException("", "whatsapp_link",
+                            donationDto.getWhatsappLink());
+        }
     }
 
     private void validateMandatory(DonationDto donationDto) {
@@ -60,6 +75,11 @@ public class DonationValidation {
         if (donationDto.getCityId() == null) {
             throw new MandatoryFieldException(ErrorCode.MANDATORY_DONATION_CITY_ID,
                             "city_id");
+        }
+        if (donationDto.getCommunicationMethod() == CommunicationMethod.CHAT
+                        && isBlank(donationDto.getTelegramLink())
+                        && isBlank(donationDto.getWhatsappLink())) {
+            throw new MandatoryFieldException(null, "telegram_link or whatsapp_link");
         }
     }
 }

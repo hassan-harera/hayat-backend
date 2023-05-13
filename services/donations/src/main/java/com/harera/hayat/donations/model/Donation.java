@@ -1,5 +1,6 @@
 package com.harera.hayat.donations.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.framework.model.BaseEntity;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.user.BaseUser;
@@ -52,4 +53,10 @@ public class Donation extends BaseEntity {
     @ManyToOne(targetEntity = BaseUser.class)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private BaseUser user;
+
+    @Column(name = "telegram_link")
+    private String telegramLink;
+
+    @Column(name = "whatsapp_link")
+    private String whatsappLink;
 }

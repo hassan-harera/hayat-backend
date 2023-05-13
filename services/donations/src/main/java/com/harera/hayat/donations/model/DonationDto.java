@@ -45,4 +45,10 @@ public class DonationDto extends BaseEntityDto {
 
     @JsonProperty(value = "image_url")
     private String imageUrl;
+
+    @JsonProperty(value = "telegram_link")
+    private String telegramLink;
+
+    @JsonProperty(value = "whatsapp_link")
+    private String whatsappLink;
 }

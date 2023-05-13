@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0029" author="hharera@hayat.social">
+        <sql>
+            ALTER TABLE medicine_donation
+            ADD COLUMN telegram_link varchar(1024) null,
+            ADD COLUMN whatsapp_link varchar(1024) null;
+
+            ALTER TABLE food_donation
+            ADD COLUMN telegram_link varchar(1024) null,
+            ADD COLUMN whatsapp_link varchar(1024) null;
+
+            ALTER TABLE book_donation
+            ADD COLUMN telegram_link varchar(1024) null,
+            ADD COLUMN whatsapp_link varchar(1024) null;
+
+            ALTER TABLE clothing_donation
+            ADD COLUMN telegram_link varchar(1024) null,
+            ADD COLUMN whatsapp_link varchar(1024) null;
+        </sql>
+    </changeSet>
+</databaseChangeLog>
