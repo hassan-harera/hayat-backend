@@ -111,7 +111,7 @@ public class MedicineDonationController {
     public ResponseEntity<Void> upvoteBloodNeed(
             @PathVariable("id") Long id,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        medicineDonationService.upvote(id, authorization);
+        medicineDonationService.upvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 
@@ -130,7 +130,7 @@ public class MedicineDonationController {
     public ResponseEntity<Void> downVoteBloodNeed(
             @PathVariable("id") Long id,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        medicineDonationService.downvote(id, authorization);
+        medicineDonationService.downvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 }

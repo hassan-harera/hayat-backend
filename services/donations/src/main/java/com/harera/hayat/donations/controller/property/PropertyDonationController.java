@@ -77,7 +77,7 @@ public class PropertyDonationController {
     public ResponseEntity<Void> upvoteBloodNeed(
             @PathVariable("id") Long id,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        propertyDonationService.upvote(id, authorization);
+        propertyDonationService.upvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 
@@ -96,7 +96,7 @@ public class PropertyDonationController {
     public ResponseEntity<Void> downVoteBloodNeed(
             @PathVariable("id") Long id,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        propertyDonationService.downvote(id, authorization);
+        propertyDonationService.downvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 }

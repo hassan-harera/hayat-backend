@@ -92,7 +92,7 @@ public class FoodDonationController {
     public ResponseEntity<Void> upvoteBloodNeed(
             @PathVariable("id") Long id,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        foodDonationService.upvote(id, authorization);
+        foodDonationService.upvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 
@@ -111,7 +111,7 @@ public class FoodDonationController {
     public ResponseEntity<Void> downVoteBloodNeed(
             @PathVariable("id") Long id,
             @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        foodDonationService.downvote(id, authorization);
+        foodDonationService.downvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 }

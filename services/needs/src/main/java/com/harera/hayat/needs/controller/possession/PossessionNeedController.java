@@ -47,7 +47,7 @@ public class PossessionNeedController {
                     tags = "Possession - Need")
     public ResponseEntity<Void> upvoteBloodNeed(@PathVariable("id") String id,
                     @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        possessionNeedService.upvote(id, authorization);
+        possessionNeedService.upvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 
@@ -63,7 +63,7 @@ public class PossessionNeedController {
                     tags = "Possession - Need")
     public ResponseEntity<Void> downVoteBloodNeed(@PathVariable("id") String id,
                     @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        possessionNeedService.downvote(id, authorization);
+        possessionNeedService.downvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 }

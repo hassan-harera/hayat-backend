@@ -49,7 +49,7 @@ public class BloodNeedController {
     public ResponseEntity<Void> upvoteBloodNeed(
                     @PathVariable("id") String id,
                     @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        bloodNeedService.upvote(id, authorization);
+        bloodNeedService.upvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 
@@ -68,7 +68,7 @@ public class BloodNeedController {
     public ResponseEntity<Void> downVoteBloodNeed(
                     @PathVariable("id") String id,
                     @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        bloodNeedService.downvote(id, authorization);
+        bloodNeedService.downvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 }

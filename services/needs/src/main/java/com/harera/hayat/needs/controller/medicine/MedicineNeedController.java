@@ -103,7 +103,7 @@ public class MedicineNeedController {
                     tags = "Medicine-Need")
     public ResponseEntity<Void> upvoteBloodNeed(@PathVariable("id") String id,
                     @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        medicineNeedService.upvote(id, authorization);
+        medicineNeedService.upvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 
@@ -119,7 +119,7 @@ public class MedicineNeedController {
                     tags = "Medicine-Need")
     public ResponseEntity<Void> downVoteBloodNeed(@PathVariable("id") String id,
                     @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        medicineNeedService.downvote(id, authorization);
+        medicineNeedService.downvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 }
