@@ -36,13 +36,13 @@ public class BookDonation extends Donation {
     @Column(name = "book_language")
     private String bookLanguage;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_donation_upvotes",
                     joinColumns = @JoinColumn(name = "donation_id"),
                     inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<BaseUser> upvotes = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "book_donation_downvotes",
                     joinColumns = @JoinColumn(name = "donation_id"),
                     inverseJoinColumns = @JoinColumn(name = "user_id"))

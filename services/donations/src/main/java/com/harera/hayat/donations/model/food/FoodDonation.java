@@ -34,13 +34,13 @@ public class FoodDonation extends Donation {
     @Column(name = "quantity")
     private Float quantity;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "food_donation_upvotes",
                     joinColumns = @JoinColumn(name = "donation_id"),
                     inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<BaseUser> upvotes = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "food_donation_downvotes",
                     joinColumns = @JoinColumn(name = "donation_id"),
                     inverseJoinColumns = @JoinColumn(name = "user_id"))
