@@ -2,7 +2,7 @@ package com.harera.hayat.shared.controller.city;
 
 
 import com.harera.hayat.framework.model.city.StateResponse;
-import com.harera.hayat.framework.service.StateService;
+import com.harera.hayat.framework.service.city.StateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

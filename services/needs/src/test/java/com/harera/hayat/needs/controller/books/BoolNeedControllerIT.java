@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.model.user.UserDto;
+import com.harera.hayat.framework.model.user.BaseUserDto;
 import com.harera.hayat.needs.ApplicationIT;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
-import com.harera.hayat.needs.model.NeedState;
+import com.harera.hayat.needs.model.NeedStatus;
 import com.harera.hayat.needs.model.books.BookNeedRequest;
 import com.harera.hayat.needs.model.books.BookNeedResponse;
 import com.harera.hayat.needs.stubs.CityStubs;
@@ -37,7 +37,7 @@ class BoolNeedControllerIT extends ApplicationIT {
         bookNeedRequest.setDescription("description");
         bookNeedRequest.setCommunicationMethod(CommunicationMethod.PHONE);
         bookNeedRequest.setCityId(city.getId());
-        bookNeedRequest.setUser(new UserDto());
+        bookNeedRequest.setUser(new BaseUserDto());
         bookNeedRequest.setBookName("bookName");
         bookNeedRequest.setBookAuthor("bookAuthor");
         bookNeedRequest.setBookPublisher("bookPublisher");
@@ -51,7 +51,7 @@ class BoolNeedControllerIT extends ApplicationIT {
         assertEquals(200, bookNeedResponseResponseEntity.getStatusCode().value());
         assertNotNull(body);
         assertEquals(NeedCategory.BOOKS, body.getCategory());
-        assertEquals(NeedState.PENDING, body.getStatus());
+        assertEquals(NeedStatus.PENDING, body.getStatus());
         assertEquals(bookNeedRequest.getTitle(), body.getTitle());
         assertEquals(bookNeedRequest.getDescription(), body.getDescription());
         assertNotNull(body.getNeedDate());

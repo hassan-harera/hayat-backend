@@ -1,13 +1,14 @@
 package com.harera.hayat.donations.service.book;
 
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.book.BookDonation;
 import com.harera.hayat.donations.model.book.BookDonationRequest;
 import com.harera.hayat.donations.model.book.BookDonationResponse;
 import com.harera.hayat.donations.model.book.BookDonationUpdateRequest;
 import com.harera.hayat.donations.repository.book.BookDonationRepository;
-import com.harera.hayat.framework.service.CityService;
+import com.harera.hayat.donations.service.BaseService;
+import com.harera.hayat.framework.service.city.CityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
-public class BookDonationService {
+public class BookDonationService extends BaseService {
 
     @Value("${donation.book.expiration.days:45}")
     private int bookDonationExpirationDays;
@@ -36,25 +37,26 @@ public class BookDonationService {
         this.cityService = cityService;
     }
 
-    public BookDonationResponse create(BookDonationRequest request) {
+    public BookDonationResponse create(BookDonationRequest request,
+                    String authorization) {
         bookDonationValidation.validateCreate(request);
 
         BookDonation bookDonation = modelMapper.map(request, BookDonation.class);
 
         bookDonation.setCategory(DonationCategory.BOOKS);
-        bookDonation.setStatus(DonationState.PENDING);
+        bookDonation.setStatus(DonationStatus.PENDING);
         bookDonation.setDonationDate(OffsetDateTime.now());
         bookDonation.setDonationExpirationDate(
                         OffsetDateTime.now().plusDays(bookDonationExpirationDays));
-
+        bookDonation.setUser(getUser(authorization));
         bookDonation.setCity(cityService.getCity(request.getCityId()));
-        // TODO: get user from auth
 
         bookDonationRepository.save(bookDonation);
         return modelMapper.map(bookDonation, BookDonationResponse.class);
     }
 
-    public BookDonationResponse update(Long id, BookDonationUpdateRequest bookDonationUpdateRequest) {
+    public BookDonationResponse update(Long id,
+                    BookDonationUpdateRequest bookDonationUpdateRequest) {
         return null;
     }
 

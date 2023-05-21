@@ -50,7 +50,7 @@ class FoodDonationServiceTest {
         int days = 1;
         foodDonationService = new FoodDonationService(foodDonationValidation,
                         cityRepository, modelMapper, foodUnitRepository,
-                        foodDonationRepository, days, foodCategoryRepository);
+                        foodDonationRepository, days, foodCategoryRepository, cloudFileService);
     }
 
     @Test
@@ -59,8 +59,8 @@ class FoodDonationServiceTest {
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setUnitId(1L);
-        request.setAmount(1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -81,8 +81,8 @@ class FoodDonationServiceTest {
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setUnitId(1L);
-        request.setAmount(1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -90,7 +90,7 @@ class FoodDonationServiceTest {
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
-        when(foodUnitRepository.findById(request.getUnitId()))
+        when(foodUnitRepository.findById(request.getFoodUnitId()))
                         .thenReturn(Optional.empty());
 
         // when
@@ -109,8 +109,8 @@ class FoodDonationServiceTest {
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setUnitId(1L);
-        request.setAmount(1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -148,8 +148,8 @@ class FoodDonationServiceTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setUnitId(1L);
-        request.setAmount(1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -170,7 +170,7 @@ class FoodDonationServiceTest {
                         foodDonationResponse.getFoodExpirationDate());
         assertEquals(request.getFoodExpirationDate(),
                         foodDonationResponse.getFoodExpirationDate());
-        assertEquals(request.getAmount(), foodDonationResponse.getAmount());
+        assertEquals(request.getQuantity(), foodDonationResponse.getQuantity());
 
         verify(foodDonationValidation, times(1)).validateCreate(request);
         verify(foodDonationRepository, times(1)).save(any());
@@ -184,8 +184,8 @@ class FoodDonationServiceTest {
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setUnitId(1L);
-        request.setAmount(1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -208,8 +208,8 @@ class FoodDonationServiceTest {
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setUnitId(1L);
-        request.setAmount(1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -238,8 +238,8 @@ class FoodDonationServiceTest {
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
         request.setDonationDate(OffsetDateTime.now());
-        request.setUnitId(1L);
-        request.setAmount(1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -272,8 +272,8 @@ class FoodDonationServiceTest {
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
-        request.setUnitId(1L);
-        request.setAmount(1F);
+        request.setFoodUnitId(1L);
+        request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -335,8 +335,8 @@ class FoodDonationServiceTest {
         foodUnit.setId(1L);
 
         FoodDonation foodDonation = new FoodDonation();
-        foodDonation.setAmount(1F);
-        foodDonation.setUnit(foodUnit);
+        foodDonation.setQuantity(1F);
+        foodDonation.setFoodUnit(foodUnit);
         foodDonation.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
         foodDonation.setId(1L);
         foodDonation.setTitle("title");
@@ -357,8 +357,8 @@ class FoodDonationServiceTest {
                         response.getCommunicationMethod());
         assertEquals(foodDonation.getCity().getId(), response.getCity().getId());
 
-        assertEquals(foodDonation.getUnit().getId(), response.getUnit().getId());
-        assertEquals(foodDonation.getAmount(), response.getAmount());
+        assertEquals(foodDonation.getFoodUnit().getId(), response.getFoodUnit().getId());
+        assertEquals(foodDonation.getQuantity(), response.getQuantity());
         assertTrue(foodDonation.getFoodExpirationDate()
                         .isEqual(response.getFoodExpirationDate()));
 

@@ -6,5 +6,7 @@ public enum DonationCategory {
     MEDICINE,
     EDUCATION,
     PROPERTY,
-    BOOKS, CLOTHING, OTHER
+    BOOKS,
+    CLOTHING,
+    OTHER
 }

@@ -1,7 +1,7 @@
 package com.harera.hayat.donations.stubs.food;
 
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.food.FoodDonation;
 import com.harera.hayat.donations.repository.food.FoodDonationRepository;
 import com.harera.hayat.framework.model.city.City;
@@ -21,11 +21,11 @@ public class FoodDonationStubs {
     public FoodDonation create(FoodUnit unit, Float amount,
                     OffsetDateTime foodExpirationDate, String title,
                     DonationCategory category, String description, City city,
-                    DonationState state) {
+                    DonationStatus state) {
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(0L);
-        foodDonation.setUnit(unit);
-        foodDonation.setAmount(amount);
+        foodDonation.setFoodUnit(unit);
+        foodDonation.setQuantity(amount);
         foodDonation.setFoodExpirationDate(foodExpirationDate);
         foodDonation.setTitle(title);
         foodDonation.setCategory(category);
@@ -37,7 +37,7 @@ public class FoodDonationStubs {
     public FoodDonation insert(FoodUnit unit, Float amount,
                                OffsetDateTime foodExpirationDate, String title,
                                DonationCategory category, String description, City city,
-                               DonationState state) {
+                               DonationStatus state) {
         FoodDonation foodDonation = create(unit, amount, foodExpirationDate, title,
                         category, description, city, state);
         return foodDonationRepository.save(foodDonation);

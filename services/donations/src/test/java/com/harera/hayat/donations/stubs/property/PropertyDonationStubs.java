@@ -2,7 +2,7 @@ package com.harera.hayat.donations.stubs.property;
 
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.property.PropertyDonation;
 import com.harera.hayat.donations.repository.property.PropertyDonationRepository;
 import com.harera.hayat.framework.model.city.City;
@@ -20,7 +20,7 @@ public class PropertyDonationStubs {
 
     public PropertyDonation create(String title, String description,
                     OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
-                    DonationCategory category, DonationState status,
+                    DonationCategory category, DonationStatus status,
                     CommunicationMethod communicationMethod, int rooms, int bathrooms,
                     int kitchens, City city, int peopleCapacity,
                     OffsetDateTime availableFrom, OffsetDateTime availableTo) {
@@ -45,7 +45,7 @@ public class PropertyDonationStubs {
 
     public PropertyDonation insert(String title, String description,
                     OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
-                    DonationCategory category, DonationState status,
+                    DonationCategory category, DonationStatus status,
                     CommunicationMethod communicationMethod, int rooms, int bathrooms,
                     int kitchens, City city, int peopleCapacity,
                     OffsetDateTime availableFrom, OffsetDateTime availableTo) {

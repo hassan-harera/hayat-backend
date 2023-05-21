@@ -2,13 +2,13 @@ package com.harera.hayat.donations.stubs.clothing;
 
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.clothing.*;
 import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository;
-import com.harera.hayat.framework.model.ClothingCondition;
-import com.harera.hayat.framework.model.ClothingType;
-import com.harera.hayat.framework.model.ClothingSeason;
-import com.harera.hayat.framework.model.ClothingSize;
+import com.harera.hayat.framework.model.clothing.ClothingCondition;
+import com.harera.hayat.framework.model.clothing.ClothingType;
+import com.harera.hayat.framework.model.clothing.ClothingSeason;
+import com.harera.hayat.framework.model.clothing.ClothingSize;
 import com.harera.hayat.framework.model.city.City;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class ClothingDonationStubs {
 
     public ClothingDonation create(String title, String description,
                                    OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
-                                   DonationCategory category, DonationState status,
+                                   DonationCategory category, DonationStatus status,
                                    CommunicationMethod communicationMethod, int quantity,
                                    ClothingCondition condition, ClothingType gender,
                                    ClothingSize clothingSize, ClothingSeason clothingSeason, City city) {
@@ -48,7 +48,7 @@ public class ClothingDonationStubs {
 
     public ClothingDonation insert(String title, String description,
                     OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
-                    DonationCategory category, DonationState status,
+                    DonationCategory category, DonationStatus status,
                     CommunicationMethod communicationMethod, int quantity,
                     ClothingCondition condition, ClothingType gender,
                     ClothingSize clothingSize, ClothingSeason clothingSeason, City city) {

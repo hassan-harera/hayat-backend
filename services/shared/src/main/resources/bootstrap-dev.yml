@@ -29,8 +29,7 @@ spring:
         format_sql: false
   liquibase:
     change-log: classpath:db/main/changelog/changelog-main.yaml
-    clear-checksums: true
-    enabled: false
+    database-change-log-table: SHARED_SERVICE_DATABASE_CHANGELOG
   data:
     mongodb:
       host: localhost

@@ -1,0 +1,46 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0007" author="hharera@hayat.social">
+        <sql>
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (1,'القاهرة','Cairo',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (2,'الجيزة','Giza',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES
+            (3,'الأسكندرية','Alexandria',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (4,'الدقهلية','Dakahlia',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (5,'البحر الأحمر','Red
+            Sea',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (6,'البحيرة','Beheira',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (7,'الفيوم','Fayoum',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (8,'الغربية','Gharbiya',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES
+            (9,'الإسماعلية','Ismailia',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (10,'المنوفية','Menofia',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (11,'المنيا','Minya',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES
+            (12,'القليوبية','Qaliubiya',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (13,'الوادي الجديد','New
+            Valley',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (14,'السويس','Suez',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (15,'اسوان','Aswan',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (16,'اسيوط','Assiut',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (17,'بني سويف','Beni
+            Suef',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (18,'بورسعيد','Port Said',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (19,'دمياط','Damietta',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (20,'الشرقية','Sharkia',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (21,'جنوب سيناء','South
+            Sinai',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (22,'كفر الشيخ','Kafr Al
+            sheikh',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (23,'مطروح','Matrouh',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (24,'الأقصر','Luxor',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (25,'قنا','Qena',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (26,'شمال سيناء','North
+            Sinai',1,1);
+            INSERT INTO state(id,arabic_name,english_name,country_id,active) VALUES (27,'سوهاج','Sohag',1,1);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

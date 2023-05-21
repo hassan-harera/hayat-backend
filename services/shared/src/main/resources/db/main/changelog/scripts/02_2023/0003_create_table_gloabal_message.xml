@@ -3,9 +3,9 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="0003" author="hharera@hharera.net">
+    <changeSet id="0003" author="hharera@hayat.social">
         <sql>
-            create table global_message
+            create table if not exists global_message
             (
             id bigint primary key auto_increment,
             active bit ,

@@ -51,7 +51,7 @@ public class ClothingDonationValidation {
                             ErrorCode.MANDATORY_CLOTHING_DONATION_QUANTITY, "quantity");
         }
 
-        if (clothingDonationRequest.getCondition() == null) {
+        if (clothingDonationRequest.getClothingConditionId() == null) {
             throw new MandatoryFieldException(
                             ErrorCode.MANDATORY_CLOTHING_DONATION_CONDITION,
                             "clothing_condition");

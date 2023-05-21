@@ -1,0 +1,17 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0027" author="hharera@hayat.social">
+        <sql>
+            create table if not exists user_authorities
+            (
+            user_id   bigint       not null,
+            authority varchar(500) not null,
+            constraint primary key (user_id, authority),
+            constraint fk_user_authority_user_id foreign key (user_id) references user_ (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

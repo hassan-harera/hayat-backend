@@ -3,7 +3,7 @@ package com.harera.hayat.donations.controller;
 import com.harera.hayat.donations.ApplicationIT;
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.property.PropertyDonation;
 import com.harera.hayat.donations.model.property.PropertyDonationRequest;
 import com.harera.hayat.donations.model.property.PropertyDonationResponse;
@@ -45,7 +45,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
         request.setDonationDate(OffsetDateTime.now());
         request.setDonationExpirationDate(OffsetDateTime.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationState.ACCEPTED);
+        request.setStatus(DonationStatus.ACCEPTED);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setBathrooms(1);
@@ -75,7 +75,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
             assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             assertEquals(request.getCategory(), response.getCategory());
-            assertEquals(DonationState.PENDING, response.getStatus());
+            assertEquals(DonationStatus.PENDING, response.getStatus());
             assertEquals(request.getCityId(), response.getCity().getId());
             assertEquals(request.getRooms(), response.getRooms());
             assertEquals(request.getBathrooms(), response.getBathrooms());
@@ -98,7 +98,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
 
         PropertyDonation propertyDonation = propertyDonationStubs.insert("title",
                         "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationState.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
                         OffsetDateTime.now().plusHours(1),
                         OffsetDateTime.now().plusMonths(1));
@@ -110,7 +110,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
         request.setDonationDate(OffsetDateTime.now());
         request.setDonationExpirationDate(OffsetDateTime.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationState.ACCEPTED);
+        request.setStatus(DonationStatus.ACCEPTED);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setBathrooms(2);
@@ -141,7 +141,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
             assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             assertEquals(request.getCategory(), response.getCategory());
-            assertEquals(DonationState.ACCEPTED, response.getStatus());
+            assertEquals(DonationStatus.ACCEPTED, response.getStatus());
             assertEquals(request.getCityId(), response.getCity().getId());
             assertEquals(request.getRooms(), response.getRooms());
             assertEquals(request.getBathrooms(), response.getBathrooms());
@@ -159,7 +159,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
         City city = cityStubs.insert("arabic_name", "english_name");
         PropertyDonation propertyDonation = propertyDonationStubs.insert("title",
                         "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationState.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
                         OffsetDateTime.now().plusHours(1),
                         OffsetDateTime.now().plusMonths(1));
@@ -184,7 +184,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
             assertEquals(propertyDonation.getCommunicationMethod(),
                             response.getCommunicationMethod());
             assertEquals(propertyDonation.getCategory(), response.getCategory());
-            assertEquals(DonationState.ACCEPTED, response.getStatus());
+            assertEquals(DonationStatus.ACCEPTED, response.getStatus());
             assertEquals(propertyDonation.getCity().getId(), response.getCity().getId());
             assertEquals(propertyDonation.getRooms(), response.getRooms());
             assertEquals(propertyDonation.getBathrooms(), response.getBathrooms());
@@ -203,21 +203,21 @@ class PropertyDonationControllerIT extends ApplicationIT {
 
         PropertyDonation propertyDonation1 = propertyDonationStubs.insert("title",
                         "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationState.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
                         OffsetDateTime.now().plusHours(1),
                         OffsetDateTime.now().plusMonths(1));
 
         PropertyDonation propertyDonation2 = propertyDonationStubs.insert("title",
                         "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationState.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
                         OffsetDateTime.now().plusHours(1),
                         OffsetDateTime.now().plusMonths(1));
 
         PropertyDonation propertyDonation3 = propertyDonationStubs.insert("title",
                         "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationState.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
                         OffsetDateTime.now().plusHours(1),
                         OffsetDateTime.now().plusMonths(1));

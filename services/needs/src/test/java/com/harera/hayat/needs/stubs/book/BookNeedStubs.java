@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.model.user.User;
+import com.harera.hayat.framework.model.user.BaseUser;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
-import com.harera.hayat.needs.model.NeedState;
+import com.harera.hayat.needs.model.NeedStatus;
 import com.harera.hayat.needs.model.books.BookNeed;
 import com.harera.hayat.needs.repository.books.BookNeedRepository;
 
@@ -27,10 +27,10 @@ public class BookNeedStubs {
             LocalDateTime needDate,
             LocalDateTime needExpirationDate,
             NeedCategory category,
-            NeedState status,
+            NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
-            User user,
+            BaseUser user,
             String bookName,
             String bookAuthor,
             String bookPublisher,
@@ -60,10 +60,10 @@ public class BookNeedStubs {
             LocalDateTime needDate,
             LocalDateTime needExpirationDate,
             NeedCategory category,
-            NeedState status,
+            NeedStatus status,
             CommunicationMethod communicationMethod,
             City city,
-            User user,
+            BaseUser user,
             String bookName,
             String bookAuthor,
             String bookPublisher,
@@ -80,7 +80,7 @@ public class BookNeedStubs {
         bookNeed.setCommunicationMethod(communicationMethod);
         bookNeed.setCity(city);
         bookNeed.setUser(user);
-        bookNeed.setBookName(bookName);
+        bookNeed.setBookTitle(bookName);
         bookNeed.setBookAuthor(bookAuthor);
         bookNeed.setBookPublisher(bookPublisher);
         bookNeed.setBookLanguage(bookLanguage);

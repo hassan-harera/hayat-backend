@@ -1,0 +1,86 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: needs-service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_SERVICE_URL}/realms/master
+          jwk-set-uri: ${KEYCLOAK_SERVICE_URL}/realms/master/protocol/openid-connect/certs
+        registration:
+          keycloak:
+            client-id: needs-service
+            authorization-grant-type: authorization_code
+            scope: openid
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
+    password: harera
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: root
+  hibernate:
+    connection:
+      charSet: UTF-8
+      characterEncoding: utf8
+      useUnicode: true
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: false
+  liquibase:
+    change-log: classpath:db/main/changelog/changelog-main.yaml
+    clear-checksums: true
+    enabled: false
+  data:
+    mongodb:
+      host: ${MONGO_HOST}
+      port: ${MONGO_PORT}
+      database: hayat
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761}/eureka/
+needs:
+  possession:
+    expiration_days: 45
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        all: true
+        http.server.requests: true
+  tracing:
+    sampling:
+      probability: 1.0
+  prometheus:
+    metrics:
+      export:
+        step: 10s
+
+s3:
+  endpoint:
+    url: ${S3_ENDPOINT_URL}
+  bucket:
+    name: ${S3_BUCKET_NAME}
+  access:
+    key:
+      id: ${S3_ACCESS_KEY_ID}
+  secret:
+    key: ${S3_SECRET_KEY}

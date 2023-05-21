@@ -1,0 +1,38 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0021" author="hharera@hayat.social">
+        <sql>
+            create table if not exists clothing_donation
+            (
+            id bigint primary key auto_increment,
+            active boolean default true,
+            title varchar(100),
+            description varchar(600),
+            category varchar(50),
+            communication_method varchar(50),
+            status varchar(50),
+            donation_date datetime,
+            donation_expiration_date datetime,
+            image_url varchar(2048),
+            quantity int,
+            clothing_condition_id bigint,
+            clothing_type_id bigint,
+            clothing_size_id bigint,
+            clothing_category_id bigint,
+            clothing_season_id bigint,
+            user_id bigint,
+            city_id bigint,
+            foreign key book_donation_city_id (city_id) references city (id),
+            foreign key book_donation_user_id (user_id) references user_ (id),
+            foreign key clothing_donation_clothing_condition_id (clothing_condition_id) references clothing_condition (id),
+            foreign key clothing_donation_clothing_type_id (clothing_type_id) references clothing_type (id),
+            foreign key clothing_donation_clothing_size_id (clothing_size_id) references clothing_size (id),
+            foreign key clothing_donation_clothing_category_id (clothing_category_id) references clothing_category (id),
+            foreign key clothing_donation_clothing_season_id (clothing_season_id) references clothing_season (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

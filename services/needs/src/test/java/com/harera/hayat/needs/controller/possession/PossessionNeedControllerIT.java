@@ -11,7 +11,7 @@ import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.needs.ApplicationIT;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
-import com.harera.hayat.needs.model.NeedState;
+import com.harera.hayat.needs.model.NeedStatus;
 import com.harera.hayat.needs.model.possession.PossessionCategory;
 import com.harera.hayat.needs.model.possession.PossessionCondition;
 import com.harera.hayat.needs.model.possession.PossessionNeedRequest;
@@ -60,7 +60,7 @@ class PossessionNeedControllerIT extends ApplicationIT {
             assertEquals(200, bookNeedResponseResponseEntity.getStatusCode().value());
             assertNotNull(body);
             assertEquals(NeedCategory.POSSESSION, body.getCategory());
-            assertEquals(NeedState.PENDING, body.getStatus());
+            assertEquals(NeedStatus.PENDING, body.getStatus());
             assertEquals(possessionNeedRequest.getTitle(), body.getTitle());
             assertEquals(possessionNeedRequest.getDescription(), body.getDescription());
             assertNotNull(body.getNeedDate());

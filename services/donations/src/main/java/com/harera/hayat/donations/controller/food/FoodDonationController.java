@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,8 +29,10 @@ public class FoodDonationController {
                     tags = "Food-Donation", responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<FoodDonationResponse> create(
-                    @RequestBody FoodDonationRequest foodDonationRequest) {
-        return ResponseEntity.ok(foodDonationService.create(foodDonationRequest));
+                    @RequestBody FoodDonationRequest foodDonationRequest,
+                    @RequestHeader("Authorization") String authorization) {
+        return ResponseEntity.ok(foodDonationService.create(foodDonationRequest,
+                        authorization.substring(7)));
     }
 
     @PutMapping("/{id}")
@@ -60,5 +63,16 @@ public class FoodDonationController {
                                     description = "success|Ok"))
     public ResponseEntity<FoodDonationResponse> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(foodDonationService.get(id));
+    }
+
+    @PostMapping("/{id}/images")
+    @Operation(summary = "Update Image", description = "Update the donation image",
+                    tags = "Medicine-Donation",
+                    responses = @ApiResponse(responseCode = "200",
+                                    description = "success|Ok"))
+    public ResponseEntity<FoodDonationResponse> updateImage(
+                    @RequestPart(name = "file") MultipartFile file,
+                    @PathVariable("id") Long id) {
+        return ResponseEntity.ok(foodDonationService.updateImage(id, file));
     }
 }

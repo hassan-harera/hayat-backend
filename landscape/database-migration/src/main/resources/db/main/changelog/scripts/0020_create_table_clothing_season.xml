@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0020" author="hharera@hayat.social">
+        <sql>
+            create table if not exists clothing_season
+            (
+            id bigint primary key auto_increment,
+            active boolean default 1,
+            arabic_name varchar(100),
+            english_name varchar(100),
+            shortcut varchar(10)
+            );
+
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('صيف', 'Summer', 'SUMMER');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('شتاء', 'Winter', 'WINTER');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('ربيع', 'Spring', 'SPRING');
+            INSERT INTO clothing_season(arabic_name, english_name, shortcut)
+            VALUES ('خريف', 'Autumn', 'AUTUMN');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

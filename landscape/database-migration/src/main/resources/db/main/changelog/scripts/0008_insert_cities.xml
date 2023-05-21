@@ -1,0 +1,544 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0008" author="hharera@hayat.social">
+        <sql>
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('15 مايو',1,1,'15 May',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الازبكية',2,1,'Al Azbakeyah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('البساتين',3,1,'Al Basatin',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('التبين',4,1,'Tebin',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الخليفة',5,1,'El-Khalifa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الدراسة',6,1,'El darrasa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الدرب الاحمر',7,1,'Aldarb
+            Alahmar',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الزاوية الحمراء',8,1,'Zawya
+            al-Hamra',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الزيتون',9,1,'El-Zaytoun',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الساحل',10,1,'Sahel',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السلام',11,1,'El Salam',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السيدة زينب',12,1,'Sayeda
+            Zeinab',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الشرابية',13,1,'El
+            Sharabeya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مدينة الشروق',14,1,'Shorouk',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الظاهر',15,1,'El Daher',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العتبة',16,1,'Ataba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القاهرة الجديدة',17,1,'New
+            Cairo',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المرج',18,1,'El Marg',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('عزبة النخل',19,1,'Ezbet el
+            Nakhl',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المطرية',20,1,'Matareya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المعادى',21,1,'Maadi',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المعصرة',22,1,'Maasara',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المقطم',23,1,'Mokattam',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المنيل',24,1,'Manyal',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الموسكى',25,1,'Mosky',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('النزهة',26,1,'Nozha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الوايلى',27,1,'Waily',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('باب الشعرية',28,1,'Bab
+            al-Shereia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بولاق',29,1,'Bolaq',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('جاردن سيتى',30,1,'Garden
+            City',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حدائق القبة',31,1,'Hadayek
+            El-Kobba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حلوان',32,1,'Helwan',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دار السلام',33,1,'Dar Al
+            Salam',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شبرا',34,1,'Shubra',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طره',35,1,'Tura',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('عابدين',36,1,'Abdeen',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('عباسية',37,1,'Abaseya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('عين شمس',38,1,'Ain Shams',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مدينة نصر',39,1,'Nasr City',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مصر الجديدة',40,1,'New
+            Heliopolis',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مصر القديمة',41,1,'Masr Al
+            Qadima',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('منشية ناصر',42,1,'Mansheya
+            Nasir',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مدينة بدر',43,1,'Badr City',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مدينة العبور',44,1,'Obour
+            City',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('وسط البلد',45,1,'Cairo
+            Downtown',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الزمالك',46,1,'Zamalek',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قصر النيل',47,1,'Kasr El
+            Nile',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الرحاب',48,1,'Rehab',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القطامية',49,1,'Katameya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مدينتي',50,1,'Madinty',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('روض الفرج',51,1,'Rod
+            Alfarag',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شيراتون',52,1,'Sheraton',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الجمالية',53,1,'El-Gamaleya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العاشر من رمضان',54,1,'10th of
+            Ramadan City',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الحلمية',55,1,'Helmeyat
+            Alzaytoun',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('النزهة الجديدة',56,1,'New
+            Nozha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العاصمة الإدارية',57,1,'Capital
+            New',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الجيزة',58,2,'Giza',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السادس من أكتوبر',59,2,'Sixth of
+            October',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الشيخ زايد',60,2,'Cheikh
+            Zayed',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الحوامدية',61,2,'Hawamdiyah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('البدرشين',62,2,'Al
+            Badrasheen',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الصف',63,2,'Saf',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أطفيح',64,2,'Atfih',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العياط',65,2,'Al Ayat',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الباويطي',66,2,'Al-Bawaiti',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('منشأة القناطر',67,2,'ManshiyetAl
+            Qanater',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أوسيم',68,2,'Oaseem',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كرداسة',69,2,'Kerdasa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو النمرس',70,2,'Abu
+            Nomros',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كفر غطاطي',71,2,'Kafr Ghati',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('منشأة البكاري',72,2,'Manshiyet Al
+            Bakari',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الدقى',73,2,'Dokki',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العجوزة',74,2,'Agouza',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الهرم',75,2,'Haram',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الوراق',76,2,'Warraq',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('امبابة',77,2,'Imbaba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بولاق الدكرور',78,2,'Boulaq
+            Dakrour',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الواحات البحرية',79,2,'Al Wahat Al
+            Baharia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العمرانية',80,2,'Omraneya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المنيب',81,2,'Moneeb',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بين السرايات',82,2,'Bin
+            Alsarayat',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الكيت كات',83,2,'Kit Kat',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('المهندسين',84,2,'Mohandessin',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فيصل',85,2,'Faisal',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو رواش',86,2,'Abu Rawash',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حدائق الأهرام',87,2,'Hadayek
+            Alahram',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الحرانية',88,2,'Haraneya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حدائق اكتوبر',89,2,'Hadayek
+            October',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('صفط اللبن',90,2,'Saft
+            Allaban',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القرية الذكية',91,2,'Smart
+            Village',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ارض اللواء',92,2,'Ard
+            Ellwaa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ابو قير',93,3,'Abu Qir',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الابراهيمية',94,3,'Al
+            Ibrahimeyah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الأزاريطة',95,3,'Azarita',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الانفوشى',96,3,'Anfoushi',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الدخيلة',97,3,'Dekheila',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السيوف',98,3,'El Soyof',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العامرية',99,3,'Ameria',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('اللبان',100,3,'El Labban',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المفروزة',101,3,'Al
+            Mafrouza',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المنتزه',102,3,'El Montaza',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المنشية',103,3,'Mansheya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الناصرية',104,3,'Naseria',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('امبروزو',105,3,'Ambrozo',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('باب شرق',106,3,'Bab Sharq',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('برج العرب',107,3,'Bourj
+            Alarab',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ستانلى',108,3,'Stanley',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سموحة',109,3,'Smouha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سيدى بشر',110,3,'Sidi Bishr',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شدس',111,3,'Shads',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('غيط العنب',112,3,'Gheet
+            Alenab',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فلمينج',113,3,'Fleming',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فيكتوريا',114,3,'Victoria',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كامب شيزار',115,3,'Camp
+            Shizar',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كرموز',116,3,'Karmooz',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('محطة الرمل',117,3,'Mahta
+            Alraml',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مينا البصل',118,3,'Mina
+            El-Basal',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العصافرة',119,3,'Asafra',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العجمي',120,3,'Agamy',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بكوس',121,3,'Bakos',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بولكلي',122,3,'Boulkly',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كليوباترا',123,3,'Cleopatra',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('جليم',124,3,'Glim',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المعمورة',125,3,'Al Mamurah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المندرة',126,3,'Al Mandara',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('محرم بك',127,3,'Moharam Bek',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الشاطبي',128,3,'Elshatby',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سيدي جابر',129,3,'Sidi
+            Gaber',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الساحل الشمالي',130,3,'North
+            Coast/sahel',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الحضرة',131,3,'Alhadra',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العطارين',132,3,'Alattarin',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سيدي كرير',133,3,'Sidi
+            Kerir',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الجمرك',134,3,'Elgomrok',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المكس',135,3,'Al Max',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مارينا',136,3,'Marina',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المنصورة',137,4,'Mansoura',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طلخا',138,4,'Talkha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ميت غمر',139,4,'Mitt Ghamr',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دكرنس',140,4,'Dekernes',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أجا',141,4,'Aga',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('منية النصر',142,4,'Menia El
+            Nasr',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('السنبلاوين',143,4,'Sinbillawin',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الكردي',144,4,'El Kurdi',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بني عبيد',145,4,'Bani Ubaid',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المنزلة',146,4,'Al Manzala',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('تمي الأمديد',147,4,'tami
+            al''amdid',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الجمالية',148,4,'aljamalia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شربين',149,4,'Sherbin',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المطرية',150,4,'Mataria',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بلقاس',151,4,'Belqas',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ميت سلسيل',152,4,'Meet
+            Salsil',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('جمصة',153,4,'Gamasa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('محلة دمنة',154,4,'Mahalat
+            Damana',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('نبروه',155,4,'Nabroh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الغردقة',156,5,'Hurghada',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('رأس غارب',157,5,'Ras Ghareb',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سفاجا',158,5,'Safaga',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القصير',159,5,'El Qusiar',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مرسى علم',160,5,'Marsa Alam',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الشلاتين',161,5,'Shalatin',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حلايب',162,5,'Halaib',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الدهار',163,5,'Aldahar',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دمنهور',164,6,'Damanhour',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كفر الدوار',165,6,'Kafr El
+            Dawar',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('رشيد',166,6,'Rashid',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('إدكو',167,6,'Edco',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو المطامير',168,6,'Abu
+            al-Matamir',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو حمص',169,6,'Abu Homs',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الدلنجات',170,6,'Delengat',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('المحمودية',171,6,'Mahmoudiyah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('الرحمانية',172,6,'Rahmaniyah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('إيتاي البارود',173,6,'Itai
+            Baroud',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حوش عيسى',174,6,'Housh
+            Eissa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شبراخيت',175,6,'Shubrakhit',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كوم حمادة',176,6,'Kom
+            Hamada',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بدر',177,6,'Badr',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('وادي النطرون',178,6,'Wadi
+            Natrun',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('النوبارية الجديدة',179,6,'New
+            Nubaria',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('النوبارية',180,6,'Alnoubareya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الفيوم',181,7,'Fayoum',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الفيوم الجديدة',182,7,'Fayoum El
+            Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طامية',183,7,'Tamiya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سنورس',184,7,'Snores',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('إطسا',185,7,'Etsa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('إبشواي',186,7,'Epschway',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('يوسف الصديق',187,7,'Yusuf El
+            Sediaq',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الحادقة',188,7,'Hadqa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('اطسا',189,7,'Atsa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الجامعة',190,7,'Algamaa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السيالة',191,7,'Sayala',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طنطا',192,8,'Tanta',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المحلة الكبرى',193,8,'Al Mahalla Al
+            Kobra',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كفر الزيات',194,8,'Kafr El
+            Zayat',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('زفتى',195,8,'Zefta',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السنطة',196,8,'El Santa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قطور',197,8,'Qutour',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بسيون',198,8,'Basion',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سمنود',199,8,'Samannoud',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('الإسماعيلية',200,9,'Ismailia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فايد',201,9,'Fayed',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القنطرة شرق',202,9,'Qantara
+            Sharq',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القنطرة غرب',203,9,'Qantara
+            Gharb',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('التل الكبير',204,9,'El Tal El
+            Kabier',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو صوير',205,9,'Abu Sawir',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القصاصين الجديدة',206,9,'Kasasien El
+            Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('نفيشة',207,9,'Nefesha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الشيخ زايد',208,9,'Sheikh
+            Zayed',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شبين الكوم',209,10,'Shbeen El
+            Koom',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مدينة السادات',210,10,'Sadat
+            City',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('منوف',211,10,'Menouf',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سرس الليان',212,10,'Sars
+            El-Layan',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أشمون',213,10,'Ashmon',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الباجور',214,10,'Al Bagor',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قويسنا',215,10,'Quesna',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بركة السبع',216,10,'Berkat El
+            Saba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('تلا',217,10,'Tala',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الشهداء',218,10,'Al Shohada',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المنيا',219,11,'Minya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المنيا الجديدة',220,11,'Minya El
+            Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العدوة',221,11,'El Adwa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مغاغة',222,11,'Magagha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بني مزار',223,11,'Bani
+            Mazar',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مطاي',224,11,'Mattay',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سمالوط',225,11,'Samalut',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المدينة الفكرية',226,11,'Madinat El
+            Fekria',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ملوي',227,11,'Meloy',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دير مواس',228,11,'Deir
+            Mawas',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ابو قرقاص',229,11,'Abu
+            Qurqas',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ارض سلطان',230,11,'Ard
+            Sultan',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بنها',231,12,'Banha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قليوب',232,12,'Qalyub',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شبرا الخيمة',233,12,'Shubra Al
+            Khaimah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القناطر الخيرية',234,12,'Al Qanater
+            Charity',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الخانكة',235,12,'Khanka',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كفر شكر',236,12,'Kafr Shukr',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طوخ',237,12,'Tukh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قها',238,12,'Qaha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العبور',239,12,'Obour',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الخصوص',240,12,'Khosous',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شبين القناطر',241,12,'Shibin Al
+            Qanater',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مسطرد',242,12,'Mostorod',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الخارجة',243,13,'El Kharga',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('باريس',244,13,'Paris',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('موط',245,13,'Mout',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الفرافرة',246,13,'Farafra',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بلاط',247,13,'Balat',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الداخلة',248,13,'Dakhla',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السويس',249,14,'Suez',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الجناين',250,14,'Alganayen',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('عتاقة',251,14,'Ataqah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العين السخنة',252,14,'Ain
+            Sokhna',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فيصل',253,14,'Faysal',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أسوان',254,15,'Aswan',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أسوان الجديدة',255,15,'Aswan El
+            Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دراو',256,15,'Drau',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كوم أمبو',257,15,'Kom Ombo',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('نصر النوبة',258,15,'Nasr Al
+            Nuba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كلابشة',259,15,'Kalabsha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('إدفو',260,15,'Edfu',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('الرديسية',261,15,'Al-Radisiyah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('البصيلية',262,15,'Al
+            Basilia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السباعية',263,15,'Al
+            Sibaeia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ابوسمبل السياحية',264,15,'Abo Simbl
+            Al Siyahia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مرسى علم',265,15,'Marsa
+            Alam',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أسيوط',266,16,'Assiut',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أسيوط الجديدة',267,16,'Assiut El
+            Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ديروط',268,16,'Dayrout',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('منفلوط',269,16,'Manfalut',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القوصية',270,16,'Qusiya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبنوب',271,16,'Abnoub',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو تيج',272,16,'Abu Tig',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الغنايم',273,16,'El Ghanaim',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ساحل سليم',274,16,'Sahel
+            Selim',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('البداري',275,16,'El Badari',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('صدفا',276,16,'Sidfa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بني سويف',277,17,'Bani
+            Sweif',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بني سويف الجديدة',278,17,'Beni Suef
+            El Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الواسطى',279,17,'Al Wasta',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ناصر',280,17,'Naser',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('إهناسيا',281,17,'Ehnasia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ببا',282,17,'beba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الفشن',283,17,'Fashn',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سمسطا',284,17,'Somasta',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('الاباصيرى',285,17,'Alabbaseri',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مقبل',286,17,'Mokbel',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بورسعيد',287,18,'PorSaid',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بورفؤاد',288,18,'Port Fouad',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العرب',289,18,'Alarab',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حى الزهور',290,18,'Zohour',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حى الشرق',291,18,'Alsharq',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حى
+            الضواحى',292,18,'Aldawahi',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حى المناخ',293,18,'Almanakh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('حى مبارك',294,18,'Mubarak',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دمياط',295,19,'Damietta',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دمياط الجديدة',296,19,'New
+            Damietta',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('رأس البر',297,19,'Ras El
+            Bar',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فارسكور',298,19,'Faraskour',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الزرقا',299,19,'Zarqa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السرو',300,19,'alsaru',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الروضة',301,19,'alruwda',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كفر البطيخ',302,19,'Kafr
+            El-Batikh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('عزبة البرج',303,19,'Azbet Al
+            Burg',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ميت أبو غالب',304,19,'Meet Abou
+            Ghalib',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كفر سعد',305,19,'Kafr Saad',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الزقازيق',306,20,'Zagazig',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العاشر من رمضان',307,20,'Al Ashr Men
+            Ramadan',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('منيا القمح',308,20,'Minya Al
+            Qamh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بلبيس',309,20,'Belbeis',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مشتول السوق',310,20,'Mashtoul El
+            Souq',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القنايات',311,20,'Qenaiat',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو حماد',312,20,'Abu
+            Hammad',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القرين',313,20,'El Qurain',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ههيا',314,20,'Hehia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو كبير',315,20,'Abu Kabir',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فاقوس',316,20,'Faccus',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الصالحية الجديدة',317,20,'El Salihia
+            El Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الإبراهيمية',318,20,'Al
+            Ibrahimiyah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ديرب نجم',319,20,'Deirb
+            Negm',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كفر صقر',320,20,'Kafr Saqr',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أولاد صقر',321,20,'Awlad
+            Saqr',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('الحسينية',322,20,'Husseiniya',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('صان الحجر القبلية',323,20,'san
+            alhajar alqablia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('منشأة أبو عمر',324,20,'Manshayat Abu
+            Omar',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الطور',325,21,'Al Toor',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('شرم الشيخ',326,21,'Sharm
+            El-Shaikh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دهب',327,21,'Dahab',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('نويبع',328,21,'Nuweiba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طابا',329,21,'Taba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سانت كاترين',330,21,'Saint
+            Catherine',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو رديس',331,21,'Abu Redis',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أبو زنيمة',332,21,'Abu
+            Zenaima',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('رأس سدر',333,21,'Ras Sidr',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('كفر الشيخ',334,22,'Kafr El
+            Sheikh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('وسط البلد كفر الشيخ',335,22,'Kafr El
+            Sheikh Downtown',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دسوق',336,22,'Desouq',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فوه',337,22,'Fooh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مطوبس',338,22,'Metobas',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('برج البرلس',339,22,'Burg Al
+            Burullus',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بلطيم',340,22,'Baltim',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مصيف بلطيم',341,22,'Masief
+            Baltim',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الحامول',342,22,'Hamol',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بيلا',343,22,'Bella',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الرياض',344,22,'Riyadh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سيدي سالم',345,22,'Sidi
+            Salm',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قلين',346,22,'Qellen',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سيدي غازي',347,22,'Sidi
+            Ghazi',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مرسى مطروح',348,23,'Marsa
+            Matrouh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الحمام',349,23,'El Hamam',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العلمين',350,23,'Alamein',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الضبعة',351,23,'Dabaa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('النجيلة',352,23,'Al-Nagila',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سيدي براني',353,23,'Sidi
+            Brani',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('السلوم',354,23,'Salloum',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سيوة',355,23,'Siwa',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('مارينا',356,23,'Marina',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الساحل الشمالى',357,23,'North
+            Coast',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الأقصر',358,24,'Luxor',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الأقصر الجديدة',359,24,'New
+            Luxor',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('إسنا',360,24,'Esna',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طيبة الجديدة',361,24,'New
+            Tiba',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الزينية',362,24,'Al ziynia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('البياضية',363,24,'Al
+            Bayadieh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('القرنة',364,24,'Al Qarna',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أرمنت',365,24,'Armant',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الطود',366,24,'Al Tud',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قنا',367,25,'Qena',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قنا الجديدة',368,25,'New
+            Qena',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ابو طشت',369,25,'Abu Tesht',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('نجع حمادي',370,25,'Nag
+            Hammadi',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دشنا',371,25,'Deshna',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الوقف',372,25,'Alwaqf',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قفط',373,25,'Qaft',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('نقادة',374,25,'Naqada',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('فرشوط',375,25,'Farshout',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('قوص',376,25,'Quos',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('العريش',377,26,'Arish',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الشيخ زويد',378,26,'Sheikh
+            Zowaid',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('نخل',379,26,'Nakhl',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('رفح',380,26,'Rafah',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('بئر العبد',381,26,'Bir
+            al-Abed',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الحسنة',382,26,'Al Hasana',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سوهاج',383,27,'Sohag',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('سوهاج الجديدة',384,27,'Sohag El
+            Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أخميم',385,27,'Akhmeem',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('أخميم الجديدة',386,27,'Akhmim El
+            Gedida',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('البلينا',387,27,'Albalina',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('المراغة',388,27,'El Maragha',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES
+            ('المنشأة',389,27,'almunsha''a',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('دار السلام',390,27,'Dar
+            AISalaam',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('جرجا',391,27,'Gerga',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('جهينة الغربية',392,27,'Jahina Al
+            Gharbia',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('ساقلته',393,27,'Saqilatuh',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طما',394,27,'Tama',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('طهطا',395,27,'Tahta',1);
+            INSERT INTO city(arabic_name,id,state_id,english_name,active) VALUES ('الكوثر',396,27,'Alkawthar',1);
+        </sql>
+    </changeSet>
+</databaseChangeLog>

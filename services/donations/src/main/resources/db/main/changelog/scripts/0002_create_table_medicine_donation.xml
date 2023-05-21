@@ -1,0 +1,36 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0002" author="hharera@hayat.social">
+        <sql>
+            create table if not exists medicine_donation (
+            id                       bigint auto_increment primary key,
+            active                   tinyint(1) default 1 null,
+            title                    varchar(100)         null,
+            description              varchar(500)         null,
+            image_url                varchar(2048)        null,
+            donation_date            datetime             null,
+            donation_expiration_date datetime             null,
+            status                   varchar(50)          null,
+            category                 varchar(50)          null,
+            communication_method     varchar(50)          null,
+            medicine_id              bigint               null,
+            quantity                 int                  null,
+            medicine_unit_id         bigint               null,
+            medicine_expiration_date datetime             null,
+            user_id                  bigint               null,
+            city_id                  bigint               null,
+            constraint medicine_donation_medicine_id_fk
+            foreign key (medicine_id) references medicine (id),
+            constraint medicine_donation_medicine_unit_id_fk
+            foreign key (medicine_unit_id) references medicine_unit (id),
+            constraint medicine_donation_user_id_fk
+            foreign key (user_id) references user_ (id),
+            constraint medicine_donation_city_id_fk
+            foreign key (city_id) references city (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

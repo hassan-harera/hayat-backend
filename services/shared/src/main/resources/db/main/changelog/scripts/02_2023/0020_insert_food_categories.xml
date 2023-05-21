@@ -3,7 +3,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
-    <changeSet id="02_2023_0020" author="hharera@hharera.net">
+    <changeSet id="02_2023_0020" author="hharera@hayat.social">
         <sql>
             insert into food_category (arabic_name, english_name, description)
             values ('قابل للتلف', 'Perishable', 'قابل للتلف');

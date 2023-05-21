@@ -22,6 +22,7 @@
         <module>landscape/config-service</module>
         <module>landscape/discovery-service</module>
         <module>landscape/authorization</module>
+        <module>landscape/database-migration</module>
 
         <module>components/framework</module>
 
@@ -205,10 +206,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-            <version>4.17.2</version>
-            <scope>test</scope>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 

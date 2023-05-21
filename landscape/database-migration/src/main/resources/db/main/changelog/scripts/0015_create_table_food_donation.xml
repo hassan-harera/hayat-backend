@@ -1,0 +1,37 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0015" author="hharera@hayat.social">
+        <sql>
+            create table if not exists food_donation
+            (
+            id                       bigint auto_increment primary key,
+            active                   bit default 1 null,
+            title                    varchar(100)  null,
+            description              varchar(500)  null,
+            donation_date            datetime      null,
+            donation_expiration_date datetime      null,
+            status                   varchar(50)   null,
+            category                 varchar(50)   null,
+            communication_method     varchar(50)   null,
+            image_url                varchar(2048) null,
+            quantity                 float         null,
+            food_unit_id             bigint,
+            food_category_id         bigint,
+            food_expiration_date     datetime,
+            user_id                  bigint        null,
+            city_id                  bigint        null,
+            constraint food_donation_food_unit_id_fk
+            foreign key (food_unit_id) references food_unit (id),
+            constraint food_donation_food_category_id_fk
+            foreign key (food_category_id) references food_category (id),
+            constraint food_donation_user_id_fk
+            foreign key (user_id) references user_ (id),
+            constraint food_donation_city_id_fk
+            foreign key (city_id) references city (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,22 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0026" author="hharera@hayat.social">
+        <sql>
+            insert into medicine_unit (arabic_name, english_name)
+            values ('كبسول', 'Capsule'),
+            ('حقنة', 'Injection'),
+            ('قرص', 'Tablet'),
+            ('منشقة', 'Syrup'),
+            ('زجاجة', 'Bottle'),
+            ('أمبول', 'Ampoule'),
+            ('كيس', 'Bag'),
+            ('علبة', 'Box'),
+            ('زجاجة مضخة', 'Pump Bottle'),
+            ('زجاجة رذاذ', 'Spray Bottle'),
+            ('قطارة', 'Strip');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

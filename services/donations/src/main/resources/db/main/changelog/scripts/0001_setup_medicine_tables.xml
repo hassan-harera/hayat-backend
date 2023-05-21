@@ -1,0 +1,40 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0001" author="hharera@hayat.social">
+        <sql>
+            create table if not exists medicine_unit
+            (
+            id           bigint primary key auto_increment,
+            active       boolean default 1,
+            arabic_name  varchar(100),
+            english_name varchar(100)
+            );
+
+            create table if not exists medicine_category
+            (
+            id           bigint primary key auto_increment,
+            active       boolean default 1,
+            arabic_name  varchar(100),
+            english_name varchar(100)
+            );
+
+            create table if not exists medicine
+            (
+            id           bigint primary key auto_increment,
+            active       boolean default 1,
+            arabic_name  varchar(100),
+            english_name varchar(100),
+            category_id  bigint,
+            unit_id      bigint,
+            info         varchar(100),
+            constraint medicine_category_id_fk
+                foreign key (category_id) references medicine_category (id),
+            constraint medicine_unit_id_fk
+                foreign key (unit_id) references medicine_unit (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

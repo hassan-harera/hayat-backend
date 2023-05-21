@@ -2,48 +2,45 @@ package com.harera.hayat.needs.model;
 
 import java.time.LocalDateTime;
 
-import com.harera.hayat.framework.model.BaseEntity;
-import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.model.user.User;
+import com.harera.hayat.framework.model.BaseDocument;
+import com.harera.hayat.framework.model.city.CityDto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
+import com.harera.hayat.framework.model.user.BaseUserDto;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Setter
 @Getter
-@MappedSuperclass
-public class Need extends BaseEntity {
+public class Need extends BaseDocument {
 
-    @Column(name = "title")
+    @Field(name = "title")
     private String title;
 
-    @Column(name = "description")
+    @Field(name = "description")
     private String description;
 
-    @Column(name = "need_date")
+    @Field(name = "need_date")
     private LocalDateTime needDate;
 
-    @Column(name = "need_expiration_date")
+    @Field(name = "need_expiration_date")
     private LocalDateTime needExpirationDate;
 
-    @Column(name = "category")
+    @Field(name = "category")
     private NeedCategory category;
 
-    @Column(name = "status")
-    private NeedState status;
+    @Field(name = "status")
+    private NeedStatus status;
 
-    @Column(name = "communication_method")
+    @Field(name = "communication_method")
     private CommunicationMethod communicationMethod;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id", referencedColumnName = "id")
-    private City city;
+    @Field(name = "image_url")
+    private String imageUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @Field(name = "city")
+    private CityDto city;
+
+    @Field(name = "user")
+    private BaseUserDto user;
 }

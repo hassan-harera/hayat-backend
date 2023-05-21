@@ -9,8 +9,8 @@ import java.time.LocalDate;
 @Data
 public class BookDonationDto extends DonationDto {
 
-    @JsonProperty(value = "amount")
-    private Integer amount;
+    @JsonProperty(value = "quantity")
+    private Integer quantity;
 
     @JsonProperty(value = "book_title")
     private String bookTitle;
@@ -24,7 +24,7 @@ public class BookDonationDto extends DonationDto {
     @JsonProperty(value = "book_publisher")
     private String bookPublisher;
 
-    @JsonProperty(value = "book_publisher")
+    @JsonProperty(value = "book_publication_year")
     private LocalDate bookPublicationYear;
 
     @JsonProperty(value = "book_language")

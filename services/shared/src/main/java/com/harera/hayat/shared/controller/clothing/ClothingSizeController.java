@@ -1,14 +1,14 @@
 package com.harera.hayat.shared.controller.clothing;
 
-import com.harera.hayat.framework.model.ClothingSize;
-import com.harera.hayat.framework.service.ClothingSizeService;
+import com.harera.hayat.framework.model.clothing.ClothingSize;
+import com.harera.hayat.framework.service.clothing.ClothingSizeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +19,7 @@ import static org.springframework.http.ResponseEntity.ok;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
 @RequestMapping("/api/v1/clothing/sizes")
+@Tag(name = "Clothing - Size")
 public class ClothingSizeController {
 
     private final ClothingSizeService clothingConditionService;

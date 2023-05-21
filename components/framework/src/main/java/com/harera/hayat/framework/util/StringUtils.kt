@@ -23,4 +23,9 @@ object StringUtils {
     fun isValidEmail(email: String): Boolean {
         return email.matches("^(.+)@(.+)$".toRegex())
     }
+
+    @JvmStatic
+    fun isValidOtp(otp: String): Boolean {
+        return otp.matches("^[0-9]{6}$".toRegex())
+    }
 }

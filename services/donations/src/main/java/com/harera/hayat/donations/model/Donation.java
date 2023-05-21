@@ -1,8 +1,9 @@
 package com.harera.hayat.donations.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.framework.model.BaseEntity;
 import com.harera.hayat.framework.model.city.City;
-import com.harera.hayat.framework.model.user.User;
+import com.harera.hayat.framework.model.user.BaseUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,19 +32,31 @@ public class Donation extends BaseEntity {
     private OffsetDateTime donationExpirationDate;
 
     @Column(name = "communication_method")
+    @Enumerated(EnumType.STRING)
     private CommunicationMethod communicationMethod;
 
     @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     private DonationCategory category;
 
     @Column(name = "status")
-    private DonationState status;
+    @Enumerated(EnumType.STRING)
+    private DonationStatus status;
+
+    @Column(name = "image_url")
+    private String imageUrl;
 
     @ManyToOne(targetEntity = City.class)
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = BaseUser.class)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private BaseUser user;
+
+    @Column(name = "telegram_link")
+    private String telegramLink;
+
+    @Column(name = "whatsapp_link")
+    private String whatsappLink;
 }

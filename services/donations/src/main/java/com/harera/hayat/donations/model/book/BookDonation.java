@@ -13,8 +13,8 @@ import lombok.Setter;
 @Table(name = "book_donation")
 public class BookDonation extends Donation {
 
-    @Column(name = "amount")
-    private Integer amount;
+    @Column(name = "quantity")
+    private Integer quantity;
 
     @Column(name = "book_title")
     private String bookTitle;

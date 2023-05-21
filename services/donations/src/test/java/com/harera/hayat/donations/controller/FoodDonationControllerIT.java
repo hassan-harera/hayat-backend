@@ -3,7 +3,7 @@ package com.harera.hayat.donations.controller;
 import com.harera.hayat.donations.ApplicationIT;
 import com.harera.hayat.donations.model.CommunicationMethod;
 import com.harera.hayat.donations.model.DonationCategory;
-import com.harera.hayat.donations.model.DonationState;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.food.*;
 import com.harera.hayat.donations.stubs.city.CityStubs;
 import com.harera.hayat.donations.util.DataUtil;
@@ -11,10 +11,8 @@ import com.harera.hayat.donations.util.RequestUtil;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.donations.stubs.food.FoodDonationStubs;
 import com.harera.hayat.donations.stubs.food.FoodUnitStubs;
-import com.harera.hayat.framework.model.food.FoodCategory;
 import com.harera.hayat.framework.model.food.FoodUnit;
 import lombok.RequiredArgsConstructor;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +43,9 @@ class FoodDonationControllerIT extends ApplicationIT {
         FoodDonationRequest request = new FoodDonationRequest();
         request.setTitle("title");
         request.setDescription("description");
-        request.setAmount(2F);
+        request.setQuantity(2F);
         request.setCityId(city.getId());
-        request.setUnitId(foodUnit.getId());
+        request.setFoodUnitId(foodUnit.getId());
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
 
@@ -67,11 +65,11 @@ class FoodDonationControllerIT extends ApplicationIT {
             Assertions.assertNotNull(response.getId());
             Assertions.assertEquals(request.getTitle(), response.getTitle());
             Assertions.assertEquals(request.getDescription(), response.getDescription());
-            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getQuantity(), response.getQuantity());
             Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             Assertions.assertEquals(request.getCityId(), response.getCity().getId());
-            Assertions.assertEquals(request.getUnitId(), response.getUnit().getId());
+            Assertions.assertEquals(request.getFoodUnitId(), response.getFoodUnit().getId());
             assertTrue(request.getFoodExpirationDate()
                             .isEqual(response.getFoodExpirationDate()));
 
@@ -94,12 +92,12 @@ class FoodDonationControllerIT extends ApplicationIT {
 
         FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
                         OffsetDateTime.now(), "title", DonationCategory.FOOD,
-                        "description", city, DonationState.PENDING);
+                        "description", city, DonationStatus.PENDING);
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(city.getId());
-        request.setUnitId(foodUnit.getId());
-        request.setAmount(2F);
+        request.setFoodUnitId(foodUnit.getId());
+        request.setQuantity(2F);
         request.setTitle("new_title");
         request.setDescription("new_desc");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
@@ -119,11 +117,11 @@ class FoodDonationControllerIT extends ApplicationIT {
 
             Assertions.assertEquals(request.getTitle(), response.getTitle());
             Assertions.assertEquals(request.getDescription(), response.getDescription());
-            Assertions.assertEquals(request.getAmount(), response.getAmount());
+            Assertions.assertEquals(request.getQuantity(), response.getQuantity());
             Assertions.assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             Assertions.assertEquals(request.getCityId(), response.getCity().getId());
-            Assertions.assertEquals(request.getUnitId(), response.getUnit().getId());
+            Assertions.assertEquals(request.getFoodUnitId(), response.getFoodUnit().getId());
             assertTrue(request.getFoodExpirationDate()
                             .isEqual(response.getFoodExpirationDate()));
         } finally {
@@ -143,7 +141,7 @@ class FoodDonationControllerIT extends ApplicationIT {
 
         FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
                         OffsetDateTime.now(), "title", DonationCategory.FOOD,
-                        "description", city, DonationState.PENDING);
+                        "description", city, DonationStatus.PENDING);
 
         try {
             // When
@@ -163,9 +161,9 @@ class FoodDonationControllerIT extends ApplicationIT {
                             response.getCommunicationMethod());
             Assertions.assertEquals(foodDonation.getCity().getId(),
                             response.getCity().getId());
-            Assertions.assertEquals(foodDonation.getAmount(), response.getAmount());
-            Assertions.assertEquals(foodDonation.getUnit().getId(),
-                            response.getUnit().getId());
+            Assertions.assertEquals(foodDonation.getQuantity(), response.getQuantity());
+            Assertions.assertEquals(foodDonation.getFoodUnit().getId(),
+                            response.getFoodUnit().getId());
             assertTrue(foodDonation.getFoodExpirationDate().toLocalDate()
                             .isEqual(response.getFoodExpirationDate().toLocalDate()));
         } finally {
