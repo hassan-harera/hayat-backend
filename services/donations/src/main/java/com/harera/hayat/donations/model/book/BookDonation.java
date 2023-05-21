@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -36,14 +37,16 @@ public class BookDonation extends Donation {
     private String bookLanguage;
 
     @ManyToMany
-    @JoinTable(name = "book_donation_upvotes", joinColumns = @JoinColumn(name = "donation_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<BaseUser> upvotes;
+    @JoinTable(name = "book_donation_upvotes",
+                    joinColumns = @JoinColumn(name = "donation_id"),
+                    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<BaseUser> upvotes = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "book_donation_downvotes", joinColumns = @JoinColumn(name = "donation_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<BaseUser> downvotes;
+    @JoinTable(name = "book_donation_downvotes",
+                    joinColumns = @JoinColumn(name = "donation_id"),
+                    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<BaseUser> downvotes = new HashSet<>();
 
     public Integer getReputation() {
         return upvotes.size() - downvotes.size();

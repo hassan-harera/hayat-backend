@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -34,14 +35,16 @@ public class FoodDonation extends Donation {
     private Float quantity;
 
     @ManyToMany
-    @JoinTable(name = "food_donation_upvotes", joinColumns = @JoinColumn(name = "donation_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<BaseUser> upvotes;
+    @JoinTable(name = "food_donation_upvotes",
+                    joinColumns = @JoinColumn(name = "donation_id"),
+                    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<BaseUser> upvotes = new HashSet<>();
 
     @ManyToMany
-    @JoinTable(name = "food_donation_downvotes", joinColumns = @JoinColumn(name = "donation_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<BaseUser> downvotes;
+    @JoinTable(name = "food_donation_downvotes",
+                    joinColumns = @JoinColumn(name = "donation_id"),
+                    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<BaseUser> downvotes = new HashSet<>();
 
     public Integer getReputation() {
         return upvotes.size() - downvotes.size();

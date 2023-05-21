@@ -1,6 +1,7 @@
 package com.harera.hayat.needs.model;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -51,10 +52,10 @@ public class Need extends BaseDocument {
     private String qrCode = UUID.randomUUID().toString();
 
     @Field(name = "upvotes")
-    private Set<Long> upvotes;
+    private Set<Long> upvotes = new HashSet<>();
 
     @Field(name = "downvotes")
-    private Set<Long> downvotes;
+    private Set<Long> downvotes = new HashSet<>();
 
     public Integer getReputation() {
         return upvotes.size() - downvotes.size();

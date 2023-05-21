@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -37,12 +38,12 @@ public class PropertyDonation extends Donation {
     @ManyToMany
     @JoinTable(name = "property_donation_upvotes", joinColumns = @JoinColumn(name = "donation_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<BaseUser> upvotes;
+    private Set<BaseUser> upvotes = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "property_donation_downvotes", joinColumns = @JoinColumn(name = "donation_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<BaseUser> downvotes;
+    private Set<BaseUser> downvotes = new HashSet<>();
 
     public Integer getReputation() {
         return upvotes.size() - downvotes.size();
