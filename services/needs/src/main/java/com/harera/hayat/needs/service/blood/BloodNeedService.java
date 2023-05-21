@@ -1,5 +1,6 @@
 package com.harera.hayat.needs.service.blood;
 
+import com.harera.hayat.framework.exception.DocumentNotFoundException;
 import com.harera.hayat.framework.model.user.BaseUserDto;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.needs.model.NeedCategory;
@@ -50,5 +51,19 @@ public class BloodNeedService {
 
         bloodNeedRepository.save(bloodNeed);
         return modelMapper.map(bloodNeed, BloodNeedResponse.class);
+    }
+
+    public void upvote(String id, String authorization) {
+        BloodNeed bloodNeed = bloodNeedRepository.findById(id).orElseThrow(
+                        () -> new DocumentNotFoundException("Blood Need not found"));
+        bloodNeed.upvote(userService.getUser(authorization).getId());
+        bloodNeedRepository.save(bloodNeed);
+    }
+
+    public void downvote(String id, String authorization) {
+        BloodNeed bloodNeed = bloodNeedRepository.findById(id).orElseThrow(
+                        () -> new DocumentNotFoundException("Blood Need not found"));
+        bloodNeed.downvote(userService.getUser(authorization).getId());
+        bloodNeedRepository.save(bloodNeed);
     }
 }

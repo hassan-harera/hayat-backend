@@ -51,4 +51,10 @@ public class DonationDto extends BaseEntityDto {
 
     @JsonProperty(value = "whatsapp_link")
     private String whatsappLink;
+
+    @JsonProperty(value = "qr_code")
+    private String qrCode;
+
+    @JsonProperty(value = "reputation")
+    private Integer reputation;
 }

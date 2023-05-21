@@ -1,5 +1,7 @@
 package com.harera.hayat.needs.service.possession;
 
+import com.harera.hayat.framework.exception.DocumentNotFoundException;
+import com.harera.hayat.framework.model.user.BaseUserDto;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
@@ -27,13 +29,15 @@ public class PossessionNeedService implements BaseService {
     private final PossessionNeedRepository possessionNeedRepository;
     private final PossessionCategoryRepository possessionCategoryRepository;
     private final PossessionConditionRepository possessionConditionRepository;
+    private final UserService userService;
 
     public PossessionNeedService(PossessionValidation possessionValidation,
                     ModelMapper modelMapper, CityService cityService,
                     @Value("${needs.possession.expiration_days}") String possessionNeedExpirationDays,
                     PossessionNeedRepository possessionNeedRepository,
                     PossessionCategoryRepository possessionCategoryRepository,
-                    PossessionConditionRepository possessionConditionRepository) {
+                    PossessionConditionRepository possessionConditionRepository,
+                    UserService userService) {
         this.possessionValidation = possessionValidation;
         this.modelMapper = modelMapper;
         this.cityService = cityService;
@@ -42,18 +46,21 @@ public class PossessionNeedService implements BaseService {
         this.possessionNeedRepository = possessionNeedRepository;
         this.possessionCategoryRepository = possessionCategoryRepository;
         this.possessionConditionRepository = possessionConditionRepository;
+        this.userService = userService;
     }
 
-    public PossessionNeedResponse create(PossessionNeedRequest possessionNeedRequest) {
+    public PossessionNeedResponse create(PossessionNeedRequest possessionNeedRequest,
+                    String authorization) {
         possessionValidation.validateCreate(possessionNeedRequest);
 
         PossessionNeed possessionNeed =
                         modelMapper.map(possessionNeedRequest, PossessionNeed.class);
         possessionNeed.setNeedDate(LocalDateTime.now());
         possessionNeed.setNeedExpirationDate(
-                LocalDateTime.now().plusDays(possessionNeedExpirationDays));
+                        LocalDateTime.now().plusDays(possessionNeedExpirationDays));
         possessionNeed.setCategory(NeedCategory.POSSESSION);
-        // TODO: set user from request authorization header
+        possessionNeed.setUser(modelMapper.map(userService.getUser(authorization),
+                        BaseUserDto.class));
         possessionNeed.setCity(cityService.get(possessionNeedRequest.getCityId()));
         possessionNeed.setPossessionCategory(possessionCategoryRepository
                         .findById(possessionNeedRequest.getPossessionCategoryId()).get());
@@ -66,5 +73,19 @@ public class PossessionNeedService implements BaseService {
         // TODO: send request to ml service
         return modelMapper.map(possessionNeedRepository.save(possessionNeed),
                         PossessionNeedResponse.class);
+    }
+
+    public void upvote(String id, String authorization) {
+        PossessionNeed possessionNeed = possessionNeedRepository.findById(id).orElseThrow(
+                        () -> new DocumentNotFoundException("Need not found"));
+        possessionNeed.upvote(userService.getUser(authorization).getId());
+        possessionNeedRepository.save(possessionNeed);
+    }
+
+    public void downvote(String id, String authorization) {
+        PossessionNeed possessionNeed = possessionNeedRepository.findById(id).orElseThrow(
+                        () -> new DocumentNotFoundException("Need not found"));
+        possessionNeed.downvote(userService.getUser(authorization).getId());
+        possessionNeedRepository.save(possessionNeed);
     }
 }

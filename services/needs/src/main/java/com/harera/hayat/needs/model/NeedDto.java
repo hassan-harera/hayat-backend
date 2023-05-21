@@ -44,4 +44,10 @@ public class NeedDto extends BaseDocument {
 
     @JsonProperty("user")
     private BaseUserDto user;
+
+    @JsonProperty(value = "qr_code")
+    private String qrCode;
+
+    @JsonProperty(value = "reputation")
+    private Integer reputation;
 }

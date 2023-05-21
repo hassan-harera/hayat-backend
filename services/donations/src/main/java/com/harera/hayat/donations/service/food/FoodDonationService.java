@@ -145,4 +145,18 @@ public class FoodDonationService extends BaseService {
         foodDonationRepository.save(foodDonation);
         return modelMapper.map(foodDonation, FoodDonationResponse.class);
     }
+
+    public void upvote(Long id, String authorization) {
+        FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(FoodDonation.class, id));
+        foodDonation.upvote(getUser(authorization));
+        foodDonationRepository.save(foodDonation);
+    }
+
+    public void downvote(Long id, String authorization) {
+        FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(FoodDonation.class, id));
+        foodDonation.downvote(getUser(authorization));
+        foodDonationRepository.save(foodDonation);
+    }
 }

@@ -130,4 +130,20 @@ public class ClothingDonationService extends BaseService {
         }
         return response;
     }
+
+    public void upvote(Long id, String authorization) {
+        ClothingDonation clothingDonation = clothingDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        ClothingDonation.class, id));
+        clothingDonation.upvote(getUser(authorization));
+        clothingDonationRepository.save(clothingDonation);
+    }
+
+    public void downvote(Long id, String authorization) {
+        ClothingDonation clothingDonation = clothingDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        ClothingDonation.class, id));
+        clothingDonation.downvote(getUser(authorization));
+        clothingDonationRepository.save(clothingDonation);
+    }
 }

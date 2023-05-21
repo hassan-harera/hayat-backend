@@ -51,7 +51,8 @@ public class PropertyDonationService extends BaseService {
         propertyDonation.setStatus(DonationStatus.PENDING);
         propertyDonation.setCategory(DonationCategory.PROPERTY);
         propertyDonation.setDonationDate(OffsetDateTime.now());
-        propertyDonation.setDonationExpirationDate(OffsetDateTime.now().plusDays(expirationDays));
+        propertyDonation.setDonationExpirationDate(
+                        OffsetDateTime.now().plusDays(expirationDays));
 
         assignCity(propertyDonation, propertyDonationRequest.getCityId());
         // TODO: set user
@@ -93,5 +94,23 @@ public class PropertyDonationService extends BaseService {
                         .map(propertyDonation -> modelMapper.map(propertyDonation,
                                         PropertyDonationResponse.class))
                         .toList();
+    }
+
+    public void upvote(Long id, String authorization) {
+        PropertyDonation propertyDonation = propertyDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        PropertyDonation.class, id,
+                                        ErrorCode.NOT_FOUND_PROPERTY_DONATION));
+        propertyDonation.upvote(getUser(authorization));
+        propertyDonationRepository.save(propertyDonation);
+    }
+
+    public void downvote(Long id, String authorization) {
+        PropertyDonation propertyDonation = propertyDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        PropertyDonation.class, id,
+                                        ErrorCode.NOT_FOUND_PROPERTY_DONATION));
+        propertyDonation.downvote(getUser(authorization));
+        propertyDonationRepository.save(propertyDonation);
     }
 }

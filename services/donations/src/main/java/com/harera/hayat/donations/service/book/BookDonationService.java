@@ -67,4 +67,16 @@ public class BookDonationService extends BaseService {
     public BookDonationResponse get(Long id) {
         return null;
     }
+
+    public void upvote(Long id, String authorization) {
+        BookDonation bookDonation = bookDonationRepository.findById(id).orElseThrow();
+        bookDonation.upvote(getUser(authorization));
+        bookDonationRepository.save(bookDonation);
+    }
+
+    public void downvote(Long id, String authorization) {
+        BookDonation bookDonation = bookDonationRepository.findById(id).orElseThrow();
+        bookDonation.downvote(getUser(authorization));
+        bookDonationRepository.save(bookDonation);
+    }
 }

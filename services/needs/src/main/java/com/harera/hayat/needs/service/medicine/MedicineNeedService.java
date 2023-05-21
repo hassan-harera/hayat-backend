@@ -1,7 +1,7 @@
 package com.harera.hayat.needs.service.medicine;
 
 import com.harera.hayat.framework.exception.DocumentNotFoundException;
-import com.harera.hayat.framework.repository.repository.MedicineRepository;
+import com.harera.hayat.framework.model.user.BaseUserDto;
 import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.file.CloudFileService;
@@ -9,12 +9,14 @@ import com.harera.hayat.framework.service.medicine.MedicineService;
 import com.harera.hayat.framework.service.medicine.MedicineUnitService;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
+import com.harera.hayat.needs.model.books.BookNeed;
 import com.harera.hayat.needs.model.medicine.MedicineNeed;
 import com.harera.hayat.needs.model.medicine.MedicineNeedRequest;
 import com.harera.hayat.needs.model.medicine.MedicineNeedResponse;
 import com.harera.hayat.needs.model.medicine.MedicineNeedUpdateRequest;
 import com.harera.hayat.needs.repository.medicine.MedicineNeedRepository;
 import com.harera.hayat.needs.service.BaseService;
+import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,39 +34,36 @@ public class MedicineNeedService implements BaseService {
     private final CityService cityService;
     private final MedicineUnitService medicineUnitService;
     private final MedicineService medicineService;
-    private final MedicineUnitRepository medicineUnitRepository;
     private final ModelMapper modelMapper;
     private final MedicineNeedRepository medicineNeedRepository;
-    private final MedicineRepository medicineRepository;
+    private final UserService userService;
     private final CloudFileService cloudFileService;
 
     public MedicineNeedService(MedicineNeedValidation needValidation,
                     CityService cityService, MedicineUnitService medicineUnitService,
                     MedicineService medicineService,
-                    MedicineUnitRepository medicineUnitRepository,
                     ModelMapper modelMapper,
                     MedicineNeedRepository medicineNeedRepository,
-                    MedicineRepository medicineRepository,
-                    CloudFileService cloudFileService) {
+                    UserService userService, CloudFileService cloudFileService) {
         this.needValidation = needValidation;
         this.cityService = cityService;
         this.medicineUnitService = medicineUnitService;
         this.medicineService = medicineService;
-        this.medicineUnitRepository = medicineUnitRepository;
         this.modelMapper = modelMapper;
         this.medicineNeedRepository = medicineNeedRepository;
-        this.medicineRepository = medicineRepository;
+        this.userService = userService;
         this.cloudFileService = cloudFileService;
     }
 
-    public MedicineNeedResponse create(MedicineNeedRequest medicineNeedRequest) {
+    public MedicineNeedResponse create(MedicineNeedRequest medicineNeedRequest, String authorization) {
         needValidation.validateCreate(medicineNeedRequest);
 
         MedicineNeed medicineNeed =
                         modelMapper.map(medicineNeedRequest, MedicineNeed.class);
         medicineNeed.setCategory(NeedCategory.MEDICINE);
         medicineNeed.setCity(cityService.get(medicineNeedRequest.getCityId()));
-        // TODO: 28/02/23 get user from token
+        medicineNeed.setUser(modelMapper.map(userService.getUser(authorization),
+                        BaseUserDto.class));
         medicineNeed.setMedicineUnit(
                         medicineUnitService.get(medicineNeedRequest.getMedicineUnitId()));
         medicineNeed.setMedicine(
@@ -72,6 +71,7 @@ public class MedicineNeedService implements BaseService {
 
         medicineNeed.setNeedDate(LocalDateTime.now());
         medicineNeed.setNeedExpirationDate(LocalDateTime.now().plusDays(45));
+        // TODO: 28/02/23 send request to ai model
 
         medicineNeedRepository.save(medicineNeed);
         return modelMapper.map(medicineNeed, MedicineNeedResponse.class);
@@ -106,7 +106,6 @@ public class MedicineNeedService implements BaseService {
                         medicineUnitService.get(request.getMedicineUnitId()));
         medicineNeed.setMedicine(medicineService.get(request.getMedicineId()));
 
-        // TODO: 28/02/23 get user from token
         // TODO: 28/02/23 send request to ai model
 
         medicineNeedRepository.save(medicineNeed);
@@ -136,5 +135,19 @@ public class MedicineNeedService implements BaseService {
 
         medicineNeedRepository.save(medicineNeed);
         return modelMapper.map(medicineNeed, MedicineNeedResponse.class);
+    }
+
+    public void upvote(String id, String authorization) {
+        MedicineNeed medicineNeed = medicineNeedRepository.findById(id).orElseThrow(
+                        () -> new DocumentNotFoundException(MedicineNeed.class, id));
+        medicineNeed.upvote(userService.getUser(authorization).getId());
+        medicineNeedRepository.save(medicineNeed);
+    }
+
+    public void downvote(String id, String authorization) {
+        MedicineNeed medicineNeed = medicineNeedRepository.findById(id).orElseThrow(
+                        () -> new DocumentNotFoundException(MedicineNeed.class, id));
+        medicineNeed.downvote(userService.getUser(authorization).getId());
+        medicineNeedRepository.save(medicineNeed);
     }
 }

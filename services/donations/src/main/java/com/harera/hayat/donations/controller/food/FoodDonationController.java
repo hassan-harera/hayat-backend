@@ -7,6 +7,7 @@ import com.harera.hayat.donations.service.food.FoodDonationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,5 +75,43 @@ public class FoodDonationController {
                     @RequestPart(name = "file") MultipartFile file,
                     @PathVariable("id") Long id) {
         return ResponseEntity.ok(foodDonationService.updateImage(id, file));
+    }
+
+    @PutMapping("/{id}/upvote")
+    @Operation(summary = "Upvote Blood Need", description = "Upvote Blood Need",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "success|ok"),
+                    @ApiResponse(responseCode = "400",
+                            description = "Invalid request body"),
+                    @ApiResponse(responseCode = "404",
+                            description = "Blood Need not found"),
+                    @ApiResponse(responseCode = "401",
+                            description = "Unauthorized"), },
+            tags = "Needs - Blood")
+    public ResponseEntity<Void> upvoteBloodNeed(
+            @PathVariable("id") Long id,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+        foodDonationService.upvote(id, authorization);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{id}/down-vote")
+    @Operation(summary = "Down-vote Blood Need", description = "Down-vote Blood Need",
+            responses = {
+                    @ApiResponse(responseCode = "200",
+                            description = "success|ok"),
+                    @ApiResponse(responseCode = "400",
+                            description = "Invalid request body"),
+                    @ApiResponse(responseCode = "404",
+                            description = "Blood Need not found"),
+                    @ApiResponse(responseCode = "401",
+                            description = "Unauthorized"), },
+            tags = "Needs - Blood")
+    public ResponseEntity<Void> downVoteBloodNeed(
+            @PathVariable("id") Long id,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+        foodDonationService.downvote(id, authorization);
+        return ResponseEntity.ok().build();
     }
 }

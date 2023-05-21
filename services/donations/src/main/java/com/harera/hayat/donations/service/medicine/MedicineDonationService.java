@@ -158,4 +158,20 @@ public class MedicineDonationService extends BaseService {
         medicineDonationRepository.save(medicineDonation);
         return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
     }
+
+    public void upvote(Long id, String authorization) {
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+        medicineDonation.upvote(getUser(authorization));
+        medicineDonationRepository.save(medicineDonation);
+    }
+
+    public void downvote(Long id, String authorization) {
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+        medicineDonation.downvote(getUser(authorization));
+        medicineDonationRepository.save(medicineDonation);
+    }
 }

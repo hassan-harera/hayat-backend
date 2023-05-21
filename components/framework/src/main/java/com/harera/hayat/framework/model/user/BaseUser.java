@@ -1,17 +1,13 @@
 package com.harera.hayat.framework.model.user;
 
+import com.harera.hayat.framework.model.BaseEntity;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Data;
 
-import com.harera.hayat.framework.model.BaseEntity;
-
-import lombok.Getter;
-import lombok.Setter;
-
-@Setter
-@Getter
+@Data
 @Entity
 @Table(name = "user_")
 public class BaseUser extends BaseEntity {

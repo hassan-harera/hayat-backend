@@ -1,0 +1,90 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0030" author="hharera@hayat.social">
+        <sql>
+            ALTER TABLE medicine_donation
+            ADD COLUMN reputation int default 0,
+            ADD COLUMN qr_code varchar(1024) null;
+
+            ALTER TABLE food_donation
+            ADD COLUMN reputation int default 0,
+            ADD COLUMN qr_code varchar(1024) null;
+
+            ALTER TABLE book_donation
+            ADD COLUMN reputation int default 0,
+            ADD COLUMN qr_code varchar(1024) null;
+
+            ALTER TABLE clothing_donation
+            ADD COLUMN reputation int default 0,
+            ADD COLUMN qr_code varchar(1024) null;
+
+            CREATE TABLE medicine_donation_upvotes
+            (
+            user_id              BIGINT not null,
+            donation_id BIGINT not null,
+            foreign key (donation_id) references medicine_donation (id),
+            foreign key (user_id) references user_ (id)
+            );
+
+            CREATE TABLE medicine_donation_downvotes
+            (
+            user_id              BIGINT not null,
+            donation_id BIGINT not null,
+            foreign key (donation_id) references medicine_donation (id),
+            foreign key (user_id) references user_ (id)
+            );
+
+
+            CREATE TABLE food_donation_upvotes
+            (
+            user_id              BIGINT not null,
+            donation_id BIGINT not null,
+            foreign key (donation_id) references food_donation (id),
+            foreign key (user_id) references user_ (id)
+            );
+
+            CREATE TABLE food_donation_downvotes
+            (
+            user_id              BIGINT not null,
+            donation_id BIGINT not null,
+            foreign key (donation_id) references food_donation (id),
+            foreign key (user_id) references user_ (id)
+            );
+
+            CREATE TABLE book_donation_upvotes
+            (
+            user_id              BIGINT not null,
+            donation_id BIGINT not null,
+            foreign key (donation_id) references book_donation (id),
+            foreign key (user_id) references user_ (id)
+            );
+
+            CREATE TABLE book_donation_downvotes
+            (
+            user_id              BIGINT not null,
+            donation_id BIGINT not null,
+            foreign key (donation_id) references book_donation (id),
+            foreign key (user_id) references user_ (id)
+            );
+
+            CREATE TABLE clothing_donation_upvotes
+            (
+            user_id              BIGINT not null,
+            donation_id BIGINT not null,
+            foreign key (donation_id) references clothing_donation (id),
+            foreign key (user_id) references user_ (id)
+            );
+
+            CREATE TABLE clothing_donation_downvotes
+            (
+            user_id              BIGINT not null,
+            donation_id BIGINT not null,
+            foreign key (donation_id) references clothing_donation (id),
+            foreign key (user_id) references user_ (id)
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
