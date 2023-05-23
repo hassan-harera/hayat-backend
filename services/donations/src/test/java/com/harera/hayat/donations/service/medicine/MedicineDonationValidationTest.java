@@ -19,7 +19,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -55,8 +55,8 @@ class MedicineDonationValidationTest {
         request.setMedicineUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         MandatoryFieldException ex = assertThrows(MandatoryFieldException.class, () -> {
@@ -74,12 +74,12 @@ class MedicineDonationValidationTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         MandatoryFieldException ex = assertThrows(MandatoryFieldException.class, () -> {
@@ -97,12 +97,12 @@ class MedicineDonationValidationTest {
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
         request.setMedicineUnitId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         MandatoryFieldException ex = assertThrows(MandatoryFieldException.class, () -> {
@@ -141,7 +141,7 @@ class MedicineDonationValidationTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
 
         request.setMedicineUnitId(1L);
         request.setMedicineId(1L);
@@ -149,7 +149,7 @@ class MedicineDonationValidationTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         FieldLimitException ex = assertThrows(FieldLimitException.class, () -> {
@@ -166,14 +166,14 @@ class MedicineDonationValidationTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setMedicineUnitId(1L);
         request.setMedicineId(1L);
         request.setQuantity(1f);
         request.setTitle("a");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().minusDays(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().minusDays(1));
 
         // when
         FieldLimitException ex = assertThrows(FieldLimitException.class, () -> {
@@ -195,7 +195,7 @@ class MedicineDonationValidationTest {
         request.setMedicineUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.existsById(request.getCityId())).thenReturn(false);
@@ -218,7 +218,7 @@ class MedicineDonationValidationTest {
         request.setMedicineUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.existsById(request.getCityId())).thenReturn(true);
@@ -242,7 +242,7 @@ class MedicineDonationValidationTest {
         request.setMedicineUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.existsById(request.getCityId())).thenReturn(true);
@@ -267,7 +267,7 @@ class MedicineDonationValidationTest {
         request.setMedicineUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.existsById(request.getCityId())).thenReturn(true);
@@ -290,8 +290,8 @@ class MedicineDonationValidationTest {
         request.setMedicineUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
 
@@ -311,13 +311,13 @@ class MedicineDonationValidationTest {
         MedicineDonationUpdateRequest request = new MedicineDonationUpdateRequest();
         request.setMedicineUnitId(null);
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setQuantity(15f);
         request.setTitle("title");
         request.setMedicineId(1L);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         MandatoryFieldException ex = assertThrows(MandatoryFieldException.class, () -> {
@@ -358,15 +358,15 @@ class MedicineDonationValidationTest {
         // given
         MedicineDonationUpdateRequest request = new MedicineDonationUpdateRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
         request.setQuantity(-1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         FieldLimitException ex = assertThrows(FieldLimitException.class, () -> {
