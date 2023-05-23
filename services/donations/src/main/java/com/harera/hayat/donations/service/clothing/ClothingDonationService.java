@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
+import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
 
 @Service
 public class ClothingDonationService extends BaseService {
@@ -121,14 +122,8 @@ public class ClothingDonationService extends BaseService {
 
     public List<ClothingDonationResponse> search(String query, int page) {
         List<ClothingDonation> clothingDonationList = clothingDonationRepository
-                        .search(query, PageRequest.of(page, 10));
-        List<ClothingDonationResponse> response = new LinkedList<>();
-        for (ClothingDonation clothingDonation : clothingDonationList) {
-            ClothingDonationResponse clothingDonationResponse = modelMapper
-                            .map(clothingDonation, ClothingDonationResponse.class);
-            response.add(clothingDonationResponse);
-        }
-        return response;
+                        .search(query, PageRequest.of(page, 16));
+        return mapAll(clothingDonationList, ClothingDonationResponse.class);
     }
 
     public void upvote(Long id, String authorization) {

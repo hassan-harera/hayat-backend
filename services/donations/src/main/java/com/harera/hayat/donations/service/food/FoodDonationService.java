@@ -1,6 +1,7 @@
 package com.harera.hayat.donations.service.food;
 
 import com.harera.hayat.donations.model.DonationCategory;
+import com.harera.hayat.donations.model.DonationStatus;
 import com.harera.hayat.donations.model.food.FoodDonation;
 import com.harera.hayat.donations.model.food.FoodDonationRequest;
 import com.harera.hayat.donations.model.food.FoodDonationResponse;
@@ -18,6 +19,7 @@ import com.harera.hayat.framework.service.file.CloudFileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
+import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
 
 @Service
 public class FoodDonationService extends BaseService {
@@ -62,6 +65,7 @@ public class FoodDonationService extends BaseService {
 
         FoodDonation foodDonation =
                         modelMapper.map(foodDonationRequest, FoodDonation.class);
+        foodDonation.setStatus(DonationStatus.PENDING);
         foodDonation.setCategory(DonationCategory.FOOD);
         foodDonation.setDonationDate(OffsetDateTime.now());
         foodDonation.setDonationExpirationDate(getDonationExpirationDate());
@@ -158,5 +162,12 @@ public class FoodDonationService extends BaseService {
                         () -> new EntityNotFoundException(FoodDonation.class, id));
         foodDonation.downvote(getUser(authorization));
         foodDonationRepository.save(foodDonation);
+    }
+
+    public List<FoodDonationResponse> search(String query, Integer page) {
+        page = Integer.max(page, 1) - 1;
+        List<FoodDonation> search = foodDonationRepository.search(query,
+                        Pageable.ofSize(16).withPage(page));
+        return mapAll(search, FoodDonationResponse.class);
     }
 }
