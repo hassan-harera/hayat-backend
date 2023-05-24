@@ -2,6 +2,7 @@ package com.harera.hayat.needs.service;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import com.harera.hayat.needs.model.blood.BloodNeedUpdateRequest;
 import com.harera.hayat.needs.model.medicine.MedicineNeedRequest;
 import com.harera.hayat.needs.model.medicine.MedicineNeedUpdateRequest;
 import org.springframework.stereotype.Service;
@@ -59,5 +60,9 @@ public class NeedValidation {
     public void validateUpdate(MedicineNeedUpdateRequest medicineNeedRequest) {
         validateMandatory(medicineNeedRequest);
         validateFormat(medicineNeedRequest);
+    }
+
+    public void validateUpdate(BloodNeedUpdateRequest request) {
+
     }
 }

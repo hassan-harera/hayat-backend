@@ -3,7 +3,6 @@ package com.harera.hayat.donations.controller.book;
 import com.harera.hayat.donations.model.book.BookDonationRequest;
 import com.harera.hayat.donations.model.book.BookDonationResponse;
 import com.harera.hayat.donations.model.book.BookDonationUpdateRequest;
-import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
 import com.harera.hayat.donations.service.book.BookDonationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -111,10 +110,10 @@ public class BookDonationController {
 
     @PostMapping("/{id}/images")
     @Operation(summary = "Update Image",
-                    description = "Update image for a book donation by id",
+                    description = "Update the image of the book donation by its id",
                     tags = "Book-Donation", responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
-    public ResponseEntity<MedicineDonationResponse> insertImage(
+    public ResponseEntity<BookDonationResponse> insertImage(
                     @RequestPart(name = "file") MultipartFile file,
                     @PathVariable("id") Long id) {
         return ResponseEntity.ok(bookDonationService.updateImage(id, file));

@@ -2,14 +2,12 @@ package com.harera.hayat.needs.service.medicine;
 
 import com.harera.hayat.framework.exception.DocumentNotFoundException;
 import com.harera.hayat.framework.model.user.BaseUserDto;
-import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.file.CloudFileService;
 import com.harera.hayat.framework.service.medicine.MedicineService;
 import com.harera.hayat.framework.service.medicine.MedicineUnitService;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
-import com.harera.hayat.needs.model.books.BookNeed;
 import com.harera.hayat.needs.model.medicine.MedicineNeed;
 import com.harera.hayat.needs.model.medicine.MedicineNeedRequest;
 import com.harera.hayat.needs.model.medicine.MedicineNeedResponse;
@@ -41,8 +39,7 @@ public class MedicineNeedService implements BaseService {
 
     public MedicineNeedService(MedicineNeedValidation needValidation,
                     CityService cityService, MedicineUnitService medicineUnitService,
-                    MedicineService medicineService,
-                    ModelMapper modelMapper,
+                    MedicineService medicineService, ModelMapper modelMapper,
                     MedicineNeedRepository medicineNeedRepository,
                     UserService userService, CloudFileService cloudFileService) {
         this.needValidation = needValidation;
@@ -55,12 +52,14 @@ public class MedicineNeedService implements BaseService {
         this.cloudFileService = cloudFileService;
     }
 
-    public MedicineNeedResponse create(MedicineNeedRequest medicineNeedRequest, String authorization) {
+    public MedicineNeedResponse create(MedicineNeedRequest medicineNeedRequest,
+                    String authorization) {
         needValidation.validateCreate(medicineNeedRequest);
 
         MedicineNeed medicineNeed =
                         modelMapper.map(medicineNeedRequest, MedicineNeed.class);
         medicineNeed.setCategory(NeedCategory.MEDICINE);
+        medicineNeed.setStatus(NeedStatus.PENDING);
         medicineNeed.setCity(cityService.get(medicineNeedRequest.getCityId()));
         medicineNeed.setUser(modelMapper.map(userService.getUser(authorization),
                         BaseUserDto.class));

@@ -32,8 +32,8 @@ public class MedicineNeedController {
     public ResponseEntity<MedicineNeedResponse> create(
                     @RequestBody MedicineNeedRequest medicineNeedRequest,
                     @RequestHeader("Authorization") String authorization) {
-        MedicineNeedResponse needResponse =
-                        medicineNeedService.create(medicineNeedRequest, authorization);
+        MedicineNeedResponse needResponse = medicineNeedService
+                        .create(medicineNeedRequest, authorization.substring(7));
         return ResponseEntity.ok(needResponse);
     }
 
@@ -67,7 +67,7 @@ public class MedicineNeedController {
         return ResponseEntity.ok(medicineNeedService.get(id));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/results")
     @Operation(summary = "List", description = "Search medicine needs",
                     tags = "Medicine-Need", responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))

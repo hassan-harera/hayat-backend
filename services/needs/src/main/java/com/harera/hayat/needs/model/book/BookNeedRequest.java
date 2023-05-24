@@ -1,4 +1,4 @@
-package com.harera.hayat.needs.model.books;
+package com.harera.hayat.needs.model.book;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

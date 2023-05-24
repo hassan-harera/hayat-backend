@@ -7,9 +7,7 @@ import com.harera.hayat.donations.model.book.BookDonationRequest;
 import com.harera.hayat.donations.model.book.BookDonationResponse;
 import com.harera.hayat.donations.model.book.BookDonationUpdateRequest;
 import com.harera.hayat.donations.model.medicine.MedicineDonation;
-import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
 import com.harera.hayat.donations.repository.book.BookDonationRepository;
-import com.harera.hayat.donations.repository.food.FoodDonationRepository;
 import com.harera.hayat.donations.repository.medicine.MedicineDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
@@ -110,20 +108,19 @@ public class BookDonationService extends BaseService {
         bookDonationRepository.save(bookDonation);
     }
 
-    public MedicineDonationResponse updateImage(Long id, MultipartFile file) {
-        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException(
-                                        MedicineDonation.class, id));
+    public BookDonationResponse updateImage(Long id, MultipartFile file) {
+        BookDonation bookDonation = bookDonationRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(MedicineDonation.class, id));
 
         String imageUrl = cloudFileService.uploadFile(convertMultiPartToFile(file));
-        if (medicineDonation.getImageUrl() == null) {
-            medicineDonation.setImageUrl(imageUrl);
+        if (bookDonation.getImageUrl() == null) {
+            bookDonation.setImageUrl(imageUrl);
         } else {
-            cloudFileService.deleteFile(medicineDonation.getImageUrl());
-            medicineDonation.setImageUrl(imageUrl);
+            cloudFileService.deleteFile(bookDonation.getImageUrl());
+            bookDonation.setImageUrl(imageUrl);
         }
 
-        medicineDonationRepository.save(medicineDonation);
-        return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
+        bookDonationRepository.save(bookDonation);
+        return modelMapper.map(bookDonation, BookDonationResponse.class);
     }
 }

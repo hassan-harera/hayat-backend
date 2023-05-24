@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/donations/medicine")
-@Tag(name = "Medicine-Donation")
+@Tag(name = "Medicine - Donation")
 public class MedicineDonationController {
 
     private final MedicineDonationService medicineDonationService;
@@ -27,7 +27,7 @@ public class MedicineDonationController {
 
     @PostMapping
     @Operation(summary = "Create", description = "Create a medicine donations",
-                    tags = "Medicine-Donation",
+                    tags = "Medicine - Donation",
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<MedicineDonationResponse> create(
@@ -40,7 +40,7 @@ public class MedicineDonationController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update", description = "Update a medicine donation",
-                    tags = "Medicine-Donation",
+                    tags = "Medicine - Donation",
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<MedicineDonationResponse> update(@PathVariable("id") Long id,
@@ -51,7 +51,7 @@ public class MedicineDonationController {
 
     @GetMapping
     @Operation(summary = "List", description = "List medicine donations",
-                    tags = "Medicine-Donation",
+                    tags = "Medicine - Donation",
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<List<MedicineDonationResponse>> list(
@@ -64,16 +64,16 @@ public class MedicineDonationController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get", description = "Get a medicine donations",
-                    tags = "Medicine-Donation",
+                    tags = "Medicine - Donation",
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<MedicineDonationResponse> get(@PathVariable("id") Long id) {
         return ResponseEntity.ok(medicineDonationService.get(id));
     }
 
-    @GetMapping("/search")
+    @GetMapping("/results")
     @Operation(summary = "List", description = "Search medicine donations",
-                    tags = "Medicine-Donation",
+                    tags = "Medicine - Donation",
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<List<MedicineDonationResponse>> search(
@@ -87,7 +87,7 @@ public class MedicineDonationController {
     @PostMapping("/{id}/images")
     @Operation(summary = "Insert Image",
                     description = "Insert image for a medicine donation",
-                    tags = "Medicine-Donation",
+                    tags = "Medicine - Donation",
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<MedicineDonationResponse> insertImage(
@@ -97,39 +97,39 @@ public class MedicineDonationController {
     }
 
     @PutMapping("/{id}/upvote")
-    @Operation(summary = "Upvote Blood Need", description = "Upvote Blood Need",
-            responses = {
-                    @ApiResponse(responseCode = "200",
-                            description = "success|ok"),
-                    @ApiResponse(responseCode = "400",
-                            description = "Invalid request body"),
-                    @ApiResponse(responseCode = "404",
-                            description = "Blood Need not found"),
-                    @ApiResponse(responseCode = "401",
-                            description = "Unauthorized"), },
-            tags = "Needs - Blood")
-    public ResponseEntity<Void> upvoteBloodNeed(
-            @PathVariable("id") Long id,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+    @Operation(summary = "Upvote Medicine Donation",
+                    description = "Upvote Medicine Donation",
+                    responses = {
+                            @ApiResponse(responseCode = "200",
+                                            description = "success|ok"),
+                            @ApiResponse(responseCode = "400",
+                                            description = "Invalid request body"),
+                            @ApiResponse(responseCode = "404",
+                                            description = "Medicine Donation not found"),
+                            @ApiResponse(responseCode = "401",
+                                            description = "Unauthorized"), },
+                    tags = "Medicine - Donation")
+    public ResponseEntity<Void> upvoteMedicineDonation(@PathVariable("id") Long id,
+                    @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
         medicineDonationService.upvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}/down-vote")
-    @Operation(summary = "Down-vote Blood Need", description = "Down-vote Blood Need",
-            responses = {
-                    @ApiResponse(responseCode = "200",
-                            description = "success|ok"),
-                    @ApiResponse(responseCode = "400",
-                            description = "Invalid request body"),
-                    @ApiResponse(responseCode = "404",
-                            description = "Blood Need not found"),
-                    @ApiResponse(responseCode = "401",
-                            description = "Unauthorized"), },
-            tags = "Needs - Blood")
-    public ResponseEntity<Void> downVoteBloodNeed(
-            @PathVariable("id") Long id,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+    @Operation(summary = "Down-vote Medicine Donation",
+                    description = "DownVote Medicine Donation",
+                    responses = {
+                            @ApiResponse(responseCode = "200",
+                                            description = "success|ok"),
+                            @ApiResponse(responseCode = "400",
+                                            description = "Invalid request body"),
+                            @ApiResponse(responseCode = "404",
+                                            description = "Medicine Donation not found"),
+                            @ApiResponse(responseCode = "401",
+                                            description = "Unauthorized"), },
+                    tags = "Medicine - Donation")
+    public ResponseEntity<Void> downVoteMedicineDonation(@PathVariable("id") Long id,
+                    @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
         medicineDonationService.downvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }

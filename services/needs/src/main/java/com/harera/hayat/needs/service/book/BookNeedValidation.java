@@ -3,7 +3,7 @@ package com.harera.hayat.needs.service.book;
 import org.springframework.stereotype.Service;
 
 import com.harera.hayat.framework.repository.city.CityRepository;
-import com.harera.hayat.needs.model.books.BookNeedRequest;
+import com.harera.hayat.needs.model.book.BookNeedRequest;
 import com.harera.hayat.needs.service.NeedValidation;
 
 @Service
