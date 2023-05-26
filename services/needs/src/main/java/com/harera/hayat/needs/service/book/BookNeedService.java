@@ -65,17 +65,17 @@ public class BookNeedService {
         return mapAll(all, BookNeedResponse.class);
     }
 
-    public void upvote(String id, String authorization) {
+    public void upvote(String id, String bearerToken) {
         BookNeed bookNeed = bookNeedRepository.findById(id)
                         .orElseThrow(() -> new RuntimeException("Book Need not found"));
-        bookNeed.downvote(userService.getUser(authorization).getId());
+        bookNeed.upvote(userService.getUser(bearerToken).getId());
         bookNeedRepository.save(bookNeed);
     }
 
-    public void downvote(String id, String authorization) {
+    public void downvote(String id, String bearerToken) {
         BookNeed bookNeed = bookNeedRepository.findById(id)
                         .orElseThrow(() -> new RuntimeException("Book Need not found"));
-        bookNeed.upvote(userService.getUser(authorization).getId());
+        bookNeed.downvote(userService.getUser(bearerToken).getId());
         bookNeedRepository.save(bookNeed);
     }
 

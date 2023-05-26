@@ -55,10 +55,9 @@ public class MedicineDonationController {
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<List<MedicineDonationResponse>> list(
-                    @RequestParam(value = "page", defaultValue = "0") int page,
-                    @RequestParam(value = "size", defaultValue = "10") int size) {
+                    @RequestParam(value = "page", defaultValue = "1") int page) {
         List<MedicineDonationResponse> medicineDonationResponses =
-                        medicineDonationService.list(size, page);
+                        medicineDonationService.list(page);
         return ResponseEntity.ok(medicineDonationResponses);
     }
 

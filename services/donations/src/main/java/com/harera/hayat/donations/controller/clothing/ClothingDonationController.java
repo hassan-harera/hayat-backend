@@ -54,10 +54,9 @@ public class ClothingDonationController {
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<List<ClothingDonationResponse>> list(
-                    @RequestParam(value = "page", defaultValue = "0") int page,
-                    @RequestParam(value = "size", defaultValue = "10") int size) {
+                    @RequestParam(value = "page", defaultValue = "1") int page) {
         List<ClothingDonationResponse> clothingDonationResponses =
-                        clothingDonationService.list(size, page);
+                        clothingDonationService.list(page);
         return ResponseEntity.ok(clothingDonationResponses);
     }
 

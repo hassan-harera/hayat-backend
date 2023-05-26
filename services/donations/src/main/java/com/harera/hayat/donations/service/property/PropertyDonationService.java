@@ -23,10 +23,8 @@ import java.util.List;
 @Service
 public class PropertyDonationService extends BaseService {
 
-    @Value("${donation.property.page_size:10}")
-    private int pageSize;
-    @Value("${donation.property.expirations_days:45}")
-    private int expirationDays;
+    private final int pageSize = 16;
+    private final int expirationDays = 45;
 
     private final PropertyDonationRepository propertyDonationRepository;
     private final PropertyDonationValidation donationValidation;
@@ -43,7 +41,7 @@ public class PropertyDonationService extends BaseService {
     }
 
     public PropertyDonationResponse create(
-                    PropertyDonationRequest propertyDonationRequest) {
+                    PropertyDonationRequest propertyDonationRequest, String bearerToken) {
         donationValidation.validateCreate(propertyDonationRequest);
         PropertyDonation propertyDonation =
                         modelMapper.map(propertyDonationRequest, PropertyDonation.class);
@@ -55,7 +53,7 @@ public class PropertyDonationService extends BaseService {
                         OffsetDateTime.now().plusDays(expirationDays));
 
         assignCity(propertyDonation, propertyDonationRequest.getCityId());
-        // TODO: set user
+        propertyDonation.setUser(getUser(bearerToken));
 
         propertyDonationRepository.save(propertyDonation);
         return modelMapper.map(propertyDonation, PropertyDonationResponse.class);

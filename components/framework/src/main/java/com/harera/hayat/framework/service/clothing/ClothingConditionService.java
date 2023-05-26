@@ -12,12 +12,18 @@ public class ClothingConditionService {
 
     private final ClothingConditionRepository clothingConditionRepository;
 
-    public ClothingConditionService(ClothingConditionRepository clothingConditionRepository) {
+    public ClothingConditionService(
+                    ClothingConditionRepository clothingConditionRepository) {
         this.clothingConditionRepository = clothingConditionRepository;
     }
 
     @Cacheable("clothing_conditions")
     public List<ClothingCondition> list() {
         return clothingConditionRepository.findAll();
+    }
+
+    public ClothingCondition get(Long clothingConditionId) {
+        return clothingConditionRepository.findById(clothingConditionId).orElseThrow(
+                        () -> new RuntimeException("Clothing condition not found"));
     }
 }

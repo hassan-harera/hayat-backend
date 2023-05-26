@@ -104,8 +104,9 @@ public class MedicineDonationService extends BaseService {
                         MedicineDonationResponse.class);
     }
 
-    public List<MedicineDonationResponse> list(int size, int page) {
-        return medicineDonationRepository.findAll(Pageable.ofSize(size).withPage(page))
+    public List<MedicineDonationResponse> list(int page) {
+        page = Math.max(page, 1) - 1;
+        return medicineDonationRepository.findAll(Pageable.ofSize(16).withPage(page))
                         .map(medicineDonation -> modelMapper.map(medicineDonation,
                                         MedicineDonationResponse.class))
                         .toList();

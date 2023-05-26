@@ -84,8 +84,9 @@ public class MedicineNeedService implements BaseService {
                         MedicineNeedResponse.class);
     }
 
-    public List<MedicineNeedResponse> list(int size, int page) {
-        return medicineNeedRepository.findAll(Pageable.ofSize(size).withPage(page))
+    public List<MedicineNeedResponse> list(int page) {
+        page = Integer.max(page, 1) - 1;
+        return medicineNeedRepository.findAll(Pageable.ofSize(16).withPage(page))
                         .map(medicineNeed -> modelMapper.map(medicineNeed,
                                         MedicineNeedResponse.class))
                         .toList();

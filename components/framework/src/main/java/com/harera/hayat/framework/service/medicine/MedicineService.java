@@ -28,7 +28,7 @@ public class MedicineService {
     public List<MedicineDto> list(int page) {
         page = Integer.max(page, 1) - 1;
         List<Medicine> medicineList = medicineRepository
-                        .findAll(Pageable.ofSize(10).withPage(page)).getContent();
+                .findAll(Pageable.ofSize(16).withPage(page)).getContent();
         return mapAll(medicineList, MedicineDto.class);
     }
 
@@ -42,7 +42,7 @@ public class MedicineService {
     public List<MedicineDto> search(String query, int page) {
         page = Integer.max(page, 1) - 1;
         List<Medicine> medicineList = medicineRepository.search(query,
-                        Pageable.ofSize(10).withPage(page));
+                        Pageable.ofSize(16).withPage(page));
         return mapAll(medicineList, MedicineDto.class);
     }
 }

@@ -36,7 +36,7 @@ public class BookNeedController {
     public ResponseEntity<BookNeedResponse> create(
                     @RequestBody BookNeedRequest bookNeedRequest,
                     @RequestHeader("Authorization") String authorization) {
-        return ok(bookNeedService.create(bookNeedRequest, authorization));
+        return ok(bookNeedService.create(bookNeedRequest, authorization.substring(7)));
     }
 
     @Operation(summary = "List", description = "List book needs", responses = {

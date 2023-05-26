@@ -33,8 +33,8 @@ public class BloodNeedController {
     public ResponseEntity<BloodNeedResponse> createBloodNeed(
                     @RequestBody BloodNeedRequest bloodNeedRequest,
                     @RequestHeader("Authorization") String authorization) {
-        BloodNeedResponse bloodNeedResponse =
-                        bloodNeedService.create(bloodNeedRequest, authorization);
+        BloodNeedResponse bloodNeedResponse = bloodNeedService.create(bloodNeedRequest,
+                        authorization.substring(7));
         return ResponseEntity.ok(bloodNeedResponse);
     }
 

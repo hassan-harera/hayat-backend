@@ -31,8 +31,10 @@ public class PropertyDonationController {
             @ApiResponse(responseCode = "200", description = "success|Ok"),
             @ApiResponse(responseCode = "400", description = "error|Bad Request") })
     public ResponseEntity<PropertyDonationResponse> create(
+                    @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization,
                     @RequestBody PropertyDonationRequest propertyDonationRequest) {
-        return ok(propertyDonationService.create(propertyDonationRequest));
+        return ok(propertyDonationService.create(propertyDonationRequest,
+                        authorization.substring(7)));
     }
 
     @PutMapping("/{id}")
@@ -64,38 +66,36 @@ public class PropertyDonationController {
 
     @PutMapping("/{id}/upvote")
     @Operation(summary = "Upvote Blood Need", description = "Upvote Blood Need",
-            responses = {
-                    @ApiResponse(responseCode = "200",
-                            description = "success|ok"),
-                    @ApiResponse(responseCode = "400",
-                            description = "Invalid request body"),
-                    @ApiResponse(responseCode = "404",
-                            description = "Blood Need not found"),
-                    @ApiResponse(responseCode = "401",
-                            description = "Unauthorized"), },
-            tags = "Property - Donation")
-    public ResponseEntity<Void> upvoteBloodNeed(
-            @PathVariable("id") Long id,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+                    responses = {
+                            @ApiResponse(responseCode = "200",
+                                            description = "success|ok"),
+                            @ApiResponse(responseCode = "400",
+                                            description = "Invalid request body"),
+                            @ApiResponse(responseCode = "404",
+                                            description = "Blood Need not found"),
+                            @ApiResponse(responseCode = "401",
+                                            description = "Unauthorized"), },
+                    tags = "Property - Donation")
+    public ResponseEntity<Void> upvoteBloodNeed(@PathVariable("id") Long id,
+                    @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
         propertyDonationService.upvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}/down-vote")
     @Operation(summary = "Down-vote Blood Need", description = "Down-vote Blood Need",
-            responses = {
-                    @ApiResponse(responseCode = "200",
-                            description = "success|ok"),
-                    @ApiResponse(responseCode = "400",
-                            description = "Invalid request body"),
-                    @ApiResponse(responseCode = "404",
-                            description = "Blood Need not found"),
-                    @ApiResponse(responseCode = "401",
-                            description = "Unauthorized"), },
-            tags = "Property - Donation")
-    public ResponseEntity<Void> downVoteBloodNeed(
-            @PathVariable("id") Long id,
-            @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
+                    responses = {
+                            @ApiResponse(responseCode = "200",
+                                            description = "success|ok"),
+                            @ApiResponse(responseCode = "400",
+                                            description = "Invalid request body"),
+                            @ApiResponse(responseCode = "404",
+                                            description = "Blood Need not found"),
+                            @ApiResponse(responseCode = "401",
+                                            description = "Unauthorized"), },
+                    tags = "Property - Donation")
+    public ResponseEntity<Void> downVoteBloodNeed(@PathVariable("id") Long id,
+                    @RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
         propertyDonationService.downvote(id, authorization.substring(7));
         return ResponseEntity.ok().build();
     }

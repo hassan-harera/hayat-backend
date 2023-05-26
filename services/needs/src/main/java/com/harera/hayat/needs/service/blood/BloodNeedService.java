@@ -58,6 +58,7 @@ public class BloodNeedService {
         bloodNeed.setNeedDate(LocalDateTime.now());
         bloodNeed.setNeedExpirationDate(LocalDateTime.now().plusDays(15));
         bloodNeed.setCity(cityService.get(bloodNeedRequest.getCityId()));
+        bloodNeed.setStatus(NeedStatus.PENDING);
         bloodNeed.setCategory(NeedCategory.BLOOD);
 
         bloodNeed.setUser(modelMapper.map(userService.getUser(authorization),

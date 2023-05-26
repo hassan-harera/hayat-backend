@@ -52,10 +52,9 @@ public class MedicineNeedController {
                     tags = "Medicine-Need", responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
     public ResponseEntity<List<MedicineNeedResponse>> list(
-                    @RequestParam(value = "page", defaultValue = "0") int page,
-                    @RequestParam(value = "size", defaultValue = "10") int size) {
+                    @RequestParam(value = "page", defaultValue = "1") int page) {
         List<MedicineNeedResponse> medicineNeedResponses =
-                        medicineNeedService.list(size, page);
+                        medicineNeedService.list(page);
         return ResponseEntity.ok(medicineNeedResponses);
     }
 
