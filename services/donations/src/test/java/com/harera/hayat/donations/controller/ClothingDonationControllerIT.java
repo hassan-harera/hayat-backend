@@ -45,7 +45,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         request.setDonationDate(LocalDate.now());
         request.setDonationExpirationDate(LocalDate.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationStatus.ACCEPTED);
+        request.setStatus(DonationStatus.ACTIVE);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setQuantity(5);
@@ -85,7 +85,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         City city = cityStubs.insert("arabic_name", "english_name");
         ClothingDonation clothingDonation = clothingDonationStubs.insert("title",
                         "description", LocalDateTime.now(), LocalDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, null, null, null, null, city);
         ClothingDonationRequest request = new ClothingDonationRequest();
         request.setId(0L);
@@ -94,7 +94,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         request.setDonationDate(LocalDate.now());
         request.setDonationExpirationDate(LocalDate.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationStatus.ACCEPTED);
+        request.setStatus(DonationStatus.ACTIVE);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setQuantity(8);
@@ -132,7 +132,7 @@ class ClothingDonationControllerIT extends ApplicationIT {
         City city = cityStubs.insert("arabic_name", "english_name");
         ClothingDonation clothingDonation = clothingDonationStubs.insert("title",
                         "description", LocalDateTime.now(), LocalDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, null, null, null, null, city);
 
         try {

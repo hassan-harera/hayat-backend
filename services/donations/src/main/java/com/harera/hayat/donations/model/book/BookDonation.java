@@ -1,6 +1,6 @@
 package com.harera.hayat.donations.model.book;
 
-import com.harera.hayat.donations.model.Donation;
+import com.harera.hayat.donations.model.BaseDonation;
 import com.harera.hayat.framework.model.user.BaseUser;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "book_donation")
-public class BookDonation extends Donation {
+public class BookDonation extends BaseDonation {
 
     @Column(name = "quantity")
     private Integer quantity;

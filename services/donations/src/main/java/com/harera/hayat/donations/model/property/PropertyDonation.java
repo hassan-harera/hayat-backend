@@ -1,6 +1,6 @@
 package com.harera.hayat.donations.model.property;
 
-import com.harera.hayat.donations.model.Donation;
+import com.harera.hayat.donations.model.BaseDonation;
 import com.harera.hayat.framework.model.user.BaseUser;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "property_donation")
-public class PropertyDonation extends Donation {
+public class PropertyDonation extends BaseDonation {
 
     @Column(name = "rooms")
     private int rooms;

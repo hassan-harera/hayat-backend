@@ -1,7 +1,7 @@
 package com.harera.hayat.donations.service.food;
 
+import com.harera.hayat.donations.model.BaseDonation;
 import com.harera.hayat.donations.model.CommunicationMethod;
-import com.harera.hayat.donations.model.Donation;
 import com.harera.hayat.donations.model.food.FoodDonation;
 import com.harera.hayat.donations.model.food.FoodDonationRequest;
 import com.harera.hayat.donations.model.food.FoodDonationResponse;
@@ -216,8 +216,8 @@ class FoodDonationServiceTest {
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
 
-        Donation donation = new Donation();
-        donation.setId(1L);
+        BaseDonation baseDonation = new BaseDonation();
+        baseDonation.setId(1L);
 
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(1L);
@@ -246,8 +246,8 @@ class FoodDonationServiceTest {
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
 
-        Donation donation = new Donation();
-        donation.setId(1L);
+        BaseDonation baseDonation = new BaseDonation();
+        baseDonation.setId(1L);
 
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(1L);
@@ -286,8 +286,8 @@ class FoodDonationServiceTest {
         FoodUnit foodUnit = new FoodUnit();
         foodUnit.setId(1L);
 
-        Donation donation = new Donation();
-        donation.setId(1L);
+        BaseDonation baseDonation = new BaseDonation();
+        baseDonation.setId(1L);
 
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(1L);

@@ -1,6 +1,6 @@
 package com.harera.hayat.donations.model.clothing;
 
-import com.harera.hayat.donations.model.Donation;
+import com.harera.hayat.donations.model.BaseDonation;
 import com.harera.hayat.framework.model.clothing.*;
 import com.harera.hayat.framework.model.user.BaseUser;
 import jakarta.persistence.*;
@@ -14,7 +14,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "clothing_donation")
-public class ClothingDonation extends Donation {
+public class ClothingDonation extends BaseDonation {
 
     @Column(name = "quantity")
     private int quantity;

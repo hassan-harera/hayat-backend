@@ -12,9 +12,8 @@ import java.util.UUID;
 
 @Setter
 @Getter
-@Entity
-@Table(name = "donation")
-public class Donation extends BaseEntity {
+@MappedSuperclass
+public class BaseDonation extends BaseEntity {
 
     @Basic
     @Column(name = "title")

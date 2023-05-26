@@ -12,7 +12,7 @@
 
     <artifactId>donations</artifactId>
     <version>1.0</version>
-    <name>donation</name>
+    <name>baseDonation</name>
     <description>Donation service</description>
 
     <properties>

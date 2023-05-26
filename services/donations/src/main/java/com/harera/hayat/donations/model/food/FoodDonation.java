@@ -1,6 +1,6 @@
 package com.harera.hayat.donations.model.food;
 
-import com.harera.hayat.donations.model.Donation;
+import com.harera.hayat.donations.model.BaseDonation;
 import com.harera.hayat.framework.model.food.FoodCategory;
 import com.harera.hayat.framework.model.food.FoodUnit;
 import com.harera.hayat.framework.model.user.BaseUser;
@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "food_donation")
-public class FoodDonation extends Donation {
+public class FoodDonation extends BaseDonation {
 
     @Basic
     @Column(name = "food_expiration_date")

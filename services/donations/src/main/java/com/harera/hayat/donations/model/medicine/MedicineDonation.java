@@ -1,6 +1,6 @@
 package com.harera.hayat.donations.model.medicine;
 
-import com.harera.hayat.donations.model.Donation;
+import com.harera.hayat.donations.model.BaseDonation;
 import com.harera.hayat.framework.model.medicine.Medicine;
 import com.harera.hayat.framework.model.medicine.MedicineUnit;
 import com.harera.hayat.framework.model.user.BaseUser;
@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Entity
 @Table(name = "medicine_donation")
-public class MedicineDonation extends Donation {
+public class MedicineDonation extends BaseDonation {
 
     @Column(name = "quantity")
     private Float quantity;
