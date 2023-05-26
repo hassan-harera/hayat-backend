@@ -40,9 +40,7 @@ public class KeycloakServiceImpl implements KeycloakService {
                     @Value("${keycloak.auth-server-url}") String serverUrl,
                     @Value("${keycloak.realm}") String realm,
                     @Value("${keycloak.credentials.client-id}") String clientId,
-                    @Value("${keycloak.credentials.secret}") String clientSecret,
-                    @Value("${keycloak.credentials.username}") String username,
-                    @Value("${keycloak.credentials.password}") String password) {
+                    @Value("${keycloak.credentials.secret}") String clientSecret) {
         this.keycloak = keycloak;
         this.modelMapper = modelMapper;
         this.clientId = clientId;
@@ -71,9 +69,10 @@ public class KeycloakServiceImpl implements KeycloakService {
         userRepresentation.setEnabled(true);
         userRepresentation.setEmailVerified(true);
 
+        String uid = user.getUid() == null ? user.getUsername() : user.getUid();
         Map<String, List<String>> attributes = new HashMap<>();
         attributes.put("id", of(valueOf(user.getId())));
-        attributes.put("uid", of(user.getUid()));
+        attributes.put("uid", of(uid));
         attributes.put("username", of(user.getUsername()));
         userRepresentation.setAttributes(attributes);
 
