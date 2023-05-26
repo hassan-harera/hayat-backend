@@ -2,6 +2,7 @@ package com.harera.hayat.authorization.service;
 
 import com.harera.hayat.authorization.model.user.User;
 import com.harera.hayat.authorization.repository.UserRepository;
+import com.harera.hayat.framework.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,16 @@ public class UserUtils {
 
     private final UserRepository userRepository;
 
-    public long getUserId(String subject) {
+    public long getUserId(String subject) throws EntityNotFoundException {
+        User user = getUser(subject);
+        if (user == null) {
+            throw new EntityNotFoundException("User not found");
+        } else {
+            return user.getId();
+        }
+    }
+
+    public User getUser(String subject) {
         Optional<User> user = Optional.empty();
         if (isPhoneNumber(subject)) {
             user = userRepository.findByMobile(subject);
@@ -24,9 +34,6 @@ public class UserUtils {
         } else if (isUsername(subject)) {
             user = userRepository.findByUsername(subject);
         }
-        if (user.isPresent()) {
-            return user.get().getId();
-        }
-        return 0;
+        return user.orElse(null);
     }
 }
