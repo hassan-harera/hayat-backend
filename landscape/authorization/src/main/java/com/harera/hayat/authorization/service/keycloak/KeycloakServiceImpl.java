@@ -114,13 +114,16 @@ public class KeycloakServiceImpl implements KeycloakService {
         credentialRepresentation.setValue(newPassword);
         credentialRepresentation.setTemporary(false);
 
-        keycloak.realm(realm).users().get(user.getMobile())
-                        .resetPassword(credentialRepresentation);
+        UserRepresentation userRepresentation = keycloak.realm(realm).users()
+                        .searchByUsername(user.getMobile(), true).get(0);
+        userRepresentation.setCredentials(singletonList(credentialRepresentation));
+        keycloak.realm(realm).users().get(userRepresentation.getId())
+                        .update(userRepresentation);
     }
 
     private Keycloak buildLoginKeycloak(String username, String password) {
         return KeycloakBuilder.builder().realm(realm).serverUrl(serverUrl)
-                .clientId(clientId).clientSecret(clientSecret).username(username)
-                .password(password).build();
+                        .clientId(clientId).clientSecret(clientSecret).username(username)
+                        .password(password).build();
     }
 }
