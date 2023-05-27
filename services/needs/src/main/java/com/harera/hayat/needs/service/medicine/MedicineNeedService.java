@@ -6,6 +6,7 @@ import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.file.CloudFileService;
 import com.harera.hayat.framework.service.medicine.MedicineService;
 import com.harera.hayat.framework.service.medicine.MedicineUnitService;
+import com.harera.hayat.framework.util.ObjectMapperUtils;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
 import com.harera.hayat.needs.model.medicine.MedicineNeed;
@@ -16,6 +17,7 @@ import com.harera.hayat.needs.repository.medicine.MedicineNeedRepository;
 import com.harera.hayat.needs.service.BaseService;
 import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
+import static com.harera.hayat.framework.util.PageableUtils.of;
 
 @Service
 public class MedicineNeedService implements BaseService {
@@ -114,11 +117,7 @@ public class MedicineNeedService implements BaseService {
     }
 
     public List<MedicineNeedResponse> search(String query, int page) {
-        page = Integer.max(page, 1) - 1;
-        return medicineNeedRepository.searchByTitleRegexOrDescriptionRegex(query, query)
-                        .stream().map(medicineNeed -> modelMapper.map(medicineNeed,
-                                        MedicineNeedResponse.class))
-                        .toList();
+        return search(query, page, 16);
     }
 
     public MedicineNeedResponse updateImage(String id, MultipartFile file) {
@@ -149,5 +148,11 @@ public class MedicineNeedService implements BaseService {
                         () -> new DocumentNotFoundException(MedicineNeed.class, id));
         medicineNeed.downvote(userService.getUser(authorization).getId());
         medicineNeedRepository.save(medicineNeed);
+    }
+
+    public List<MedicineNeedResponse> search(String query, int page, int pageSize) {
+        page = Integer.max(page, 1) - 1;
+        List<MedicineNeed> medicineNeeds = medicineNeedRepository.search(query, NeedStatus.ACTIVE, of(page, pageSize));
+        return ObjectMapperUtils.mapAll(medicineNeeds, MedicineNeedResponse.class);
     }
 }

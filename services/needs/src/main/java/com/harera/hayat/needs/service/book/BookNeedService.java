@@ -12,6 +12,7 @@ import com.harera.hayat.needs.model.book.BookNeedResponse;
 import com.harera.hayat.needs.repository.book.BookNeedRepository;
 import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
+import static org.springframework.data.domain.PageRequest.of;
 
 @Service
 public class BookNeedService {
@@ -80,9 +82,7 @@ public class BookNeedService {
     }
 
     public List<BookNeedResponse> search(String query, int page) {
-        page = Integer.max(page, 1) - 1;
-        List<BookNeed> bookNeeds = bookNeedRepository.search(query, NeedStatus.ACTIVE);
-        return mapAll(bookNeeds, BookNeedResponse.class);
+        return search(query, page, 16);
     }
 
     public BookNeedResponse get(String id) {
@@ -105,5 +105,11 @@ public class BookNeedService {
 
         bookNeedRepository.save(bookNeed);
         return modelMapper.map(bookNeed, BookNeedResponse.class);
+    }
+
+    public List<BookNeedResponse> search(String query, int page, int pageSize) {
+        page = Integer.max(page, 1) - 1;
+        List<BookNeed> bookNeeds = bookNeedRepository.search(query, NeedStatus.ACTIVE, of(page, pageSize));
+        return mapAll(bookNeeds, BookNeedResponse.class);
     }
 }

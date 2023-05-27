@@ -24,6 +24,7 @@ import java.util.List;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
+import static com.harera.hayat.framework.util.PageableUtils.of;
 
 @Service
 public class BloodNeedService {
@@ -115,11 +116,7 @@ public class BloodNeedService {
     }
 
     public List<BloodNeedResponse> search(String query, int page) {
-        page = Integer.max(page, 1) - 1;
-        Pageable pageable = Pageable.ofSize(16).withPage(page);
-        List<BloodNeed> needList =
-                        bloodNeedRepository.search(query, NeedStatus.ACTIVE, pageable);
-        return mapAll(needList, BloodNeedResponse.class);
+        return search(query, page, 16);
     }
 
     public BloodNeedResponse updateImage(String id, MultipartFile file) {
@@ -136,5 +133,12 @@ public class BloodNeedService {
 
         bloodNeedRepository.save(bloodNeed);
         return modelMapper.map(bloodNeed, BloodNeedResponse.class);
+    }
+
+    public List<BloodNeedResponse> search(String query, int page, int size) {
+        page = Integer.max(page, 1) - 1;
+        List<BloodNeed> needList =
+                bloodNeedRepository.search(query, NeedStatus.ACTIVE, of(page, size));
+        return mapAll(needList, BloodNeedResponse.class);
     }
 }

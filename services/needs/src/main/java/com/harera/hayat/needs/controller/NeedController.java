@@ -1,6 +1,7 @@
 package com.harera.hayat.needs.controller;
 
 import com.harera.hayat.needs.model.Need;
+import com.harera.hayat.needs.model.NeedDto;
 import com.harera.hayat.needs.service.NeedService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,10 +29,10 @@ public class NeedController {
     @Operation(summary = "Search", description = "Search needs", tags = "Needs",
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
-    public ResponseEntity<List<Need>> search(
+    public ResponseEntity<List<NeedDto>> search(
                     @RequestParam(value = "q", defaultValue = "") String query,
                     @RequestParam(value = "page", defaultValue = "1") int page) {
-        List<Need> needList = needService.search(query, page);
+        List<NeedDto> needList = needService.search(query, page);
         return ResponseEntity.ok(needList);
     }
 }
