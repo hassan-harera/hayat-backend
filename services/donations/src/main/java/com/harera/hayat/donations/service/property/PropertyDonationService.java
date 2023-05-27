@@ -23,10 +23,8 @@ import java.util.List;
 @Service
 public class PropertyDonationService extends BaseService {
 
-    @Value("${donation.property.page_size:10}")
-    private int pageSize;
-    @Value("${donation.property.expirations_days:45}")
-    private int expirationDays;
+    private final int pageSize = 16;
+    private final int expirationDays = 45;
 
     private final PropertyDonationRepository propertyDonationRepository;
     private final PropertyDonationValidation donationValidation;
@@ -43,7 +41,7 @@ public class PropertyDonationService extends BaseService {
     }
 
     public PropertyDonationResponse create(
-                    PropertyDonationRequest propertyDonationRequest) {
+                    PropertyDonationRequest propertyDonationRequest, String bearerToken) {
         donationValidation.validateCreate(propertyDonationRequest);
         PropertyDonation propertyDonation =
                         modelMapper.map(propertyDonationRequest, PropertyDonation.class);
@@ -51,10 +49,11 @@ public class PropertyDonationService extends BaseService {
         propertyDonation.setStatus(DonationStatus.PENDING);
         propertyDonation.setCategory(DonationCategory.PROPERTY);
         propertyDonation.setDonationDate(OffsetDateTime.now());
-        propertyDonation.setDonationExpirationDate(OffsetDateTime.now().plusDays(expirationDays));
+        propertyDonation.setDonationExpirationDate(
+                        OffsetDateTime.now().plusDays(expirationDays));
 
         assignCity(propertyDonation, propertyDonationRequest.getCityId());
-        // TODO: set user
+        propertyDonation.setUser(getUser(bearerToken));
 
         propertyDonationRepository.save(propertyDonation);
         return modelMapper.map(propertyDonation, PropertyDonationResponse.class);
@@ -93,5 +92,23 @@ public class PropertyDonationService extends BaseService {
                         .map(propertyDonation -> modelMapper.map(propertyDonation,
                                         PropertyDonationResponse.class))
                         .toList();
+    }
+
+    public void upvote(Long id, String authorization) {
+        PropertyDonation propertyDonation = propertyDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        PropertyDonation.class, id,
+                                        ErrorCode.NOT_FOUND_PROPERTY_DONATION));
+        propertyDonation.upvote(getUser(authorization));
+        propertyDonationRepository.save(propertyDonation);
+    }
+
+    public void downvote(Long id, String authorization) {
+        PropertyDonation propertyDonation = propertyDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        PropertyDonation.class, id,
+                                        ErrorCode.NOT_FOUND_PROPERTY_DONATION));
+        propertyDonation.downvote(getUser(authorization));
+        propertyDonationRepository.save(propertyDonation);
     }
 }

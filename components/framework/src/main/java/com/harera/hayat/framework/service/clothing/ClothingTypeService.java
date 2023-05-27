@@ -20,4 +20,9 @@ public class ClothingTypeService {
     public List<ClothingType> list() {
         return clothingTypeRepository.findAll();
     }
+
+    public ClothingType get(Long clothingTypeId) {
+        return clothingTypeRepository.findById(clothingTypeId).orElseThrow(
+                        () -> new RuntimeException("Clothing type not found"));
+    }
 }

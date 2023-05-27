@@ -1,20 +1,21 @@
 package com.harera.hayat.donations.model.property;
 
-import com.harera.hayat.donations.model.Donation;
+import com.harera.hayat.donations.model.BaseDonation;
+import com.harera.hayat.framework.model.user.BaseUser;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Setter
 @Getter
 @Entity
 @Table(name = "property_donation")
-public class PropertyDonation extends Donation {
+public class PropertyDonation extends BaseDonation {
 
     @Column(name = "rooms")
     private int rooms;
@@ -33,4 +34,28 @@ public class PropertyDonation extends Donation {
 
     @Column(name = "available_to")
     private OffsetDateTime availableTo;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "property_donation_upvotes", joinColumns = @JoinColumn(name = "donation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<BaseUser> upvotes = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "property_donation_downvotes", joinColumns = @JoinColumn(name = "donation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<BaseUser> downvotes = new HashSet<>();
+
+    public Integer getReputation() {
+        return upvotes.size() - downvotes.size();
+    }
+
+    public void upvote(BaseUser user) {
+        upvotes.add(user);
+        downvotes.remove(user);
+    }
+
+    public void downvote(BaseUser user) {
+        downvotes.add(user);
+        upvotes.remove(user);
+    }
 }

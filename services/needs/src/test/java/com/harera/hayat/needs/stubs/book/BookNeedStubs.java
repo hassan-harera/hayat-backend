@@ -10,8 +10,8 @@ import com.harera.hayat.framework.model.user.BaseUser;
 import com.harera.hayat.needs.model.CommunicationMethod;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
-import com.harera.hayat.needs.model.books.BookNeed;
-import com.harera.hayat.needs.repository.books.BookNeedRepository;
+import com.harera.hayat.needs.model.book.BookNeed;
+import com.harera.hayat.needs.repository.book.BookNeedRepository;
 
 import lombok.RequiredArgsConstructor;
 

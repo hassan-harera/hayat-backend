@@ -40,9 +40,7 @@ public class KeycloakServiceImpl implements KeycloakService {
                     @Value("${keycloak.auth-server-url}") String serverUrl,
                     @Value("${keycloak.realm}") String realm,
                     @Value("${keycloak.credentials.client-id}") String clientId,
-                    @Value("${keycloak.credentials.secret}") String clientSecret,
-                    @Value("${keycloak.credentials.username}") String username,
-                    @Value("${keycloak.credentials.password}") String password) {
+                    @Value("${keycloak.credentials.secret}") String clientSecret) {
         this.keycloak = keycloak;
         this.modelMapper = modelMapper;
         this.clientId = clientId;
@@ -71,9 +69,10 @@ public class KeycloakServiceImpl implements KeycloakService {
         userRepresentation.setEnabled(true);
         userRepresentation.setEmailVerified(true);
 
+        String uid = user.getUid() == null ? user.getUsername() : user.getUid();
         Map<String, List<String>> attributes = new HashMap<>();
         attributes.put("id", of(valueOf(user.getId())));
-        attributes.put("uid", of(user.getUid()));
+        attributes.put("uid", of(uid));
         attributes.put("username", of(user.getUsername()));
         userRepresentation.setAttributes(attributes);
 
@@ -114,13 +113,16 @@ public class KeycloakServiceImpl implements KeycloakService {
         credentialRepresentation.setValue(newPassword);
         credentialRepresentation.setTemporary(false);
 
-        keycloak.realm(realm).users().get(user.getMobile())
-                        .resetPassword(credentialRepresentation);
+        UserRepresentation userRepresentation = keycloak.realm(realm).users()
+                        .searchByUsername(user.getMobile(), true).get(0);
+        userRepresentation.setCredentials(singletonList(credentialRepresentation));
+        keycloak.realm(realm).users().get(userRepresentation.getId())
+                        .update(userRepresentation);
     }
 
     private Keycloak buildLoginKeycloak(String username, String password) {
         return KeycloakBuilder.builder().realm(realm).serverUrl(serverUrl)
-                .clientId(clientId).clientSecret(clientSecret).username(username)
-                .password(password).build();
+                        .clientId(clientId).clientSecret(clientSecret).username(username)
+                        .password(password).build();
     }
 }

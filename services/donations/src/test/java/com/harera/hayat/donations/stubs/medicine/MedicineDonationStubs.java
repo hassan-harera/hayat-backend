@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -19,7 +19,7 @@ public class MedicineDonationStubs {
     private final MedicineDonationRepository medicineDonationRepository;
 
     public MedicineDonation create(MedicineUnit unit, Float amount,
-                                   OffsetDateTime medicineExpirationDate, String title,
+                                   LocalDateTime medicineExpirationDate, String title,
                                    DonationCategory category, String description, City city,
                                    DonationStatus state) {
         MedicineDonation medicineDonation = new MedicineDonation();
@@ -35,7 +35,7 @@ public class MedicineDonationStubs {
     }
 
     public MedicineDonation insert(MedicineUnit unit, Float amount,
-                               OffsetDateTime medicineExpirationDate, String title,
+                               LocalDateTime medicineExpirationDate, String title,
                                DonationCategory category, String description, City city,
                                DonationStatus state) {
         MedicineDonation medicineDonation = create(unit, amount, medicineExpirationDate, title,

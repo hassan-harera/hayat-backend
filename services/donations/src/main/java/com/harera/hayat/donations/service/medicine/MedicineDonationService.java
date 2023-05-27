@@ -64,6 +64,7 @@ public class MedicineDonationService extends BaseService {
 
         MedicineDonation medicineDonation =
                         modelMapper.map(medicineDonationRequest, MedicineDonation.class);
+        medicineDonation.setStatus(DonationStatus.PENDING);
         medicineDonation.setCategory(DonationCategory.MEDICINE);
         medicineDonation.setCity(getCity(medicineDonationRequest.getCityId()));
         medicineDonation.setDonationDate(OffsetDateTime.now());
@@ -103,8 +104,9 @@ public class MedicineDonationService extends BaseService {
                         MedicineDonationResponse.class);
     }
 
-    public List<MedicineDonationResponse> list(int size, int page) {
-        return medicineDonationRepository.findAll(Pageable.ofSize(size).withPage(page))
+    public List<MedicineDonationResponse> list(int page) {
+        page = Math.max(page, 1) - 1;
+        return medicineDonationRepository.findAll(Pageable.ofSize(16).withPage(page))
                         .map(medicineDonation -> modelMapper.map(medicineDonation,
                                         MedicineDonationResponse.class))
                         .toList();
@@ -136,7 +138,7 @@ public class MedicineDonationService extends BaseService {
     public List<MedicineDonationResponse> search(String query, int page) {
         page = Integer.max(page, 1) - 1;
         return medicineDonationRepository
-                        .search(query, Pageable.ofSize(10).withPage(page)).stream()
+                        .search(query, Pageable.ofSize(16).withPage(page)).stream()
                         .map(medicineDonation -> modelMapper.map(medicineDonation,
                                         MedicineDonationResponse.class))
                         .toList();
@@ -157,5 +159,21 @@ public class MedicineDonationService extends BaseService {
 
         medicineDonationRepository.save(medicineDonation);
         return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
+    }
+
+    public void upvote(Long id, String authorization) {
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+        medicineDonation.upvote(getUser(authorization));
+        medicineDonationRepository.save(medicineDonation);
+    }
+
+    public void downvote(Long id, String authorization) {
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+        medicineDonation.downvote(getUser(authorization));
+        medicineDonationRepository.save(medicineDonation);
     }
 }

@@ -1,4 +1,4 @@
-package com.harera.hayat.needs.model.books;
+package com.harera.hayat.needs.model.book;
 
 import com.harera.hayat.needs.model.Need;
 import lombok.AllArgsConstructor;

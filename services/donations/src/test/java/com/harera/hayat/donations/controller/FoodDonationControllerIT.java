@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -47,7 +47,7 @@ class FoodDonationControllerIT extends ApplicationIT {
         request.setCityId(city.getId());
         request.setFoodUnitId(foodUnit.getId());
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         ResponseEntity<FoodDonationResponse> responseEntity = null;
         FoodDonationResponse response = null;
@@ -91,7 +91,7 @@ class FoodDonationControllerIT extends ApplicationIT {
                         foodUnitStubs.insert("foodUnitArabicName", "foodUnitEnglishName");
 
         FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
-                        OffsetDateTime.now(), "title", DonationCategory.FOOD,
+                        LocalDateTime.now(), "title", DonationCategory.FOOD,
                         "description", city, DonationStatus.PENDING);
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
@@ -101,7 +101,7 @@ class FoodDonationControllerIT extends ApplicationIT {
         request.setTitle("new_title");
         request.setDescription("new_desc");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         try {
             // When
@@ -140,7 +140,7 @@ class FoodDonationControllerIT extends ApplicationIT {
                         foodUnitStubs.insert("foodUnitArabicName", "foodUnitEnglishName");
 
         FoodDonation foodDonation = foodDonationStubs.insert(foodUnit, 1F,
-                        OffsetDateTime.now(), "title", DonationCategory.FOOD,
+                        LocalDateTime.now(), "title", DonationCategory.FOOD,
                         "description", city, DonationStatus.PENDING);
 
         try {

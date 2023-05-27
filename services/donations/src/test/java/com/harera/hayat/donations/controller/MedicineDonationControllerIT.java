@@ -22,7 +22,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -56,7 +57,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
         request.setMedicineUnitId(medicineUnit.getId());
         request.setMedicineId(medicine.getId());
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDate.now().plusMonths(1));
 
         ResponseEntity<MedicineDonationResponse> responseEntity = null;
         MedicineDonationResponse response = null;
@@ -102,7 +103,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
                 "medicineUnitEnglishName", medicineUnit);
 
         MedicineDonation medicineDonation = medicineDonationStubs.insert(medicineUnit, 1F,
-                        OffsetDateTime.now(), "title", DonationCategory.FOOD,
+                        LocalDateTime.now(), "title", DonationCategory.FOOD,
                         "description", city, DonationStatus.PENDING);
 
         MedicineDonationRequest request = new MedicineDonationRequest();
@@ -113,7 +114,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
         request.setTitle("new_title");
         request.setDescription("new_desc");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDate.now().plusMonths(1));
 
         try {
             // When
@@ -152,7 +153,7 @@ class MedicineDonationControllerIT extends ApplicationIT {
                         "medicineUnitEnglishName");
 
         MedicineDonation medicineDonation = medicineDonationStubs.insert(medicineUnit, 1F,
-                        OffsetDateTime.now(), "title", DonationCategory.FOOD,
+                        LocalDateTime.now(), "title", DonationCategory.FOOD,
                         "description", city, DonationStatus.PENDING);
 
         try {
@@ -177,8 +178,8 @@ class MedicineDonationControllerIT extends ApplicationIT {
             Assertions.assertEquals(medicineDonation.getQuantity(), response.getQuantity());
             Assertions.assertEquals(medicineDonation.getMedicineUnit().getId(),
                             response.getMedicineUnit().getId());
-            assertTrue(medicineDonation.getMedicineExpirationDate().toLocalDate()
-                            .isEqual(response.getMedicineExpirationDate().toLocalDate()));
+            assertTrue(medicineDonation.getMedicineExpirationDate()
+                            .isEqual(response.getMedicineExpirationDate()));
         } finally {
             // Cleanup
             dataUtil.delete(city, medicineUnit, medicineDonation);

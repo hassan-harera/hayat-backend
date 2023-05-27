@@ -18,7 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,15 +53,15 @@ class MedicineDonationServiceTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setQuantity(1F);
         request.setMedicineUnitId(1L);
         request.setMedicineId(1L);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         City city = new City();
         city.setId(1L);
@@ -91,15 +91,15 @@ class MedicineDonationServiceTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
@@ -115,15 +115,15 @@ class MedicineDonationServiceTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
@@ -149,14 +149,14 @@ class MedicineDonationServiceTest {
         // given
         MedicineDonationRequest request = new MedicineDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setMedicineId(1L);
         request.setMedicineUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.empty());
@@ -185,8 +185,8 @@ class MedicineDonationServiceTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setMedicineExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setDonationExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setMedicineExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setDonationExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));

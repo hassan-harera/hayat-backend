@@ -10,6 +10,7 @@ import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.service.city.CityService;
+import com.harera.hayat.framework.service.clothing.*;
 import com.harera.hayat.framework.service.file.CloudFileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
+import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
 
 @Service
 public class ClothingDonationService extends BaseService {
@@ -34,16 +36,31 @@ public class ClothingDonationService extends BaseService {
     private final ModelMapper modelMapper;
     private final ClothingDonationRepository clothingDonationRepository;
     private final CloudFileService cloudFileService;
+    private final ClothingCategoryService clothingCategoryService;
+    private final ClothingSizeService clothingSizeService;
+    private final ClothingTypeService clothingTypeService;
+    private final ClothingConditionService clothingConditionService;
+    private final ClothingSeasonService clothingSeasonService;
 
     public ClothingDonationService(ClothingDonationValidation donationValidation,
                     ModelMapper modelMapper, CityService citService,
                     ClothingDonationRepository clothingDonationRepository,
-                    CloudFileService cloudFileService) {
+                    CloudFileService cloudFileService,
+                    ClothingCategoryService clothingCategoryService,
+                    ClothingSizeService clothingSizeService,
+                    ClothingTypeService clothingTypeService,
+                    ClothingConditionService clothingConditionService,
+                    ClothingSeasonService clothingSeasonService) {
         this.clothingDonationValidation = donationValidation;
         this.modelMapper = modelMapper;
         this.citService = citService;
         this.clothingDonationRepository = clothingDonationRepository;
         this.cloudFileService = cloudFileService;
+        this.clothingCategoryService = clothingCategoryService;
+        this.clothingSizeService = clothingSizeService;
+        this.clothingTypeService = clothingTypeService;
+        this.clothingConditionService = clothingConditionService;
+        this.clothingSeasonService = clothingSeasonService;
     }
 
     public ClothingDonationResponse create(
@@ -61,10 +78,39 @@ public class ClothingDonationService extends BaseService {
                         OffsetDateTime.now().plusDays(expirationDays));
         clothingDonation.setUser(getUser(authorization));
         clothingDonation.setCity(citService.getCity(clothingDonationRequest.getCityId()));
+        assignClothingData(clothingDonation, clothingDonationRequest);
         // TODO: send request to ai for processing
 
         clothingDonationRepository.save(clothingDonation);
         return modelMapper.map(clothingDonation, ClothingDonationResponse.class);
+    }
+
+    private void assignClothingData(ClothingDonation clothingDonation,
+                    ClothingDonationRequest clothingDonationRequest) {
+        if (clothingDonationRequest.getClothingCategoryId() != null) {
+            clothingDonation.setClothingCategory(clothingCategoryService
+                            .get(clothingDonationRequest.getClothingCategoryId()));
+        }
+
+        if (clothingDonationRequest.getClothingSizeId() != null) {
+            clothingDonation.setClothingSize(clothingSizeService
+                            .get(clothingDonationRequest.getClothingSizeId()));
+        }
+
+        if (clothingDonationRequest.getClothingTypeId() != null) {
+            clothingDonation.setClothingType(clothingTypeService
+                            .get(clothingDonationRequest.getClothingTypeId()));
+        }
+
+        if (clothingDonationRequest.getClothingConditionId() != null) {
+            clothingDonation.setClothingCondition(clothingConditionService
+                            .get(clothingDonationRequest.getClothingConditionId()));
+        }
+
+        if (clothingDonationRequest.getClothingSeasonId() != null) {
+            clothingDonation.setClothingSeason(clothingSeasonService
+                            .get(clothingDonationRequest.getClothingSeasonId()));
+        }
     }
 
     public ClothingDonationResponse update(Long id,
@@ -82,9 +128,10 @@ public class ClothingDonationService extends BaseService {
         return modelMapper.map(clothingDonation, ClothingDonationResponse.class);
     }
 
-    public List<ClothingDonationResponse> list(int pageSize, int pageNumber) {
+    public List<ClothingDonationResponse> list(int page) {
+        page = Math.max(page, 1) - 1;
         List<ClothingDonation> clothingDonationList = clothingDonationRepository
-                        .findAll(PageRequest.of(pageNumber, pageSize)).getContent();
+                        .findAll(PageRequest.of(page, 16)).getContent();
         List<ClothingDonationResponse> response = new LinkedList<>();
         for (ClothingDonation clothingDonation : clothingDonationList) {
             ClothingDonationResponse clothingDonationResponse = modelMapper
@@ -107,27 +154,37 @@ public class ClothingDonationService extends BaseService {
                                         ClothingDonation.class, id));
 
         String imageUrl = cloudFileService.uploadFile(convertMultiPartToFile(file));
-        if (clothingDonation.getImageUrl() == null) {
-            clothingDonation.setImageUrl(imageUrl);
-        } else {
-            cloudFileService.deleteFile(clothingDonation.getImageUrl());
-            clothingDonation.setImageUrl(imageUrl);
+        String oldImageUrl = clothingDonation.getImageUrl();
+        clothingDonation.setImageUrl(imageUrl);
+
+        if (oldImageUrl != null) {
+            cloudFileService.deleteFile(oldImageUrl);
         }
 
         clothingDonationRepository.save(clothingDonation);
         return modelMapper.map(clothingDonation, ClothingDonationResponse.class);
-
     }
 
     public List<ClothingDonationResponse> search(String query, int page) {
+        page = Math.max(page, 1) - 1;
         List<ClothingDonation> clothingDonationList = clothingDonationRepository
-                        .search(query, PageRequest.of(page, 10));
-        List<ClothingDonationResponse> response = new LinkedList<>();
-        for (ClothingDonation clothingDonation : clothingDonationList) {
-            ClothingDonationResponse clothingDonationResponse = modelMapper
-                            .map(clothingDonation, ClothingDonationResponse.class);
-            response.add(clothingDonationResponse);
-        }
-        return response;
+                        .search(query, PageRequest.of(page, 16));
+        return mapAll(clothingDonationList, ClothingDonationResponse.class);
+    }
+
+    public void upvote(Long id, String authorization) {
+        ClothingDonation clothingDonation = clothingDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        ClothingDonation.class, id));
+        clothingDonation.upvote(getUser(authorization));
+        clothingDonationRepository.save(clothingDonation);
+    }
+
+    public void downvote(Long id, String authorization) {
+        ClothingDonation clothingDonation = clothingDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        ClothingDonation.class, id));
+        clothingDonation.downvote(getUser(authorization));
+        clothingDonationRepository.save(clothingDonation);
     }
 }

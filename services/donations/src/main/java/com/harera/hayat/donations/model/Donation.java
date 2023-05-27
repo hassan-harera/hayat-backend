@@ -1,18 +1,19 @@
 package com.harera.hayat.donations.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.harera.hayat.framework.model.BaseEntity;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.user.BaseUser;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.*;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 @Setter
 @Getter
-@MappedSuperclass
+@Entity
+@Table(name = "donation")
 public class Donation extends BaseEntity {
 
     @Basic
@@ -59,4 +60,7 @@ public class Donation extends BaseEntity {
 
     @Column(name = "whatsapp_link")
     private String whatsappLink;
+
+    @Column(name = "qr_code")
+    private String qrCode = UUID.randomUUID().toString();
 }

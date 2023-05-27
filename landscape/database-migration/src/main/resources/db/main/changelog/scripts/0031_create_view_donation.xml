@@ -1,0 +1,86 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0031" author="hharera@hayat.social">
+        <sql>
+            CREATE VIEW donation as
+            SELECT id,
+            active,
+            title,
+            description,
+            quantity,
+            category,
+            status,
+            donation_date,
+            donation_expiration_date,
+            communication_method,
+            qr_code,
+            reputation,
+            user_id,
+            city_id,
+            image_url,
+            telegram_link,
+            whatsapp_link
+            from book_donation
+            union
+            SELECT id,
+            active,
+            title,
+            description,
+            quantity,
+            category,
+            status,
+            donation_date,
+            donation_expiration_date,
+            communication_method,
+            qr_code,
+            reputation,
+            user_id,
+            city_id,
+            image_url,
+            telegram_link,
+            whatsapp_link
+            from medicine_donation
+            union
+            SELECT id,
+            active,
+            title,
+            description,
+            quantity,
+            category,
+            status,
+            donation_date,
+            donation_expiration_date,
+            communication_method,
+            qr_code,
+            reputation,
+            user_id,
+            city_id,
+            image_url,
+            telegram_link,
+            whatsapp_link
+            from clothing_donation
+            union
+            SELECT id,
+            active,
+            title,
+            description,
+            quantity,
+            category,
+            status,
+            donation_date,
+            donation_expiration_date,
+            communication_method,
+            qr_code,
+            reputation,
+            user_id,
+            city_id,
+            image_url,
+            telegram_link,
+            whatsapp_link
+            from food_donation;
+        </sql>
+    </changeSet>
+</databaseChangeLog>

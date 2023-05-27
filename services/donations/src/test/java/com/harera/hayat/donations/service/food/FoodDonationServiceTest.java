@@ -1,7 +1,7 @@
 package com.harera.hayat.donations.service.food;
 
+import com.harera.hayat.donations.model.BaseDonation;
 import com.harera.hayat.donations.model.CommunicationMethod;
-import com.harera.hayat.donations.model.Donation;
 import com.harera.hayat.donations.model.food.FoodDonation;
 import com.harera.hayat.donations.model.food.FoodDonationRequest;
 import com.harera.hayat.donations.model.food.FoodDonationResponse;
@@ -21,7 +21,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,13 +59,13 @@ class FoodDonationServiceTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
         request.setFoodUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.empty());
@@ -80,13 +81,13 @@ class FoodDonationServiceTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
         request.setFoodUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
@@ -108,13 +109,13 @@ class FoodDonationServiceTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setFoodUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
 
         City city = new City();
         city.setId(1L);
@@ -153,8 +154,8 @@ class FoodDonationServiceTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setDonationExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
+        request.setDonationExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(cityRepository.findById(1L)).thenReturn(Optional.of(new City()));
@@ -183,13 +184,13 @@ class FoodDonationServiceTest {
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setFoodUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
 
         // when
         when(foodDonationRepository.findById(id)).thenReturn(Optional.empty());
@@ -207,16 +208,16 @@ class FoodDonationServiceTest {
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setFoodUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
 
-        Donation donation = new Donation();
-        donation.setId(1L);
+        BaseDonation baseDonation = new BaseDonation();
+        baseDonation.setId(1L);
 
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(1L);
@@ -237,16 +238,16 @@ class FoodDonationServiceTest {
 
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDateTime.now());
         request.setFoodUnitId(1L);
         request.setQuantity(1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
 
-        Donation donation = new Donation();
-        donation.setId(1L);
+        BaseDonation baseDonation = new BaseDonation();
+        baseDonation.setId(1L);
 
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(1L);
@@ -277,7 +278,7 @@ class FoodDonationServiceTest {
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
 
         City city = new City();
         city.setId(1L);
@@ -285,8 +286,8 @@ class FoodDonationServiceTest {
         FoodUnit foodUnit = new FoodUnit();
         foodUnit.setId(1L);
 
-        Donation donation = new Donation();
-        donation.setId(1L);
+        BaseDonation baseDonation = new BaseDonation();
+        baseDonation.setId(1L);
 
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setId(1L);
@@ -337,7 +338,7 @@ class FoodDonationServiceTest {
         FoodDonation foodDonation = new FoodDonation();
         foodDonation.setQuantity(1F);
         foodDonation.setFoodUnit(foodUnit);
-        foodDonation.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        foodDonation.setFoodExpirationDate(LocalDateTime.now().plusMonths(1));
         foodDonation.setId(1L);
         foodDonation.setTitle("title");
         foodDonation.setDescription("description");

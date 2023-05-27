@@ -20,4 +20,9 @@ public class ClothingSeasonService {
     public List<ClothingSeason> list() {
         return clothingSeasonRepository.findAll();
     }
+
+    public ClothingSeason get(Long clothingSeasonId) {
+        return clothingSeasonRepository.findById(clothingSeasonId).orElseThrow(
+                        () -> new RuntimeException("Clothing season not found"));
+    }
 }

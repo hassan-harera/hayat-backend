@@ -14,7 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,8 +42,8 @@ class FoodDonationValidationTest {
         request.setFoodUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         // when
 
@@ -61,12 +61,12 @@ class FoodDonationValidationTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
         request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         // when
         MandatoryFieldException ex = assertThrows(MandatoryFieldException.class, () -> {
@@ -104,15 +104,15 @@ class FoodDonationValidationTest {
         // given
         FoodDonationRequest request = new FoodDonationRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
 
         request.setFoodUnitId(1L);
         request.setQuantity(-1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         // when
         FieldFormatException ex = assertThrows(FieldFormatException.class, () -> {
@@ -134,8 +134,8 @@ class FoodDonationValidationTest {
         request.setFoodUnitId(1L);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         // when
 
@@ -155,12 +155,12 @@ class FoodDonationValidationTest {
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
 
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
         request.setQuantity(15f);
         request.setTitle("title");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         // when
         MandatoryFieldException ex = assertThrows(MandatoryFieldException.class, () -> {
@@ -200,14 +200,14 @@ class FoodDonationValidationTest {
         // given
         FoodDonationUpdateRequest request = new FoodDonationUpdateRequest();
         request.setCityId(1L);
-        request.setDonationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
         request.setFoodUnitId(1L);
         request.setQuantity(-1F);
         request.setTitle("title");
         request.setDescription("description");
         request.setCommunicationMethod(CommunicationMethod.CHAT);
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
-        request.setFoodExpirationDate(OffsetDateTime.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
+        request.setFoodExpirationDate(LocalDate.now().plusMonths(1));
 
         // when
         FieldFormatException ex = assertThrows(FieldFormatException.class, () -> {

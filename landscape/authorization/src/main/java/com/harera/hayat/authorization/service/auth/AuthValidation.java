@@ -7,6 +7,7 @@ import com.harera.hayat.authorization.model.otp.OTP;
 import com.harera.hayat.authorization.model.user.User;
 import com.harera.hayat.authorization.repository.UserRepository;
 import com.harera.hayat.authorization.repository.otp.OtpRepository;
+import com.harera.hayat.authorization.service.UserUtils;
 import com.harera.hayat.framework.exception.*;
 import com.harera.hayat.framework.util.ErrorCode;
 import com.harera.hayat.framework.util.Subject;
@@ -14,8 +15,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 import static com.harera.hayat.authorization.util.StringUtils.*;
 import static com.harera.hayat.framework.util.ErrorCode.*;
@@ -31,13 +30,15 @@ public class AuthValidation {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
     private final OtpRepository otpRepository;
+    private final UserUtils userUtils;
 
     @Autowired
     public AuthValidation(UserRepository userRepository, PasswordEncoder encoder,
-                    OtpRepository otpRepository) {
+                    OtpRepository otpRepository, UserUtils userUtils) {
         this.userRepository = userRepository;
         this.encoder = encoder;
         this.otpRepository = otpRepository;
+        this.userUtils = userUtils;
     }
 
     public void validateLogin(LoginRequest loginRequest) {
@@ -170,18 +171,10 @@ public class AuthValidation {
     }
 
     private void validatePassword(LoginRequest loginRequest) {
-        String subjectPayload = loginRequest.getSubject();
-        Subject subjectType = getSubject(subjectPayload);
-        Optional<User> user;
-        if (subjectType instanceof Subject.PhoneNumber) {
-            user = userRepository.findByMobile(subjectPayload);
-        } else if (subjectType instanceof Subject.Email) {
-            user = userRepository.findByEmail(subjectPayload);
-        } else {
-            user = userRepository.findByUsername(subjectPayload);
+        User user = userUtils.getUser(loginRequest.getSubject());
+        if (!encoder.matches(loginRequest.getPassword(), user.getPassword())) {
+            throw new LoginException(INVALID_LOGIN_CREDENTIALS, "Invalid username or password");
         }
-        user.ifPresent(u -> validatePassword(loginRequest.getPassword(),
-                        u.getPassword()));
     }
 
     private void validatePassword(String password, String encodedPassword) {

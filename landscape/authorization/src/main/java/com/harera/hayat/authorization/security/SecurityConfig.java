@@ -16,8 +16,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     private static final String[] OPEN_APIS = { "/api/v1/auth/**", "/api/v1/oauth/**",
-            "/api/v1/otp/**", "/actuator/**", "/actuator/prometheus/**", "/v3/api-docs/**", "/swagger-ui/**",
-            "/swagger-ui.html", "/webjars/**", "/swagger-resources/**" };
+            "/api/v1/auth/password-reset", "/api/v1/auth/logout", "/api/v1/otp/**",
+            "/actuator/**", "/actuator/prometheus/**", "/v3/api-docs/**",
+            "/swagger-ui/**", "/swagger-ui.html", "/webjars/**",
+            "/swagger-resources/**" };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -32,12 +34,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",
-                new CorsConfiguration().applyPermitDefaultValues());
+                        new CorsConfiguration().applyPermitDefaultValues());
         return source;
     }
 }

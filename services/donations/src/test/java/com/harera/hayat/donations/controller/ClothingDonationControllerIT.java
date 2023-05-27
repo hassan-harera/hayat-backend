@@ -11,8 +11,8 @@ import com.harera.hayat.donations.stubs.city.CityStubs;
 import com.harera.hayat.donations.stubs.clothing.ClothingDonationStubs;
 import com.harera.hayat.donations.util.DataUtil;
 import com.harera.hayat.donations.util.RequestUtil;
-import com.harera.hayat.framework.model.clothing.ClothingCondition;
 import com.harera.hayat.framework.model.city.City;
+import com.harera.hayat.framework.model.clothing.ClothingCondition;
 import lombok.RequiredArgsConstructor;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +20,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 class ClothingDonationControllerIT extends ApplicationIT {
@@ -41,10 +42,10 @@ class ClothingDonationControllerIT extends ApplicationIT {
         request.setId(0L);
         request.setTitle("title");
         request.setDescription("description");
-        request.setDonationDate(OffsetDateTime.now());
-        request.setDonationExpirationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
+        request.setDonationExpirationDate(LocalDate.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationStatus.ACCEPTED);
+        request.setStatus(DonationStatus.ACTIVE);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setQuantity(5);
@@ -83,17 +84,17 @@ class ClothingDonationControllerIT extends ApplicationIT {
 
         City city = cityStubs.insert("arabic_name", "english_name");
         ClothingDonation clothingDonation = clothingDonationStubs.insert("title",
-                        "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        "description", LocalDateTime.now(), LocalDateTime.now(),
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, null, null, null, null, city);
         ClothingDonationRequest request = new ClothingDonationRequest();
         request.setId(0L);
         request.setTitle("title");
         request.setDescription("description");
-        request.setDonationDate(OffsetDateTime.now());
-        request.setDonationExpirationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
+        request.setDonationExpirationDate(LocalDate.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationStatus.ACCEPTED);
+        request.setStatus(DonationStatus.ACTIVE);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setQuantity(8);
@@ -130,8 +131,8 @@ class ClothingDonationControllerIT extends ApplicationIT {
 
         City city = cityStubs.insert("arabic_name", "english_name");
         ClothingDonation clothingDonation = clothingDonationStubs.insert("title",
-                        "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        "description", LocalDateTime.now(), LocalDateTime.now(),
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, null, null, null, null, city);
 
         try {

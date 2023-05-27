@@ -41,8 +41,8 @@ public class AuthController {
         return ok().build();
     }
 
-    @PostMapping("/password/reset")
-    public ResponseEntity<Void> logout(
+    @PostMapping("/password-reset")
+    public ResponseEntity<Void> resetPassword(
                     @RequestBody ResetPasswordRequest resetPasswordRequest) {
         authService.resetPassword(resetPasswordRequest);
         return ok().build();

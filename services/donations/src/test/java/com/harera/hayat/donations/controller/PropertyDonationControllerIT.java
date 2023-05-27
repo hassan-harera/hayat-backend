@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -42,18 +42,18 @@ class PropertyDonationControllerIT extends ApplicationIT {
         request.setId(0L);
         request.setTitle("title");
         request.setDescription("description");
-        request.setDonationDate(OffsetDateTime.now());
-        request.setDonationExpirationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
+        request.setDonationExpirationDate(LocalDate.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationStatus.ACCEPTED);
+        request.setStatus(DonationStatus.ACTIVE);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setBathrooms(1);
         request.setKitchens(1);
         request.setRooms(5);
         request.setPeopleCapacity(15);
-        request.setAvailableFrom(OffsetDateTime.now().plusHours(1));
-        request.setAvailableTo(OffsetDateTime.now().plusMonths(1));
+        request.setAvailableFrom(LocalDate.now().plusHours(1));
+        request.setAvailableTo(LocalDate.now().plusMonths(1));
 
         ResponseEntity<PropertyDonationResponse> responseEntity = null;
         PropertyDonationResponse response = null;
@@ -97,28 +97,28 @@ class PropertyDonationControllerIT extends ApplicationIT {
         City city = cityStubs.insert("arabic_name", "english_name");
 
         PropertyDonation propertyDonation = propertyDonationStubs.insert("title",
-                        "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        "description", LocalDateTime.now(), LocalDateTime.now(),
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
-                        OffsetDateTime.now().plusHours(1),
-                        OffsetDateTime.now().plusMonths(1));
+                        LocalDateTime.now().plusHours(1),
+                        LocalDateTime.now().plusMonths(1));
 
         PropertyDonationUpdateRequest request = new PropertyDonationUpdateRequest();
         request.setId(0L);
         request.setTitle("title");
         request.setDescription("description");
-        request.setDonationDate(OffsetDateTime.now());
-        request.setDonationExpirationDate(OffsetDateTime.now());
+        request.setDonationDate(LocalDate.now());
+        request.setDonationExpirationDate(LocalDate.now());
         request.setCategory(DonationCategory.PROPERTY);
-        request.setStatus(DonationStatus.ACCEPTED);
+        request.setStatus(DonationStatus.ACTIVE);
         request.setCommunicationMethod(CommunicationMethod.CHAT);
         request.setCityId(city.getId());
         request.setBathrooms(2);
         request.setKitchens(2);
         request.setRooms(8);
         request.setPeopleCapacity(20);
-        request.setAvailableFrom(OffsetDateTime.now().plusHours(1));
-        request.setAvailableTo(OffsetDateTime.now().plusMonths(1));
+        request.setAvailableFrom(LocalDate.now().plusHours(1));
+        request.setAvailableTo(LocalDate.now().plusMonths(1));
 
         try {
             // When
@@ -141,7 +141,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
             assertEquals(request.getCommunicationMethod(),
                             response.getCommunicationMethod());
             assertEquals(request.getCategory(), response.getCategory());
-            assertEquals(DonationStatus.ACCEPTED, response.getStatus());
+            assertEquals(DonationStatus.ACTIVE, response.getStatus());
             assertEquals(request.getCityId(), response.getCity().getId());
             assertEquals(request.getRooms(), response.getRooms());
             assertEquals(request.getBathrooms(), response.getBathrooms());
@@ -158,11 +158,11 @@ class PropertyDonationControllerIT extends ApplicationIT {
 
         City city = cityStubs.insert("arabic_name", "english_name");
         PropertyDonation propertyDonation = propertyDonationStubs.insert("title",
-                        "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        "description", LocalDateTime.now(), LocalDateTime.now(),
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
-                        OffsetDateTime.now().plusHours(1),
-                        OffsetDateTime.now().plusMonths(1));
+                        LocalDateTime.now().plusHours(1),
+                        LocalDateTime.now().plusMonths(1));
         try {
             // When
             ResponseEntity<PropertyDonationResponse> responseEntity =
@@ -184,7 +184,7 @@ class PropertyDonationControllerIT extends ApplicationIT {
             assertEquals(propertyDonation.getCommunicationMethod(),
                             response.getCommunicationMethod());
             assertEquals(propertyDonation.getCategory(), response.getCategory());
-            assertEquals(DonationStatus.ACCEPTED, response.getStatus());
+            assertEquals(DonationStatus.ACTIVE, response.getStatus());
             assertEquals(propertyDonation.getCity().getId(), response.getCity().getId());
             assertEquals(propertyDonation.getRooms(), response.getRooms());
             assertEquals(propertyDonation.getBathrooms(), response.getBathrooms());
@@ -202,25 +202,25 @@ class PropertyDonationControllerIT extends ApplicationIT {
         City city = cityStubs.insert("arabic_name", "english_name");
 
         PropertyDonation propertyDonation1 = propertyDonationStubs.insert("title",
-                        "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        "description", LocalDateTime.now(), LocalDateTime.now(),
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
-                        OffsetDateTime.now().plusHours(1),
-                        OffsetDateTime.now().plusMonths(1));
+                        LocalDateTime.now().plusHours(1),
+                        LocalDateTime.now().plusMonths(1));
 
         PropertyDonation propertyDonation2 = propertyDonationStubs.insert("title",
-                        "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        "description", LocalDateTime.now(), LocalDateTime.now(),
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
-                        OffsetDateTime.now().plusHours(1),
-                        OffsetDateTime.now().plusMonths(1));
+                        LocalDateTime.now().plusHours(1),
+                        LocalDateTime.now().plusMonths(1));
 
         PropertyDonation propertyDonation3 = propertyDonationStubs.insert("title",
-                        "description", OffsetDateTime.now(), OffsetDateTime.now(),
-                        DonationCategory.PROPERTY, DonationStatus.ACCEPTED,
+                        "description", LocalDateTime.now(), LocalDateTime.now(),
+                        DonationCategory.PROPERTY, DonationStatus.ACTIVE,
                         CommunicationMethod.CHAT, 5, 1, 1, city, 15,
-                        OffsetDateTime.now().plusHours(1),
-                        OffsetDateTime.now().plusMonths(1));
+                        LocalDateTime.now().plusHours(1),
+                        LocalDateTime.now().plusMonths(1));
 
         try {
             // When

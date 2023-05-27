@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -19,11 +19,11 @@ public class PropertyDonationStubs {
     private final PropertyDonationRepository propertyDonationRepository;
 
     public PropertyDonation create(String title, String description,
-                    OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
+                    LocalDateTime donationDate, LocalDateTime donationExpirationDate,
                     DonationCategory category, DonationStatus status,
                     CommunicationMethod communicationMethod, int rooms, int bathrooms,
                     int kitchens, City city, int peopleCapacity,
-                    OffsetDateTime availableFrom, OffsetDateTime availableTo) {
+                    LocalDateTime availableFrom, LocalDateTime availableTo) {
         PropertyDonation propertyDonation = new PropertyDonation();
         propertyDonation.setId(0L);
         propertyDonation.setTitle(title);
@@ -44,11 +44,11 @@ public class PropertyDonationStubs {
     }
 
     public PropertyDonation insert(String title, String description,
-                    OffsetDateTime donationDate, OffsetDateTime donationExpirationDate,
+                    LocalDateTime donationDate, LocalDateTime donationExpirationDate,
                     DonationCategory category, DonationStatus status,
                     CommunicationMethod communicationMethod, int rooms, int bathrooms,
                     int kitchens, City city, int peopleCapacity,
-                    OffsetDateTime availableFrom, OffsetDateTime availableTo) {
+                    LocalDateTime availableFrom, LocalDateTime availableTo) {
         PropertyDonation propertyDonation = create(title, description, donationDate,
                         donationExpirationDate, category, status, communicationMethod,
                         rooms, bathrooms, kitchens, city, peopleCapacity, availableFrom,
