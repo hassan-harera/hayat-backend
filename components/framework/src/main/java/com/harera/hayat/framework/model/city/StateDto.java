@@ -11,5 +11,4 @@ public class StateDto extends BaseEntityDto {
 
     private String arabicName;
     private String englishName;
-    private List<CityResponse> cities;
 }
