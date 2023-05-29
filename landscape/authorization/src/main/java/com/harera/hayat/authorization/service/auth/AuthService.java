@@ -37,7 +37,7 @@ public class AuthService {
             userRepository.save(user);
         }
 
-        return keycloakService.login(user.getUsername(), user.getPassword());
+        return keycloakService.login(user.getUsername(), loginRequest.getPassword());
     }
 
     public SignupResponse signup(SignupRequest signupRequest) {
