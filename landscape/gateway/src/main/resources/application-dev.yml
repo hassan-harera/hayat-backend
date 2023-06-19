@@ -25,6 +25,12 @@ spring:
             authorization-grant-type: authorization_code
             scope: openid
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
       routes:
         - id: donations-service
           uri: ${DONATIONS_SERVICE_URL:http://localhost:8084}
