@@ -25,8 +25,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/donations/**")
-                        .permitAll().anyRequest().authenticated().and().cors().and()
-                        .csrf().disable()
+                        .permitAll().and().cors().and().csrf().disable()
                         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                         .build();
     }
@@ -35,13 +34,13 @@ public class SecurityConfig {
     @Profile("dev")
     public SecurityFilterChain devFilterChain(HttpSecurity http) throws Exception {
         http.cors().disable().formLogin().disable().httpBasic().disable().csrf().disable()
-                        .authorizeHttpRequests().requestMatchers("/**").permitAll()
-                        .anyRequest().authenticated();
+                        .authorizeHttpRequests().requestMatchers("/**").permitAll().and()
+                        .cors().and().csrf().disable();
         return http.build();
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",
                         new CorsConfiguration().applyPermitDefaultValues());
