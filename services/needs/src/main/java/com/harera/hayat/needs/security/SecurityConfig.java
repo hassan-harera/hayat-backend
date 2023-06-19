@@ -26,7 +26,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/needs/**").permitAll()
-                        .anyRequest().authenticated().and()
+                        .anyRequest().authenticated().and().cors().and()
+                        .csrf().disable()
                         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                         .build();
     }
