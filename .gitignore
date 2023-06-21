@@ -44,3 +44,4 @@ build/
 /landscape/authorization/src/main/resources/hayateg.json
 /landscape/authorization/src/test/resources/hayateg.json
 /k8s/configmap.yml
+/services/notifications/src/main/resources/hayateg.json

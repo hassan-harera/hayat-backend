@@ -8,6 +8,7 @@ import com.harera.hayat.donations.model.clothing.ClothingDonationResponse;
 import com.harera.hayat.donations.model.clothing.ClothingDonationUpdateRequest;
 import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
+import com.harera.hayat.donations.service.DonationNotificationsService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.clothing.*;
@@ -41,16 +42,17 @@ public class ClothingDonationService extends BaseService {
     private final ClothingTypeService clothingTypeService;
     private final ClothingConditionService clothingConditionService;
     private final ClothingSeasonService clothingSeasonService;
+    private final DonationNotificationsService donationNotificationsService;
 
     public ClothingDonationService(ClothingDonationValidation donationValidation,
-                    ModelMapper modelMapper, CityService citService,
-                    ClothingDonationRepository clothingDonationRepository,
-                    CloudFileService cloudFileService,
-                    ClothingCategoryService clothingCategoryService,
-                    ClothingSizeService clothingSizeService,
-                    ClothingTypeService clothingTypeService,
-                    ClothingConditionService clothingConditionService,
-                    ClothingSeasonService clothingSeasonService) {
+                                   ModelMapper modelMapper, CityService citService,
+                                   ClothingDonationRepository clothingDonationRepository,
+                                   CloudFileService cloudFileService,
+                                   ClothingCategoryService clothingCategoryService,
+                                   ClothingSizeService clothingSizeService,
+                                   ClothingTypeService clothingTypeService,
+                                   ClothingConditionService clothingConditionService,
+                                   ClothingSeasonService clothingSeasonService, DonationNotificationsService donationNotificationsService) {
         this.clothingDonationValidation = donationValidation;
         this.modelMapper = modelMapper;
         this.citService = citService;
@@ -61,6 +63,7 @@ public class ClothingDonationService extends BaseService {
         this.clothingTypeService = clothingTypeService;
         this.clothingConditionService = clothingConditionService;
         this.clothingSeasonService = clothingSeasonService;
+        this.donationNotificationsService = donationNotificationsService;
     }
 
     public ClothingDonationResponse create(
@@ -80,6 +83,7 @@ public class ClothingDonationService extends BaseService {
         clothingDonation.setCity(citService.getCity(clothingDonationRequest.getCityId()));
         assignClothingData(clothingDonation, clothingDonationRequest);
         // TODO: send request to ai for processing
+        donationNotificationsService.notifyProcessingDonation(clothingDonation);
 
         clothingDonationRepository.save(clothingDonation);
         return modelMapper.map(clothingDonation, ClothingDonationResponse.class);

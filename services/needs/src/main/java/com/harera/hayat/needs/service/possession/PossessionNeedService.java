@@ -12,6 +12,7 @@ import com.harera.hayat.needs.repository.possession.PossessionCategoryRepository
 import com.harera.hayat.needs.repository.possession.PossessionConditionRepository;
 import com.harera.hayat.needs.repository.possession.PossessionNeedRepository;
 import com.harera.hayat.needs.service.BaseService;
+import com.harera.hayat.needs.service.NeedNotificationsService;
 import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,7 @@ public class PossessionNeedService implements BaseService {
     private final PossessionCategoryRepository possessionCategoryRepository;
     private final PossessionConditionRepository possessionConditionRepository;
     private final UserService userService;
+    private final NeedNotificationsService needNotificationsService;
 
     public PossessionNeedService(PossessionValidation possessionValidation,
                     ModelMapper modelMapper, CityService cityService,
@@ -37,7 +39,8 @@ public class PossessionNeedService implements BaseService {
                     PossessionNeedRepository possessionNeedRepository,
                     PossessionCategoryRepository possessionCategoryRepository,
                     PossessionConditionRepository possessionConditionRepository,
-                    UserService userService) {
+                    UserService userService,
+                    NeedNotificationsService needNotificationsService) {
         this.possessionValidation = possessionValidation;
         this.modelMapper = modelMapper;
         this.cityService = cityService;
@@ -47,6 +50,7 @@ public class PossessionNeedService implements BaseService {
         this.possessionCategoryRepository = possessionCategoryRepository;
         this.possessionConditionRepository = possessionConditionRepository;
         this.userService = userService;
+        this.needNotificationsService = needNotificationsService;
     }
 
     public PossessionNeedResponse create(PossessionNeedRequest possessionNeedRequest,
@@ -68,6 +72,8 @@ public class PossessionNeedService implements BaseService {
                         .findById(possessionNeedRequest.getPossessionConditionId())
                         .get());
         possessionNeed.setStatus(NeedStatus.PENDING);
+
+        needNotificationsService.notifyProcessingNeed(possessionNeed);
 
         possessionNeed = possessionNeedRepository.save(possessionNeed);
         // TODO: send request to ml service

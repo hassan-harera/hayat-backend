@@ -8,8 +8,8 @@ import com.harera.hayat.donations.model.book.BookDonationResponse;
 import com.harera.hayat.donations.model.book.BookDonationUpdateRequest;
 import com.harera.hayat.donations.model.medicine.MedicineDonation;
 import com.harera.hayat.donations.repository.book.BookDonationRepository;
-import com.harera.hayat.donations.repository.medicine.MedicineDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
+import com.harera.hayat.donations.service.DonationNotificationsService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.file.CloudFileService;
@@ -36,20 +36,20 @@ public class BookDonationService extends BaseService {
     private final ModelMapper modelMapper;
     private final BookDonationRepository bookDonationRepository;
     private final CityService cityService;
-    private final MedicineDonationRepository medicineDonationRepository;
+    private final DonationNotificationsService donationNotificationsService;
 
     public BookDonationService(CloudFileService cloudFileService,
                     BookDonationValidation bookDonationValidation,
                     ModelMapper modelMapper,
                     BookDonationRepository bookDonationRepository,
                     CityService cityService,
-                    MedicineDonationRepository medicineDonationRepository) {
+                    DonationNotificationsService donationNotificationsService) {
         this.cloudFileService = cloudFileService;
         this.bookDonationValidation = bookDonationValidation;
         this.modelMapper = modelMapper;
         this.bookDonationRepository = bookDonationRepository;
         this.cityService = cityService;
-        this.medicineDonationRepository = medicineDonationRepository;
+        this.donationNotificationsService = donationNotificationsService;
     }
 
     public BookDonationResponse create(BookDonationRequest request,
@@ -65,6 +65,7 @@ public class BookDonationService extends BaseService {
                         OffsetDateTime.now().plusDays(bookDonationExpirationDays));
         bookDonation.setUser(getUser(authorization));
         bookDonation.setCity(cityService.getCity(request.getCityId()));
+        donationNotificationsService.notifyProcessingDonation(bookDonation);
 
         bookDonationRepository.save(bookDonation);
         return modelMapper.map(bookDonation, BookDonationResponse.class);

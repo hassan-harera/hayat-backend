@@ -15,4 +15,5 @@ public class BaseUserDto extends BaseEntityDto {
     private String email;
     private String password;
     private String username;
+    private String deviceToken;
 }

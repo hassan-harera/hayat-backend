@@ -15,9 +15,9 @@ import com.harera.hayat.needs.model.medicine.MedicineNeedResponse;
 import com.harera.hayat.needs.model.medicine.MedicineNeedUpdateRequest;
 import com.harera.hayat.needs.repository.medicine.MedicineNeedRepository;
 import com.harera.hayat.needs.service.BaseService;
+import com.harera.hayat.needs.service.NeedNotificationsService;
 import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,12 +39,13 @@ public class MedicineNeedService implements BaseService {
     private final MedicineNeedRepository medicineNeedRepository;
     private final UserService userService;
     private final CloudFileService cloudFileService;
+    private final NeedNotificationsService needNotificationsService;
 
     public MedicineNeedService(MedicineNeedValidation needValidation,
-                    CityService cityService, MedicineUnitService medicineUnitService,
-                    MedicineService medicineService, ModelMapper modelMapper,
-                    MedicineNeedRepository medicineNeedRepository,
-                    UserService userService, CloudFileService cloudFileService) {
+                               CityService cityService, MedicineUnitService medicineUnitService,
+                               MedicineService medicineService, ModelMapper modelMapper,
+                               MedicineNeedRepository medicineNeedRepository,
+                               UserService userService, CloudFileService cloudFileService, NeedNotificationsService needNotificationsService) {
         this.needValidation = needValidation;
         this.cityService = cityService;
         this.medicineUnitService = medicineUnitService;
@@ -53,6 +54,7 @@ public class MedicineNeedService implements BaseService {
         this.medicineNeedRepository = medicineNeedRepository;
         this.userService = userService;
         this.cloudFileService = cloudFileService;
+        this.needNotificationsService = needNotificationsService;
     }
 
     public MedicineNeedResponse create(MedicineNeedRequest medicineNeedRequest,
@@ -70,10 +72,11 @@ public class MedicineNeedService implements BaseService {
                         medicineUnitService.get(medicineNeedRequest.getMedicineUnitId()));
         medicineNeed.setMedicine(
                         medicineService.get(medicineNeedRequest.getMedicineId()));
-
         medicineNeed.setNeedDate(LocalDateTime.now());
         medicineNeed.setNeedExpirationDate(LocalDateTime.now().plusDays(45));
         // TODO: 28/02/23 send request to ai model
+
+        needNotificationsService.notifyProcessingNeed(medicineNeed);
 
         medicineNeedRepository.save(medicineNeed);
         return modelMapper.map(medicineNeed, MedicineNeedResponse.class);

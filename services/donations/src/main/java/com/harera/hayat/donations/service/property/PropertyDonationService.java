@@ -8,12 +8,12 @@ import com.harera.hayat.donations.model.property.PropertyDonationResponse;
 import com.harera.hayat.donations.model.property.PropertyDonationUpdateRequest;
 import com.harera.hayat.donations.repository.property.PropertyDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
+import com.harera.hayat.donations.service.DonationNotificationsService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.util.ErrorCode;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,14 +30,17 @@ public class PropertyDonationService extends BaseService {
     private final PropertyDonationValidation donationValidation;
     private final CityRepository cityRepository;
     private final ModelMapper modelMapper;
+    private final DonationNotificationsService donationNotificationsService;
 
     public PropertyDonationService(PropertyDonationRepository propertyDonationRepository,
                     PropertyDonationValidation donationValidation,
-                    CityRepository cityRepository, ModelMapper modelMapper) {
+                    CityRepository cityRepository, ModelMapper modelMapper,
+                    DonationNotificationsService donationNotificationsService) {
         this.propertyDonationRepository = propertyDonationRepository;
         this.donationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.modelMapper = modelMapper;
+        this.donationNotificationsService = donationNotificationsService;
     }
 
     public PropertyDonationResponse create(
@@ -54,6 +57,7 @@ public class PropertyDonationService extends BaseService {
 
         assignCity(propertyDonation, propertyDonationRequest.getCityId());
         propertyDonation.setUser(getUser(bearerToken));
+        donationNotificationsService.notifyProcessingDonation(propertyDonation);
 
         propertyDonationRepository.save(propertyDonation);
         return modelMapper.map(propertyDonation, PropertyDonationResponse.class);

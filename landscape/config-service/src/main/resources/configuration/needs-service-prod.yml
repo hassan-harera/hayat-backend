@@ -42,6 +42,13 @@ spring:
       host: ${MONGO_HOST}
       port: ${MONGO_PORT}
       database: hayat
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+    queue:
+      notifications: notifications
 eureka:
   client:
     service-url:

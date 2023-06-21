@@ -8,6 +8,7 @@ import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
 import com.harera.hayat.donations.model.medicine.MedicineDonationUpdateRequest;
 import com.harera.hayat.donations.repository.medicine.MedicineDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
+import com.harera.hayat.donations.service.DonationNotificationsService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.medicine.Medicine;
@@ -39,6 +40,7 @@ public class MedicineDonationService extends BaseService {
     private final MedicineDonationRepository medicineDonationRepository;
     private final MedicineRepository medicineRepository;
     private final CloudFileService cloudFileService;
+    private final DonationNotificationsService donationNotificationsService;
 
     @Autowired
     public MedicineDonationService(MedicineDonationValidation donationValidation,
@@ -47,7 +49,8 @@ public class MedicineDonationService extends BaseService {
                     ModelMapper modelMapper,
                     MedicineDonationRepository medicineDonationRepository,
                     MedicineRepository medicineRepository,
-                    CloudFileService cloudFileService) {
+                    CloudFileService cloudFileService,
+                    DonationNotificationsService donationNotificationsService) {
         this.donationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.medicineUnitRepository = medicineUnitRepository;
@@ -55,6 +58,7 @@ public class MedicineDonationService extends BaseService {
         this.medicineDonationRepository = medicineDonationRepository;
         this.medicineRepository = medicineRepository;
         this.cloudFileService = cloudFileService;
+        this.donationNotificationsService = donationNotificationsService;
     }
 
     public MedicineDonationResponse create(
@@ -76,6 +80,8 @@ public class MedicineDonationService extends BaseService {
 
         medicineDonation.setDonationDate(OffsetDateTime.now());
         medicineDonation.setDonationExpirationDate(OffsetDateTime.now().plusDays(45));
+
+        donationNotificationsService.notifyProcessingDonation(medicineDonation);
 
         medicineDonationRepository.save(medicineDonation);
         return modelMapper.map(medicineDonation, MedicineDonationResponse.class);

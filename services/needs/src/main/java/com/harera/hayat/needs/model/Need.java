@@ -8,6 +8,7 @@ import java.util.UUID;
 import com.harera.hayat.framework.model.BaseDocument;
 import com.harera.hayat.framework.model.city.CityDto;
 
+import com.harera.hayat.framework.model.user.BaseUser;
 import com.harera.hayat.framework.model.user.BaseUserDto;
 import jakarta.persistence.Column;
 import lombok.Getter;

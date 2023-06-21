@@ -1,8 +1,8 @@
 server:
-  port: 8084
+  port: 8086
 spring:
   application:
-    name: donations-service
+    name: notifications-service
   security:
     oauth2:
       resourceserver:
@@ -11,13 +11,13 @@ spring:
           jwk-set-uri: ${KEYCLOAK_SERVICE_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs
         registration:
           keycloak:
-            client-id: donations-service
+            client-id: notifications-service
             authorization-grant-type: authorization_code
             scope: openid
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     driverClassName: com.mysql.cj.jdbc.Driver
-    password: harera
+    password: ${MYSQL_ROOT_PASSWORD}
     url: jdbc:mysql://${DB_HOST}:${DB_PORT}/hayat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: root
   hibernate:
@@ -33,10 +33,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
         format_sql: false
-  liquibase:
-    change-log: classpath:db/main/changelog/changelog-main.yaml
-    clear-checksums: true
-    enabled: false
   rabbitmq:
     host: ${RABBITMQ_HOST}
     port: ${RABBITMQ_PORT}
@@ -44,7 +40,6 @@ spring:
     password: ${RABBITMQ_PASSWORD}
     queue:
       notifications: notifications
-
 eureka:
   client:
     service-url:
@@ -73,17 +68,3 @@ management:
     metrics:
       export:
         step: 10s
-
-s3:
-  endpoint:
-    url: ${S3_ENDPOINT_URL}
-  bucket:
-    name: ${S3_BUCKET_NAME}
-  access:
-    key:
-      id: ${S3_ACCESS_KEY_ID}
-  secret:
-    key: ${S3_SECRET_KEY}
-donation:
-  food:
-    expiration_in_days: 45

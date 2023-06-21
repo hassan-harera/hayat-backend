@@ -1,22 +1,22 @@
 package com.harera.hayat.notificaions.service;
 
-import com.harera.hayat.notificaions.model.Notification;
-import lombok.extern.log4j.Log4j2;
+import com.harera.hayat.framework.model.notificaiton.Notification;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Log4j2
-@Component
+@Slf4j
+@Service
 public class NotificationsConsumer {
 
-    @RabbitListener(queues = "${queue.donations.processing}")
-    public void consumeProcessingDonations(Notification user) {
-        log.error("Received Message: " + user);
+    private final FirebaseService firebaseService;
+    public NotificationsConsumer(FirebaseService firebaseService) {
+        this.firebaseService = firebaseService;
     }
 
-    @RabbitListener(queues = "${queue.donations.processing}")
-    public void consumeAcceptedDonations(Notification user) {
-        log.error("Received Message: " + user);
+    @RabbitListener(queues = "${spring.rabbitmq.queue.notifications}")
+    public void consumeNotifications(Notification notification) {
+        firebaseService.send(notification);
+        log.error("Notification Sent: " + notification);
     }
-
 }

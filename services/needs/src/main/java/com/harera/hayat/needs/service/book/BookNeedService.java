@@ -10,9 +10,9 @@ import com.harera.hayat.needs.model.book.BookNeed;
 import com.harera.hayat.needs.model.book.BookNeedRequest;
 import com.harera.hayat.needs.model.book.BookNeedResponse;
 import com.harera.hayat.needs.repository.book.BookNeedRepository;
+import com.harera.hayat.needs.service.NeedNotificationsService;
 import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,16 +32,18 @@ public class BookNeedService {
     private final BookNeedRepository bookNeedRepository;
     private final UserService userService;
     private final CloudFileService cloudFileService;
+    private final NeedNotificationsService needNotificationsService;
 
     public BookNeedService(CityService cityService, BookNeedValidation bookNeedValidation,
-                    ModelMapper modelMapper, BookNeedRepository bookNeedRepository,
-                    UserService userService, CloudFileService cloudFileService) {
+                           ModelMapper modelMapper, BookNeedRepository bookNeedRepository,
+                           UserService userService, CloudFileService cloudFileService, NeedNotificationsService needNotificationsService) {
         this.cityService = cityService;
         this.bookNeedValidation = bookNeedValidation;
         this.modelMapper = modelMapper;
         this.bookNeedRepository = bookNeedRepository;
         this.userService = userService;
         this.cloudFileService = cloudFileService;
+        this.needNotificationsService = needNotificationsService;
     }
 
     public BookNeedResponse create(BookNeedRequest bookNeedRequest,
@@ -57,6 +59,8 @@ public class BookNeedService {
         // TODO: send to AI model to process the request
         bookNeed.setUser(modelMapper.map(userService.getUser(authorization),
                         BaseUserDto.class));
+
+        needNotificationsService.notifyProcessingNeed(bookNeed);
 
         var bookNeedResponse = bookNeedRepository.save(bookNeed);
         return modelMapper.map(bookNeedResponse, BookNeedResponse.class);

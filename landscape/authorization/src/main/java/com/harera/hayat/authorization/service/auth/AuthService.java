@@ -3,6 +3,7 @@ package com.harera.hayat.authorization.service.auth;
 import com.harera.hayat.authorization.model.auth.*;
 import com.harera.hayat.authorization.model.user.User;
 import com.harera.hayat.authorization.repository.UserRepository;
+import com.harera.hayat.authorization.service.AuthorizationNotificationsService;
 import com.harera.hayat.authorization.service.UserUtils;
 import com.harera.hayat.authorization.service.keycloak.KeycloakService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
@@ -24,6 +25,7 @@ public class AuthService {
     private final ModelMapper modelMapper;
     private final KeycloakService keycloakService;
     private final UserUtils userUtils;
+    private final AuthorizationNotificationsService notificationsService;
 
     public LoginResponse login(LoginRequest loginRequest) {
         authValidation.validateLogin(loginRequest);
@@ -36,7 +38,7 @@ public class AuthService {
             user.setDeviceToken(loginRequest.getDeviceToken());
             userRepository.save(user);
         }
-
+        notificationsService.notifyNewLoginDetected(user);
         return keycloakService.login(user.getUsername(), loginRequest.getPassword());
     }
 

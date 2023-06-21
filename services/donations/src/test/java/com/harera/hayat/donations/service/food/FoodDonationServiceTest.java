@@ -51,7 +51,8 @@ class FoodDonationServiceTest {
         int days = 1;
         foodDonationService = new FoodDonationService(foodDonationValidation,
                         cityRepository, modelMapper, foodUnitRepository,
-                        foodDonationRepository, days, foodCategoryRepository, cloudFileService);
+                        foodDonationRepository, days, foodCategoryRepository,
+                cloudFileService, donationNotificationsService);
     }
 
     @Test

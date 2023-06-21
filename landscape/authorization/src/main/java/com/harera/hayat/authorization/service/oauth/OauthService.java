@@ -7,6 +7,7 @@ import com.harera.hayat.authorization.model.oauth.OauthLoginRequest;
 import com.harera.hayat.authorization.model.oauth.OauthSignupRequest;
 import com.harera.hayat.authorization.model.user.User;
 import com.harera.hayat.authorization.repository.UserRepository;
+import com.harera.hayat.authorization.service.AuthorizationNotificationsService;
 import com.harera.hayat.authorization.service.firebase.OauthFirebaseService;
 import com.harera.hayat.authorization.service.keycloak.KeycloakService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class OauthService {
     private final OauthFirebaseService oauthFirebaseService;
     private final ModelMapper modelMapper;
     private final KeycloakService keycloakService;
+    private final AuthorizationNotificationsService notificationsService;
 
     public LoginResponse login(OauthLoginRequest oAuthLoginRequest) {
         oauthValidation.validateLogin(oAuthLoginRequest);
@@ -34,6 +36,7 @@ public class OauthService {
         User user = userRepository.findByUid(firebaseToken.getUid()).orElseThrow(
                         () -> new UsernameNotFoundException("User not found"));
 
+        notificationsService.notifyNewLoginDetected(user);
         return keycloakService.login(user.getUsername(), user.getPassword());
     }
 

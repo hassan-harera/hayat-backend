@@ -8,6 +8,7 @@ import com.harera.hayat.donations.model.food.FoodDonationResponse;
 import com.harera.hayat.donations.model.food.FoodDonationUpdateRequest;
 import com.harera.hayat.donations.repository.food.FoodDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
+import com.harera.hayat.donations.service.DonationNotificationsService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.food.FoodCategory;
@@ -41,6 +42,7 @@ public class FoodDonationService extends BaseService {
     private final int foodDonationExpirationDays;
     private final FoodCategoryRepository foodCategoryRepository;
     private final CloudFileService cloudFileService;
+    private final DonationNotificationsService donationNotificationsService;
 
     public FoodDonationService(FoodDonationValidation donationValidation,
                     CityRepository cityRepository, ModelMapper modelMapper,
@@ -48,7 +50,8 @@ public class FoodDonationService extends BaseService {
                     FoodDonationRepository foodDonationRepository,
                     @Value("${donation.food.expiration_in_days}") int foodDonationExpirationDays,
                     FoodCategoryRepository foodCategoryRepository,
-                    CloudFileService cloudFileService) {
+                    CloudFileService cloudFileService,
+                    DonationNotificationsService donationNotificationsService) {
         this.foodDonationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.modelMapper = modelMapper;
@@ -57,6 +60,7 @@ public class FoodDonationService extends BaseService {
         this.foodDonationExpirationDays = foodDonationExpirationDays;
         this.foodCategoryRepository = foodCategoryRepository;
         this.cloudFileService = cloudFileService;
+        this.donationNotificationsService = donationNotificationsService;
     }
 
     public FoodDonationResponse create(FoodDonationRequest foodDonationRequest,
@@ -72,6 +76,7 @@ public class FoodDonationService extends BaseService {
         foodDonation.setCity(getCity(foodDonationRequest.getCityId()));
         foodDonation.setUser(getUser(authorization));
         foodDonation.setFoodUnit(getUnit(foodDonationRequest.getFoodUnitId()));
+        donationNotificationsService.notifyProcessingDonation(foodDonation);
 
         foodDonationRepository.save(foodDonation);
         return modelMapper.map(foodDonation, FoodDonationResponse.class);

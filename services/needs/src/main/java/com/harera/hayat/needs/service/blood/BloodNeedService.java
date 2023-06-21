@@ -11,6 +11,7 @@ import com.harera.hayat.needs.model.blood.BloodNeedRequest;
 import com.harera.hayat.needs.model.blood.BloodNeedResponse;
 import com.harera.hayat.needs.model.blood.BloodNeedUpdateRequest;
 import com.harera.hayat.needs.repository.blood.BloodNeedRepository;
+import com.harera.hayat.needs.service.NeedNotificationsService;
 import com.harera.hayat.needs.service.NeedValidation;
 import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -36,12 +37,14 @@ public class BloodNeedService {
     private final CityService cityService;
     private final UserService userService;
     private final CloudFileService cloudFileService;
+    private final NeedNotificationsService needNotificationsService;
 
     @Autowired
     public BloodNeedService(ModelMapper modelMapper, NeedValidation needValidation,
                     BloodNeedRepository bloodNeedRepository,
                     BloodNeedValidation bloodNeedValidation, CityService cityService,
-                    UserService userService, CloudFileService cloudFileService) {
+                    UserService userService, CloudFileService cloudFileService,
+                    NeedNotificationsService needNotificationsService) {
         this.modelMapper = modelMapper;
         this.needValidation = needValidation;
         this.bloodNeedRepository = bloodNeedRepository;
@@ -49,6 +52,7 @@ public class BloodNeedService {
         this.cityService = cityService;
         this.userService = userService;
         this.cloudFileService = cloudFileService;
+        this.needNotificationsService = needNotificationsService;
     }
 
     public BloodNeedResponse create(BloodNeedRequest bloodNeedRequest,
@@ -61,9 +65,10 @@ public class BloodNeedService {
         bloodNeed.setCity(cityService.get(bloodNeedRequest.getCityId()));
         bloodNeed.setStatus(NeedStatus.PENDING);
         bloodNeed.setCategory(NeedCategory.BLOOD);
-
         bloodNeed.setUser(modelMapper.map(userService.getUser(authorization),
                         BaseUserDto.class));
+
+        needNotificationsService.notifyProcessingNeed(bloodNeed);
 
         bloodNeedRepository.save(bloodNeed);
         return modelMapper.map(bloodNeed, BloodNeedResponse.class);
@@ -137,8 +142,8 @@ public class BloodNeedService {
 
     public List<BloodNeedResponse> search(String query, int page, int size) {
         page = Integer.max(page, 1) - 1;
-        List<BloodNeed> needList =
-                bloodNeedRepository.search(query, NeedStatus.ACTIVE, of(page, size));
+        List<BloodNeed> needList = bloodNeedRepository.search(query, NeedStatus.ACTIVE,
+                        of(page, size));
         return mapAll(needList, BloodNeedResponse.class);
     }
 }
