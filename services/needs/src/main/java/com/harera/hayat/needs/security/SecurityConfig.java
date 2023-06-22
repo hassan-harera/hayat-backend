@@ -26,7 +26,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests().requestMatchers(OPEN_APIS).permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/needs/**").permitAll()
-                        .and().cors().and().csrf().disable()
+                        .anyRequest().authenticated().and()
                         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                         .build();
     }
@@ -35,13 +35,13 @@ public class SecurityConfig {
     @Profile("dev")
     public SecurityFilterChain devFilterChain(HttpSecurity http) throws Exception {
         http.cors().disable().formLogin().disable().httpBasic().disable().csrf().disable()
-                        .authorizeHttpRequests().requestMatchers("/**").permitAll().and()
-                        .cors().and().csrf().disable();
+                        .authorizeHttpRequests().requestMatchers("/**").permitAll()
+                        .anyRequest().authenticated();
         return http.build();
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**",
                         new CorsConfiguration().applyPermitDefaultValues());
