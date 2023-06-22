@@ -26,19 +26,6 @@ spring:
             scope: openid
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedHeaders: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-              - HEAD
-              - PATCH
       routes:
         - id: donations-service
           uri: ${DONATIONS_SERVICE_URL:http://localhost:8084}
