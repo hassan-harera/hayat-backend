@@ -10,6 +10,6 @@ public class LogoutRequest {
     @JsonProperty("token")
     private String token;
 
-    @JsonProperty("device_token")
+    @JsonProperty("refresh_token")
     private String refreshToken;
 }
