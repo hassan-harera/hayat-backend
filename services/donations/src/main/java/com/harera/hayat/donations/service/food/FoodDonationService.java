@@ -2,6 +2,7 @@ package com.harera.hayat.donations.service.food;
 
 import com.harera.hayat.donations.model.DonationCategory;
 import com.harera.hayat.donations.model.DonationStatus;
+import com.harera.hayat.donations.model.ai.Prediction;
 import com.harera.hayat.donations.model.food.FoodDonation;
 import com.harera.hayat.donations.model.food.FoodDonationRequest;
 import com.harera.hayat.donations.model.food.FoodDonationResponse;
@@ -9,6 +10,7 @@ import com.harera.hayat.donations.model.food.FoodDonationUpdateRequest;
 import com.harera.hayat.donations.repository.food.FoodDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.donations.service.DonationNotificationsService;
+import com.harera.hayat.donations.service.ai.PredictionService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.food.FoodCategory;
@@ -27,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.OffsetDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
@@ -43,6 +46,7 @@ public class FoodDonationService extends BaseService {
     private final FoodCategoryRepository foodCategoryRepository;
     private final CloudFileService cloudFileService;
     private final DonationNotificationsService donationNotificationsService;
+    private final PredictionService predictionService;
 
     public FoodDonationService(FoodDonationValidation donationValidation,
                     CityRepository cityRepository, ModelMapper modelMapper,
@@ -51,7 +55,8 @@ public class FoodDonationService extends BaseService {
                     @Value("${donation.food.expiration_in_days}") int foodDonationExpirationDays,
                     FoodCategoryRepository foodCategoryRepository,
                     CloudFileService cloudFileService,
-                    DonationNotificationsService donationNotificationsService) {
+                    DonationNotificationsService donationNotificationsService,
+                    PredictionService predictionService) {
         this.foodDonationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.modelMapper = modelMapper;
@@ -61,6 +66,7 @@ public class FoodDonationService extends BaseService {
         this.foodCategoryRepository = foodCategoryRepository;
         this.cloudFileService = cloudFileService;
         this.donationNotificationsService = donationNotificationsService;
+        this.predictionService = predictionService;
     }
 
     public FoodDonationResponse create(FoodDonationRequest foodDonationRequest,
@@ -76,10 +82,24 @@ public class FoodDonationService extends BaseService {
         foodDonation.setCity(getCity(foodDonationRequest.getCityId()));
         foodDonation.setUser(getUser(authorization));
         foodDonation.setFoodUnit(getUnit(foodDonationRequest.getFoodUnitId()));
+
         donationNotificationsService.notifyProcessingDonation(foodDonation);
+        reviewDonation(foodDonation);
 
         foodDonationRepository.save(foodDonation);
         return modelMapper.map(foodDonation, FoodDonationResponse.class);
+    }
+
+    private void reviewDonation(FoodDonation foodDonation) {
+        Prediction prediction = predictionService.predict(
+                        foodDonation.getTitle() + " " + foodDonation.getDescription());
+        if (Objects.equals(prediction.getLabel(), "FOOD")
+                        && prediction.getCertainty() > 0.5) {
+            foodDonation.setStatus(DonationStatus.ACTIVE);
+        } else {
+            foodDonation.setStatus(DonationStatus.REJECTED);
+        }
+        foodDonationRepository.save(foodDonation);
     }
 
     public FoodDonationResponse update(Long id, FoodDonationUpdateRequest request) {

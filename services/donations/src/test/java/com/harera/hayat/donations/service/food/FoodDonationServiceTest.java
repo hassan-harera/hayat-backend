@@ -52,7 +52,7 @@ class FoodDonationServiceTest {
         foodDonationService = new FoodDonationService(foodDonationValidation,
                         cityRepository, modelMapper, foodUnitRepository,
                         foodDonationRepository, days, foodCategoryRepository,
-                cloudFileService, donationNotificationsService);
+                cloudFileService, donationNotificationsService, predictionService);
     }
 
     @Test

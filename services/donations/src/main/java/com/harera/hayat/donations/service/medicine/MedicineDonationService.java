@@ -2,6 +2,7 @@ package com.harera.hayat.donations.service.medicine;
 
 import com.harera.hayat.donations.model.DonationCategory;
 import com.harera.hayat.donations.model.DonationStatus;
+import com.harera.hayat.donations.model.ai.Prediction;
 import com.harera.hayat.donations.model.medicine.MedicineDonation;
 import com.harera.hayat.donations.model.medicine.MedicineDonationRequest;
 import com.harera.hayat.donations.model.medicine.MedicineDonationResponse;
@@ -9,6 +10,7 @@ import com.harera.hayat.donations.model.medicine.MedicineDonationUpdateRequest;
 import com.harera.hayat.donations.repository.medicine.MedicineDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.donations.service.DonationNotificationsService;
+import com.harera.hayat.donations.service.ai.PredictionService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.model.city.City;
 import com.harera.hayat.framework.model.medicine.Medicine;
@@ -26,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 
@@ -41,6 +44,7 @@ public class MedicineDonationService extends BaseService {
     private final MedicineRepository medicineRepository;
     private final CloudFileService cloudFileService;
     private final DonationNotificationsService donationNotificationsService;
+    private final PredictionService predictionService;
 
     @Autowired
     public MedicineDonationService(MedicineDonationValidation donationValidation,
@@ -50,7 +54,8 @@ public class MedicineDonationService extends BaseService {
                     MedicineDonationRepository medicineDonationRepository,
                     MedicineRepository medicineRepository,
                     CloudFileService cloudFileService,
-                    DonationNotificationsService donationNotificationsService) {
+                    DonationNotificationsService donationNotificationsService,
+                    PredictionService predictionService) {
         this.donationValidation = donationValidation;
         this.cityRepository = cityRepository;
         this.medicineUnitRepository = medicineUnitRepository;
@@ -59,6 +64,7 @@ public class MedicineDonationService extends BaseService {
         this.medicineRepository = medicineRepository;
         this.cloudFileService = cloudFileService;
         this.donationNotificationsService = donationNotificationsService;
+        this.predictionService = predictionService;
     }
 
     public MedicineDonationResponse create(
@@ -81,10 +87,24 @@ public class MedicineDonationService extends BaseService {
         medicineDonation.setDonationDate(OffsetDateTime.now());
         medicineDonation.setDonationExpirationDate(OffsetDateTime.now().plusDays(45));
 
-        donationNotificationsService.notifyProcessingDonation(medicineDonation);
-
         medicineDonationRepository.save(medicineDonation);
+
+        donationNotificationsService.notifyProcessingDonation(medicineDonation);
+        reviewDonation(medicineDonation);
+
         return modelMapper.map(medicineDonation, MedicineDonationResponse.class);
+    }
+
+    private void reviewDonation(MedicineDonation medicineDonation) {
+        Prediction prediction = predictionService.predict(
+                        medicineDonation.getTitle() + " " + medicineDonation.getDescription());
+        if (Objects.equals(prediction.getLabel(), "MEDICINE")
+                        && prediction.getCertainty() > 0.5) {
+            medicineDonation.setStatus(DonationStatus.ACTIVE);
+        } else {
+            medicineDonation.setStatus(DonationStatus.REJECTED);
+        }
+        medicineDonationRepository.save(medicineDonation);
     }
 
     private Medicine getMedicine(long medicineId) {

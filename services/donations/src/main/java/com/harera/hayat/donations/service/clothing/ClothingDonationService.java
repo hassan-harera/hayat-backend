@@ -2,6 +2,7 @@ package com.harera.hayat.donations.service.clothing;
 
 import com.harera.hayat.donations.model.DonationCategory;
 import com.harera.hayat.donations.model.DonationStatus;
+import com.harera.hayat.donations.model.ai.Prediction;
 import com.harera.hayat.donations.model.clothing.ClothingDonation;
 import com.harera.hayat.donations.model.clothing.ClothingDonationRequest;
 import com.harera.hayat.donations.model.clothing.ClothingDonationResponse;
@@ -9,6 +10,7 @@ import com.harera.hayat.donations.model.clothing.ClothingDonationUpdateRequest;
 import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.donations.service.DonationNotificationsService;
+import com.harera.hayat.donations.service.ai.PredictionService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.clothing.*;
@@ -22,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.OffsetDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
@@ -43,16 +46,19 @@ public class ClothingDonationService extends BaseService {
     private final ClothingConditionService clothingConditionService;
     private final ClothingSeasonService clothingSeasonService;
     private final DonationNotificationsService donationNotificationsService;
+    private final PredictionService predictionService;
 
     public ClothingDonationService(ClothingDonationValidation donationValidation,
-                                   ModelMapper modelMapper, CityService citService,
-                                   ClothingDonationRepository clothingDonationRepository,
-                                   CloudFileService cloudFileService,
-                                   ClothingCategoryService clothingCategoryService,
-                                   ClothingSizeService clothingSizeService,
-                                   ClothingTypeService clothingTypeService,
-                                   ClothingConditionService clothingConditionService,
-                                   ClothingSeasonService clothingSeasonService, DonationNotificationsService donationNotificationsService) {
+                    ModelMapper modelMapper, CityService citService,
+                    ClothingDonationRepository clothingDonationRepository,
+                    CloudFileService cloudFileService,
+                    ClothingCategoryService clothingCategoryService,
+                    ClothingSizeService clothingSizeService,
+                    ClothingTypeService clothingTypeService,
+                    ClothingConditionService clothingConditionService,
+                    ClothingSeasonService clothingSeasonService,
+                    DonationNotificationsService donationNotificationsService,
+                    PredictionService predictionService) {
         this.clothingDonationValidation = donationValidation;
         this.modelMapper = modelMapper;
         this.citService = citService;
@@ -64,6 +70,7 @@ public class ClothingDonationService extends BaseService {
         this.clothingConditionService = clothingConditionService;
         this.clothingSeasonService = clothingSeasonService;
         this.donationNotificationsService = donationNotificationsService;
+        this.predictionService = predictionService;
     }
 
     public ClothingDonationResponse create(
@@ -82,11 +89,24 @@ public class ClothingDonationService extends BaseService {
         clothingDonation.setUser(getUser(authorization));
         clothingDonation.setCity(citService.getCity(clothingDonationRequest.getCityId()));
         assignClothingData(clothingDonation, clothingDonationRequest);
-        // TODO: send request to ai for processing
+
         donationNotificationsService.notifyProcessingDonation(clothingDonation);
+        reviewDonation(clothingDonation);
 
         clothingDonationRepository.save(clothingDonation);
         return modelMapper.map(clothingDonation, ClothingDonationResponse.class);
+    }
+
+    private void reviewDonation(ClothingDonation bookDonation) {
+        Prediction prediction = predictionService.predict(
+                        bookDonation.getTitle() + " " + bookDonation.getDescription());
+        if (Objects.equals(prediction.getLabel(), "CLOTHING")
+                        && prediction.getCertainty() > 0.5) {
+            bookDonation.setStatus(DonationStatus.ACTIVE);
+        } else {
+            bookDonation.setStatus(DonationStatus.REJECTED);
+        }
+        clothingDonationRepository.save(bookDonation);
     }
 
     private void assignClothingData(ClothingDonation clothingDonation,

@@ -45,7 +45,7 @@ class MedicineDonationServiceTest {
     void setUp() {
         medicineDonationService = new MedicineDonationService(medicineDonationValidation,
                         cityRepository, medicineUnitRepository, new NotNullableMapper(),
-                        medicineDonationRepository, medicineRepository, cloudFileService, securityContext);
+                        medicineDonationRepository, medicineRepository, cloudFileService, securityContext, predictionService);
     }
 
     @Test

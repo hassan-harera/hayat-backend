@@ -2,6 +2,7 @@ package com.harera.hayat.donations.service.book;
 
 import com.harera.hayat.donations.model.DonationCategory;
 import com.harera.hayat.donations.model.DonationStatus;
+import com.harera.hayat.donations.model.ai.Prediction;
 import com.harera.hayat.donations.model.book.BookDonation;
 import com.harera.hayat.donations.model.book.BookDonationRequest;
 import com.harera.hayat.donations.model.book.BookDonationResponse;
@@ -10,6 +11,7 @@ import com.harera.hayat.donations.model.medicine.MedicineDonation;
 import com.harera.hayat.donations.repository.book.BookDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.donations.service.DonationNotificationsService;
+import com.harera.hayat.donations.service.ai.PredictionService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.file.CloudFileService;
@@ -21,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
@@ -37,19 +40,22 @@ public class BookDonationService extends BaseService {
     private final BookDonationRepository bookDonationRepository;
     private final CityService cityService;
     private final DonationNotificationsService donationNotificationsService;
+    private final PredictionService predictionService;
 
     public BookDonationService(CloudFileService cloudFileService,
                     BookDonationValidation bookDonationValidation,
                     ModelMapper modelMapper,
                     BookDonationRepository bookDonationRepository,
                     CityService cityService,
-                    DonationNotificationsService donationNotificationsService) {
+                    DonationNotificationsService donationNotificationsService,
+                    PredictionService predictionService) {
         this.cloudFileService = cloudFileService;
         this.bookDonationValidation = bookDonationValidation;
         this.modelMapper = modelMapper;
         this.bookDonationRepository = bookDonationRepository;
         this.cityService = cityService;
         this.donationNotificationsService = donationNotificationsService;
+        this.predictionService = predictionService;
     }
 
     public BookDonationResponse create(BookDonationRequest request,
@@ -65,10 +71,25 @@ public class BookDonationService extends BaseService {
                         OffsetDateTime.now().plusDays(bookDonationExpirationDays));
         bookDonation.setUser(getUser(authorization));
         bookDonation.setCity(cityService.getCity(request.getCityId()));
-        donationNotificationsService.notifyProcessingDonation(bookDonation);
 
         bookDonationRepository.save(bookDonation);
+
+        donationNotificationsService.notifyProcessingDonation(bookDonation);
+        reviewDonation(bookDonation);
+
         return modelMapper.map(bookDonation, BookDonationResponse.class);
+    }
+
+    private void reviewDonation(BookDonation bookDonation) {
+        Prediction prediction = predictionService.predict(
+                        bookDonation.getTitle() + " " + bookDonation.getDescription());
+        if (Objects.equals(prediction.getLabel(), "BOOK")
+                        && prediction.getCertainty() > 0.5) {
+            bookDonation.setStatus(DonationStatus.ACTIVE);
+        } else {
+            bookDonation.setStatus(DonationStatus.REJECTED);
+        }
+        bookDonationRepository.save(bookDonation);
     }
 
     public BookDonationResponse update(Long id,
