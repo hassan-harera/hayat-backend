@@ -6,11 +6,13 @@ import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.file.CloudFileService;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
+import com.harera.hayat.needs.model.Prediction;
 import com.harera.hayat.needs.model.book.BookNeed;
 import com.harera.hayat.needs.model.book.BookNeedRequest;
 import com.harera.hayat.needs.model.book.BookNeedResponse;
 import com.harera.hayat.needs.repository.book.BookNeedRepository;
 import com.harera.hayat.needs.service.NeedNotificationsService;
+import com.harera.hayat.needs.service.PredictionService;
 import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 import static com.harera.hayat.framework.util.ObjectMapperUtils.mapAll;
@@ -33,10 +36,13 @@ public class BookNeedService {
     private final UserService userService;
     private final CloudFileService cloudFileService;
     private final NeedNotificationsService needNotificationsService;
+    private final PredictionService predictionService;
 
     public BookNeedService(CityService cityService, BookNeedValidation bookNeedValidation,
-                           ModelMapper modelMapper, BookNeedRepository bookNeedRepository,
-                           UserService userService, CloudFileService cloudFileService, NeedNotificationsService needNotificationsService) {
+                    ModelMapper modelMapper, BookNeedRepository bookNeedRepository,
+                    UserService userService, CloudFileService cloudFileService,
+                    NeedNotificationsService needNotificationsService,
+                    PredictionService predictionService) {
         this.cityService = cityService;
         this.bookNeedValidation = bookNeedValidation;
         this.modelMapper = modelMapper;
@@ -44,6 +50,7 @@ public class BookNeedService {
         this.userService = userService;
         this.cloudFileService = cloudFileService;
         this.needNotificationsService = needNotificationsService;
+        this.predictionService = predictionService;
     }
 
     public BookNeedResponse create(BookNeedRequest bookNeedRequest,
@@ -56,14 +63,27 @@ public class BookNeedService {
         bookNeed.setCategory(NeedCategory.BOOKS);
         bookNeed.setCity(cityService.get(bookNeedRequest.getCityId()));
         bookNeed.setStatus(NeedStatus.PENDING);
-        // TODO: send to AI model to process the request
         bookNeed.setUser(modelMapper.map(userService.getUser(authorization),
                         BaseUserDto.class));
 
-        needNotificationsService.notifyProcessingNeed(bookNeed);
-
         var bookNeedResponse = bookNeedRepository.save(bookNeed);
+
+        needNotificationsService.notifyProcessingNeed(bookNeed);
+        reviewNeed(bookNeed);
+
         return modelMapper.map(bookNeedResponse, BookNeedResponse.class);
+    }
+
+    private void reviewNeed(BookNeed bookNeed) {
+        Prediction prediction = predictionService
+                        .predict(bookNeed.getTitle() + " " + bookNeed.getDescription());
+        if (Objects.equals(prediction.getLabel(), "BOOK")
+                        && prediction.getCertainty() > 0.5) {
+            bookNeed.setStatus(NeedStatus.ACTIVE);
+        } else {
+            bookNeed.setStatus(NeedStatus.REJECTED);
+        }
+        bookNeedRepository.save(bookNeed);
     }
 
     public List<BookNeedResponse> list() {
@@ -113,7 +133,8 @@ public class BookNeedService {
 
     public List<BookNeedResponse> search(String query, int page, int pageSize) {
         page = Integer.max(page, 1) - 1;
-        List<BookNeed> bookNeeds = bookNeedRepository.search(query, NeedStatus.ACTIVE, of(page, pageSize));
+        List<BookNeed> bookNeeds = bookNeedRepository.search(query, NeedStatus.ACTIVE,
+                        of(page, pageSize));
         return mapAll(bookNeeds, BookNeedResponse.class);
     }
 }

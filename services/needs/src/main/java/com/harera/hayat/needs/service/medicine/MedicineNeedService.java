@@ -9,6 +9,7 @@ import com.harera.hayat.framework.service.medicine.MedicineUnitService;
 import com.harera.hayat.framework.util.ObjectMapperUtils;
 import com.harera.hayat.needs.model.NeedCategory;
 import com.harera.hayat.needs.model.NeedStatus;
+import com.harera.hayat.needs.model.Prediction;
 import com.harera.hayat.needs.model.medicine.MedicineNeed;
 import com.harera.hayat.needs.model.medicine.MedicineNeedRequest;
 import com.harera.hayat.needs.model.medicine.MedicineNeedResponse;
@@ -16,6 +17,7 @@ import com.harera.hayat.needs.model.medicine.MedicineNeedUpdateRequest;
 import com.harera.hayat.needs.repository.medicine.MedicineNeedRepository;
 import com.harera.hayat.needs.service.BaseService;
 import com.harera.hayat.needs.service.NeedNotificationsService;
+import com.harera.hayat.needs.service.PredictionService;
 import com.harera.hayat.needs.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 import static com.harera.hayat.framework.util.FileUtils.convertMultiPartToFile;
 import static com.harera.hayat.framework.util.PageableUtils.of;
@@ -40,12 +43,15 @@ public class MedicineNeedService implements BaseService {
     private final UserService userService;
     private final CloudFileService cloudFileService;
     private final NeedNotificationsService needNotificationsService;
+    private final PredictionService predictionService;
 
     public MedicineNeedService(MedicineNeedValidation needValidation,
-                               CityService cityService, MedicineUnitService medicineUnitService,
-                               MedicineService medicineService, ModelMapper modelMapper,
-                               MedicineNeedRepository medicineNeedRepository,
-                               UserService userService, CloudFileService cloudFileService, NeedNotificationsService needNotificationsService) {
+                    CityService cityService, MedicineUnitService medicineUnitService,
+                    MedicineService medicineService, ModelMapper modelMapper,
+                    MedicineNeedRepository medicineNeedRepository,
+                    UserService userService, CloudFileService cloudFileService,
+                    NeedNotificationsService needNotificationsService,
+                    PredictionService predictionService) {
         this.needValidation = needValidation;
         this.cityService = cityService;
         this.medicineUnitService = medicineUnitService;
@@ -55,6 +61,7 @@ public class MedicineNeedService implements BaseService {
         this.userService = userService;
         this.cloudFileService = cloudFileService;
         this.needNotificationsService = needNotificationsService;
+        this.predictionService = predictionService;
     }
 
     public MedicineNeedResponse create(MedicineNeedRequest medicineNeedRequest,
@@ -74,12 +81,25 @@ public class MedicineNeedService implements BaseService {
                         medicineService.get(medicineNeedRequest.getMedicineId()));
         medicineNeed.setNeedDate(LocalDateTime.now());
         medicineNeed.setNeedExpirationDate(LocalDateTime.now().plusDays(45));
-        // TODO: 28/02/23 send request to ai model
-
-        needNotificationsService.notifyProcessingNeed(medicineNeed);
 
         medicineNeedRepository.save(medicineNeed);
+
+        needNotificationsService.notifyProcessingNeed(medicineNeed);
+        reviewNeed(medicineNeed);
+
         return modelMapper.map(medicineNeed, MedicineNeedResponse.class);
+    }
+
+    private void reviewNeed(MedicineNeed medicineNeed) {
+        Prediction prediction = predictionService.predict(
+                        medicineNeed.getTitle() + " " + medicineNeed.getDescription());
+        if (Objects.equals(prediction.getLabel(), "MEDICINE")
+                        && prediction.getCertainty() > 0.5) {
+            medicineNeed.setStatus(NeedStatus.ACTIVE);
+        } else {
+            medicineNeed.setStatus(NeedStatus.REJECTED);
+        }
+        medicineNeedRepository.save(medicineNeed);
     }
 
     public MedicineNeedResponse get(String id) {
@@ -155,7 +175,8 @@ public class MedicineNeedService implements BaseService {
 
     public List<MedicineNeedResponse> search(String query, int page, int pageSize) {
         page = Integer.max(page, 1) - 1;
-        List<MedicineNeed> medicineNeeds = medicineNeedRepository.search(query, NeedStatus.ACTIVE, of(page, pageSize));
+        List<MedicineNeed> medicineNeeds = medicineNeedRepository.search(query,
+                        NeedStatus.ACTIVE, of(page, pageSize));
         return ObjectMapperUtils.mapAll(medicineNeeds, MedicineNeedResponse.class);
     }
 }
