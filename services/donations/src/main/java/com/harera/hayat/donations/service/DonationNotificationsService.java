@@ -1,13 +1,12 @@
 package com.harera.hayat.donations.service;
 
 import com.harera.hayat.donations.model.BaseDonation;
-import com.harera.hayat.donations.model.Donation;
-import com.harera.hayat.donations.model.book.BookDonation;
 import com.harera.hayat.framework.model.notificaiton.Notification;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +18,11 @@ import java.io.Serializable;
 @Log4j2
 public class DonationNotificationsService {
 
-    private final ConnectionFactory connectionFactory;
+    private final RabbitTemplate rabbitTemplate;
     private final String notificationsQueue;
 
-    public DonationNotificationsService(ConnectionFactory connectionFactory,
-                    @Value("${spring.rabbitmq.queue.notifications}") String notificationsQueue) {
-        this.connectionFactory = connectionFactory;
+    public DonationNotificationsService(RabbitTemplate rabbitTemplate, @Value("${spring.rabbitmq.queue.notifications}") String notificationsQueue) {
+        this.rabbitTemplate = rabbitTemplate;
         this.notificationsQueue = notificationsQueue;
     }
 
@@ -38,12 +36,7 @@ public class DonationNotificationsService {
     }
 
     private void sendNotification(Notification notification) throws Exception {
-        Connection connection = connectionFactory.newConnection();
-        Channel channel = connection.createChannel();
-        channel.queueDeclare(notificationsQueue, false, false, false, null);
-        channel.basicPublish("", notificationsQueue, null, toByteArray(notification));
-        channel.close();
-        connection.close();
+        rabbitTemplate.convertAndSend(notificationsQueue, notification);
     }
 
     private byte[] toByteArray(Serializable object) throws Exception {
