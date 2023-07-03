@@ -101,7 +101,9 @@ public class MedicineDonationService extends BaseService {
         if (Objects.equals(prediction.getLabel(), "MEDICINE")
                         && prediction.getCertainty() > 0.5) {
             medicineDonation.setStatus(DonationStatus.ACTIVE);
+            donationNotificationsService.notifyDonationAccepted(medicineDonation);
         } else {
+            donationNotificationsService.notifyDonationRejected(medicineDonation);
             medicineDonation.setStatus(DonationStatus.REJECTED);
         }
         medicineDonationRepository.save(medicineDonation);

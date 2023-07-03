@@ -86,8 +86,10 @@ public class BookDonationService extends BaseService {
         if (Objects.equals(prediction.getLabel(), "BOOK")
                         && prediction.getCertainty() > 0.5) {
             bookDonation.setStatus(DonationStatus.ACTIVE);
+            donationNotificationsService.notifyDonationAccepted(bookDonation);
         } else {
             bookDonation.setStatus(DonationStatus.REJECTED);
+            donationNotificationsService.notifyDonationRejected(bookDonation);
         }
         bookDonationRepository.save(bookDonation);
     }

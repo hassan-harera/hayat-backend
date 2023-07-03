@@ -96,7 +96,9 @@ public class FoodDonationService extends BaseService {
         if (Objects.equals(prediction.getLabel(), "FOOD")
                         && prediction.getCertainty() > 0.5) {
             foodDonation.setStatus(DonationStatus.ACTIVE);
+            donationNotificationsService.notifyDonationAccepted(foodDonation);
         } else {
+            donationNotificationsService.notifyDonationRejected(foodDonation);
             foodDonation.setStatus(DonationStatus.REJECTED);
         }
         foodDonationRepository.save(foodDonation);

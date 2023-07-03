@@ -1,6 +1,8 @@
 package com.harera.hayat.donations.config;
 
 import com.rabbitmq.client.ConnectionFactory;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,5 +29,10 @@ public class RabbitMQConfig {
         factory.setUsername(username);
         factory.setPassword(password);
         return factory;
+    }
+
+    @Bean
+    public MessageConverter jsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }
