@@ -249,7 +249,7 @@ services:
       - RABBITMQ_USERNAME=${RABBITMQ_USERNAME}
       - RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}
     ports:
-      - "8085:8085"
+      - "8086:8086"
     depends_on:
       discovery-service:
         condition: service_started
