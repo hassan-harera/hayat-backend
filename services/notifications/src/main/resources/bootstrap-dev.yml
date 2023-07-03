@@ -42,10 +42,8 @@ spring:
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
 
-queue:
-  donations:
-    accepted: accepted_donations
-
+    queue:
+      notifications: notifications
 
 firebase:
   auth:
