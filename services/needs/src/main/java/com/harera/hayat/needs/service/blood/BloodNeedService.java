@@ -68,9 +68,12 @@ public class BloodNeedService {
         bloodNeed.setUser(modelMapper.map(userService.getUser(authorization),
                         BaseUserDto.class));
 
-        needNotificationsService.notifyProcessingNeed(bloodNeed);
 
         bloodNeedRepository.save(bloodNeed);
+
+        needNotificationsService.notifyProcessingNeed(bloodNeed);
+        needNotificationsService.notifyDonationAccepted(bloodNeed);
+
         return modelMapper.map(bloodNeed, BloodNeedResponse.class);
     }
 

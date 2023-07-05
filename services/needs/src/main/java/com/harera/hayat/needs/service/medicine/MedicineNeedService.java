@@ -96,7 +96,9 @@ public class MedicineNeedService implements BaseService {
         if (Objects.equals(prediction.getLabel(), "MEDICINE")
                         && prediction.getCertainty() > 0.5) {
             medicineNeed.setStatus(NeedStatus.ACTIVE);
+            needNotificationsService.notifyDonationAccepted(medicineNeed);
         } else {
+            needNotificationsService.notifyDonationRejected(medicineNeed);
             medicineNeed.setStatus(NeedStatus.REJECTED);
         }
         medicineNeedRepository.save(medicineNeed);

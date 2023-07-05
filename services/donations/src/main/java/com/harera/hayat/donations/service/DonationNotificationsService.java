@@ -35,16 +35,8 @@ public class DonationNotificationsService {
         }
     }
 
-    private void sendNotification(Notification notification) throws Exception {
+    private void sendNotification(Notification notification) {
         rabbitTemplate.convertAndSend(notificationsQueue, notification);
-    }
-
-    private byte[] toByteArray(Serializable object) throws Exception {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
-        objectStream.writeObject(object);
-        objectStream.flush();
-        return byteStream.toByteArray();
     }
 
     private Notification createProcessingDonationNotification(BaseDonation donation) {

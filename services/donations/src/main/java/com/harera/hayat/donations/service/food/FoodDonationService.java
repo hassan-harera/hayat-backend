@@ -83,10 +83,11 @@ public class FoodDonationService extends BaseService {
         foodDonation.setUser(getUser(authorization));
         foodDonation.setFoodUnit(getUnit(foodDonationRequest.getFoodUnitId()));
 
+        foodDonationRepository.save(foodDonation);
+
         donationNotificationsService.notifyProcessingDonation(foodDonation);
         reviewDonation(foodDonation);
 
-        foodDonationRepository.save(foodDonation);
         return modelMapper.map(foodDonation, FoodDonationResponse.class);
     }
 

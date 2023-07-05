@@ -80,7 +80,9 @@ public class BookNeedService {
         if (Objects.equals(prediction.getLabel(), "BOOK")
                         && prediction.getCertainty() > 0.5) {
             bookNeed.setStatus(NeedStatus.ACTIVE);
+            needNotificationsService.notifyDonationAccepted(bookNeed);
         } else {
+            needNotificationsService.notifyDonationRejected(bookNeed);
             bookNeed.setStatus(NeedStatus.REJECTED);
         }
         bookNeedRepository.save(bookNeed);

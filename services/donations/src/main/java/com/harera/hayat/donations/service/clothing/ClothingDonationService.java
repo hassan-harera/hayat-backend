@@ -90,10 +90,11 @@ public class ClothingDonationService extends BaseService {
         clothingDonation.setCity(citService.getCity(clothingDonationRequest.getCityId()));
         assignClothingData(clothingDonation, clothingDonationRequest);
 
+        clothingDonationRepository.save(clothingDonation);
+
         donationNotificationsService.notifyProcessingDonation(clothingDonation);
         reviewDonation(clothingDonation);
 
-        clothingDonationRepository.save(clothingDonation);
         return modelMapper.map(clothingDonation, ClothingDonationResponse.class);
     }
 
