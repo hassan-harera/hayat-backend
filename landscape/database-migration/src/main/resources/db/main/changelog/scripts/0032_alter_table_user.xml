@@ -1,0 +1,19 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="0032" author="hharera@hayat.social">
+        <sql>
+            ALTER TABLE user_
+            ADD COLUMN qr_code VARCHAR(1024) NULL,
+            ADD COLUMN reputation INTEGER NULL DEFAULT 0,
+            ADD COLUMN telegram_link VARCHAR(120) NULL,
+            ADD COLUMN whatsapp_link VARCHAR(120) NULL,
+            ADD COLUMN image_url VARCHAR(1024) NULL,
+            ADD COLUMN city_id BIGINT NULL DEFAULT 277;
+
+            UPDATE user_ SET qr_code = MD5(UUID());
+        </sql>
+    </changeSet>
+</databaseChangeLog>
