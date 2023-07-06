@@ -50,7 +50,7 @@ public class AuthService {
         user.setUsername(user.getMobile());
 
         userRepository.save(user);
-        keycloakService.signup(user);
+        keycloakService.signup(user, signupRequest.getPassword());
 
         return modelMapper.map(user, SignupResponse.class);
     }

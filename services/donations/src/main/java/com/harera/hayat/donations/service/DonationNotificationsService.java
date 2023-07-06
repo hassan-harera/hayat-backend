@@ -21,7 +21,8 @@ public class DonationNotificationsService {
     private final RabbitTemplate rabbitTemplate;
     private final String notificationsQueue;
 
-    public DonationNotificationsService(RabbitTemplate rabbitTemplate, @Value("${spring.rabbitmq.queue.notifications}") String notificationsQueue) {
+    public DonationNotificationsService(RabbitTemplate rabbitTemplate,
+                                        @Value("${spring.rabbitmq.queue.notifications}") String notificationsQueue) {
         this.rabbitTemplate = rabbitTemplate;
         this.notificationsQueue = notificationsQueue;
     }

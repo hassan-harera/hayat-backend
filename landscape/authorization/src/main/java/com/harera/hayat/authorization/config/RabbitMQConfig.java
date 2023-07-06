@@ -1,31 +1,30 @@
 package com.harera.hayat.authorization.config;
 
-import com.rabbitmq.client.ConnectionFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
 
-    private final String host;
-    private final String username;
-    private final String password;
+    private final ConnectionFactory connectionFactory;
 
-    public RabbitMQConfig(@Value("${spring.rabbitmq.host}") String host,
-                          @Value("${spring.rabbitmq.username}") String username,
-                          @Value("${spring.rabbitmq.password}") String password) {
-        this.host = host;
-        this.username = username;
-        this.password = password;
+    public RabbitMQConfig(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
     }
 
     @Bean
-    public ConnectionFactory connectionFactory() {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(host);
-        factory.setUsername(username);
-        factory.setPassword(password);
-        return factory;
+    public RabbitTemplate rabbitTemplate() {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        return rabbitTemplate;
+    }
+
+    @Bean
+    public MessageConverter jsonMessageConverter() {
+        return new Jackson2JsonMessageConverter();
     }
 }

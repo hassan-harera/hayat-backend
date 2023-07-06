@@ -52,7 +52,7 @@ public class OauthService {
         user.setUsername(firebaseUser.getUid());
 
         userRepository.save(user);
-        keycloakService.signup(user);
+        keycloakService.oauthSignup(user);
 
         return modelMapper.map(user, SignupResponse.class);
     }

@@ -4,25 +4,21 @@ import com.harera.hayat.authorization.model.user.User;
 import com.harera.hayat.framework.model.notificaiton.Notification;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
 @Service
 @Log4j2
 public class AuthorizationNotificationsService {
 
-    private final ConnectionFactory connectionFactory;
+    private final RabbitTemplate rabbitTemplate;
     private final String notificationsQueue;
 
-    public AuthorizationNotificationsService(ConnectionFactory connectionFactory,
+    public AuthorizationNotificationsService(RabbitTemplate rabbitTemplate,
                     @Value("${spring.rabbitmq.queue.notifications}") String notificationsQueue) {
-        this.connectionFactory = connectionFactory;
+        this.rabbitTemplate = rabbitTemplate;
         this.notificationsQueue = notificationsQueue;
     }
 
@@ -35,21 +31,8 @@ public class AuthorizationNotificationsService {
         }
     }
 
-    private void sendNotification(Notification notification) throws Exception {
-        Connection connection = connectionFactory.newConnection();
-        Channel channel = connection.createChannel();
-        channel.queueDeclare(notificationsQueue, false, false, false, null);
-        channel.basicPublish("", notificationsQueue, null, toByteArray(notification));
-        channel.close();
-        connection.close();
-    }
-
-    private byte[] toByteArray(Serializable object) throws Exception {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        ObjectOutputStream objectStream = new ObjectOutputStream(byteStream);
-        objectStream.writeObject(object);
-        objectStream.flush();
-        return byteStream.toByteArray();
+    private void sendNotification(Notification notification) {
+        rabbitTemplate.convertAndSend(notificationsQueue, notification);
     }
 
     private Notification createNewLoginNotification(User user) {

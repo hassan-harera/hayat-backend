@@ -63,7 +63,40 @@ public class KeycloakServiceImpl implements KeycloakService {
     }
 
     @Override
-    public void signup(User user) {
+    public void signup(User user, String password) {
+        UserRepresentation userRepresentation =
+                        modelMapper.map(user, UserRepresentation.class);
+        userRepresentation.setEnabled(true);
+        userRepresentation.setEmailVerified(true);
+
+        String uid = user.getUid() == null ? user.getUsername() : user.getUid();
+        Map<String, List<String>> attributes = new HashMap<>();
+        attributes.put("id", of(valueOf(user.getId())));
+        attributes.put("uid", of(uid));
+        attributes.put("username", of(user.getUsername()));
+        userRepresentation.setAttributes(attributes);
+
+        CredentialRepresentation credentialRepresentation =
+                        new CredentialRepresentation();
+        credentialRepresentation.setType("password");
+        credentialRepresentation.setValue(password);
+        credentialRepresentation.setTemporary(false);
+        userRepresentation.setCredentials(singletonList(credentialRepresentation));
+
+        HashMap<String, List<String>> clientRoles = new HashMap<>();
+        clientRoles.put(clientId, singletonList("user"));
+        userRepresentation.setClientRoles(clientRoles);
+
+        try {
+            keycloak.realm(realm).users().create(userRepresentation);
+        } catch (Exception ex) {
+            log.error(ex);
+            throw new SignupException("Error while processing creating");
+        }
+    }
+
+    @Override
+    public void oauthSignup(User user) {
         UserRepresentation userRepresentation =
                         modelMapper.map(user, UserRepresentation.class);
         userRepresentation.setEnabled(true);

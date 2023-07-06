@@ -46,6 +46,10 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "uid")
     private String uid;
 
+    @Basic
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "device_token")
     private String deviceToken;
 

@@ -8,9 +8,11 @@ public interface KeycloakService {
 
     LoginResponse login(String username, String password);
 
-    void signup(User user);
+    void signup(User user, String password);
 
     void logout(String token, String refreshToken);
 
     void resetPassword(User user, String newPassword);
+
+    void oauthSignup(User user);
 }
