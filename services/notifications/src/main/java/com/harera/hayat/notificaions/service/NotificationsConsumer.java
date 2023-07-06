@@ -17,6 +17,6 @@ public class NotificationsConsumer {
     @RabbitListener(queues = "${spring.rabbitmq.queue.notifications}")
     public void consumeNotifications(Notification notification) {
         firebaseService.send(notification);
-        log.error("Notification Sent: " + notification);
+        log.debug("Notification Sent: " + notification);
     }
 }

@@ -1,8 +1,0 @@
-application:
-  name: config-service
-cloud:
-  config:
-    enabled: false
-spring:
-  profiles:
-    default: test
