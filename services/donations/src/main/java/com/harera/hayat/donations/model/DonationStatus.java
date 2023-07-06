@@ -5,5 +5,5 @@ public enum DonationStatus {
     ACTIVE,
     DEACTIVATED,
     REJECTED,
-    COMPLETED,
+    COMPLETED, DONE,
 }

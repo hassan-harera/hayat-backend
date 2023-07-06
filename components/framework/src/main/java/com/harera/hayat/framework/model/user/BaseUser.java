@@ -40,6 +40,10 @@ public class BaseUser extends BaseEntity {
     @Column(name = "uid")
     private String uid;
 
+    @Basic
+    @Column(name = "reputation")
+    private int reputation;
+
     @Column(name = "device_token")
     private String deviceToken;
 }

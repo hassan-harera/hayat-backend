@@ -19,6 +19,7 @@ import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.repository.repository.MedicineRepository;
 import com.harera.hayat.framework.repository.repository.MedicineUnitRepository;
 import com.harera.hayat.framework.service.file.CloudFileService;
+import jakarta.ws.rs.BadRequestException;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,8 +97,8 @@ public class MedicineDonationService extends BaseService {
     }
 
     private void reviewDonation(MedicineDonation medicineDonation) {
-        Prediction prediction = predictionService.predict(
-                        medicineDonation.getTitle() + " " + medicineDonation.getDescription());
+        Prediction prediction = predictionService.predict(medicineDonation.getTitle()
+                        + " " + medicineDonation.getDescription());
         if (Objects.equals(prediction.getLabel(), "MEDICINE")
                         && prediction.getCertainty() > 0.5) {
             medicineDonation.setStatus(DonationStatus.ACTIVE);
@@ -202,6 +203,19 @@ public class MedicineDonationService extends BaseService {
                         .orElseThrow(() -> new EntityNotFoundException(
                                         MedicineDonation.class, id));
         medicineDonation.downvote(getUser(authorization));
+        medicineDonationRepository.save(medicineDonation);
+    }
+
+    public void receive(Long id) {
+        MedicineDonation medicineDonation = medicineDonationRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                        MedicineDonation.class, id));
+        if (medicineDonation.getStatus() != DonationStatus.ACTIVE) {
+            throw new BadRequestException("Donation is not active");
+        }
+        medicineDonation.setStatus(DonationStatus.DONE);
+        medicineDonation.getUser()
+                        .setReputation(medicineDonation.getUser().getReputation() + 50);
         medicineDonationRepository.save(medicineDonation);
     }
 }

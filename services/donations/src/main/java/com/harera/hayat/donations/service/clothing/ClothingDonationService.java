@@ -7,6 +7,8 @@ import com.harera.hayat.donations.model.clothing.ClothingDonation;
 import com.harera.hayat.donations.model.clothing.ClothingDonationRequest;
 import com.harera.hayat.donations.model.clothing.ClothingDonationResponse;
 import com.harera.hayat.donations.model.clothing.ClothingDonationUpdateRequest;
+import com.harera.hayat.donations.model.food.FoodDonation;
+import com.harera.hayat.donations.model.medicine.MedicineDonation;
 import com.harera.hayat.donations.repository.clothing.ClothingDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.donations.service.DonationNotificationsService;
@@ -15,6 +17,7 @@ import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.clothing.*;
 import com.harera.hayat.framework.service.file.CloudFileService;
+import jakarta.ws.rs.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -212,6 +215,17 @@ public class ClothingDonationService extends BaseService {
                         .orElseThrow(() -> new EntityNotFoundException(
                                         ClothingDonation.class, id));
         clothingDonation.downvote(getUser(authorization));
+        clothingDonationRepository.save(clothingDonation);
+    }
+
+    public void receive(Long id) {
+        ClothingDonation clothingDonation = clothingDonationRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(MedicineDonation.class, id));
+        if (clothingDonation.getStatus() != DonationStatus.ACTIVE) {
+            throw new BadRequestException("Donation is not active");
+        }
+        clothingDonation.setStatus(DonationStatus.DONE);
+        clothingDonation.getUser().setReputation(clothingDonation.getUser().getReputation() + 50);
         clothingDonationRepository.save(clothingDonation);
     }
 }

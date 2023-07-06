@@ -272,7 +272,7 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
     ports:
-      - "8086:8086"
+      - "8087:8087"
 
   redis:
     container_name: "hayat_redis"

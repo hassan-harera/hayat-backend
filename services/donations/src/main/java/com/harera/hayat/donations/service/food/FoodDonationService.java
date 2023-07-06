@@ -7,6 +7,7 @@ import com.harera.hayat.donations.model.food.FoodDonation;
 import com.harera.hayat.donations.model.food.FoodDonationRequest;
 import com.harera.hayat.donations.model.food.FoodDonationResponse;
 import com.harera.hayat.donations.model.food.FoodDonationUpdateRequest;
+import com.harera.hayat.donations.model.medicine.MedicineDonation;
 import com.harera.hayat.donations.repository.food.FoodDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
 import com.harera.hayat.donations.service.DonationNotificationsService;
@@ -19,6 +20,7 @@ import com.harera.hayat.framework.repository.city.CityRepository;
 import com.harera.hayat.framework.repository.food.FoodCategoryRepository;
 import com.harera.hayat.framework.repository.food.FoodUnitRepository;
 import com.harera.hayat.framework.service.file.CloudFileService;
+import jakarta.ws.rs.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -197,5 +199,16 @@ public class FoodDonationService extends BaseService {
         List<FoodDonation> search = foodDonationRepository.search(query,
                         Pageable.ofSize(16).withPage(page));
         return mapAll(search, FoodDonationResponse.class);
+    }
+
+    public void receive(Long id) {
+        FoodDonation foodDonation = foodDonationRepository.findById(id).orElseThrow(
+                        () -> new EntityNotFoundException(MedicineDonation.class, id));
+        if (foodDonation.getStatus() != DonationStatus.ACTIVE) {
+            throw new BadRequestException("Donation is not active");
+        }
+        foodDonation.setStatus(DonationStatus.DONE);
+        foodDonation.getUser().setReputation(foodDonation.getUser().getReputation() + 50);
+        foodDonationRepository.save(foodDonation);
     }
 }

@@ -7,6 +7,7 @@ import com.harera.hayat.donations.model.book.BookDonation;
 import com.harera.hayat.donations.model.book.BookDonationRequest;
 import com.harera.hayat.donations.model.book.BookDonationResponse;
 import com.harera.hayat.donations.model.book.BookDonationUpdateRequest;
+import com.harera.hayat.donations.model.clothing.ClothingDonation;
 import com.harera.hayat.donations.model.medicine.MedicineDonation;
 import com.harera.hayat.donations.repository.book.BookDonationRepository;
 import com.harera.hayat.donations.service.BaseService;
@@ -15,6 +16,7 @@ import com.harera.hayat.donations.service.ai.PredictionService;
 import com.harera.hayat.framework.exception.EntityNotFoundException;
 import com.harera.hayat.framework.service.city.CityService;
 import com.harera.hayat.framework.service.file.CloudFileService;
+import jakarta.ws.rs.BadRequestException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
@@ -146,5 +148,16 @@ public class BookDonationService extends BaseService {
 
         bookDonationRepository.save(bookDonation);
         return modelMapper.map(bookDonation, BookDonationResponse.class);
+    }
+
+    public void receive(Long id) {
+        BookDonation bookDonation = bookDonationRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(MedicineDonation.class, id));
+        if (bookDonation.getStatus() != DonationStatus.ACTIVE) {
+            throw new BadRequestException("Donation is not active");
+        }
+        bookDonation.setStatus(DonationStatus.DONE);
+        bookDonation.getUser().setReputation(bookDonation.getUser().getReputation() + 50);
+        bookDonationRepository.save(bookDonation);
     }
 }
