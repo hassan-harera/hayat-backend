@@ -56,10 +56,4 @@ public class AuthController {
         return ok().build();
     }
 
-    @GetMapping
-    public ResponseEntity<UserResponse> get(
-                    @RequestHeader("Authorization") String authorizationHeader) {
-        return ok(userService
-                        .getProfileWithAuthorization(authorizationHeader.substring(7)));
-    }
 }
