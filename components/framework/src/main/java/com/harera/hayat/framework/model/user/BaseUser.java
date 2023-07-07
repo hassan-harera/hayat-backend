@@ -29,10 +29,6 @@ public class BaseUser extends BaseEntity {
     private String email;
 
     @Basic
-    @Column(name = "password")
-    private String password;
-
-    @Basic
     @Column(name = "username")
     private String username;
 

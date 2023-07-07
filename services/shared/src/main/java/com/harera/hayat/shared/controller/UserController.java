@@ -1,7 +1,7 @@
-package com.harera.hayat.authorization.controller;
+package com.harera.hayat.shared.controller;
 
-import com.harera.hayat.authorization.model.user.UserResponse;
-import com.harera.hayat.authorization.service.user.UserService;
+import com.harera.hayat.framework.model.user.BaseUser;
+import com.harera.hayat.shared.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +22,9 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> get(
+    public ResponseEntity<BaseUser> get(
                     @RequestHeader("Authorization") String authorizationHeader) {
         return ok(userService
-                        .getProfileWithAuthorization(authorizationHeader.substring(7)));
+                        .getProfile(authorizationHeader.substring(7)));
     }
 }

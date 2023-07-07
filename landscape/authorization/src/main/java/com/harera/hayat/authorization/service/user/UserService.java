@@ -32,22 +32,4 @@ public class UserService {
                         .map(user -> modelMapper.map(user, UserResponse.class))
                         .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
-
-    public UserResponse getProfileWithAuthorization(String token) {
-        User user = getUser(token);
-        return modelMapper.map(user, UserResponse.class);
-    }
-
-    private User getUser(String authorization) {
-        try {
-            AccessToken token = TokenVerifier.create(authorization, AccessToken.class)
-                            .getToken();
-            String mobile = token.getPreferredUsername();
-            return userRepository.findByMobile(mobile).orElseThrow(
-                            () -> new InvalidTokenException("", "Invalid token"));
-        } catch (VerificationException e) {
-            log.error(e);
-            return null;
-        }
-    }
 }
