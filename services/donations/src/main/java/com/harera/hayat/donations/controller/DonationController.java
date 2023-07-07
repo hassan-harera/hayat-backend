@@ -31,12 +31,12 @@ public class DonationController {
         return ResponseEntity.ok(donationResponseList);
     }
 
-    @GetMapping("/{id}/receive")
+    @PutMapping("/receive")
     @Operation(summary = "Receive", description = "Receive donation", tags = "Donations",
                     responses = @ApiResponse(responseCode = "200",
                                     description = "success|Ok"))
-    public ResponseEntity receive(@PathVariable("id") Long id) {
-        donationsService.receive(id);
+    public ResponseEntity receive(@RequestParam(value = "qr_code") String qrCode) {
+        donationsService.receive(qrCode);
         return ResponseEntity.ok().build();
     }
 }

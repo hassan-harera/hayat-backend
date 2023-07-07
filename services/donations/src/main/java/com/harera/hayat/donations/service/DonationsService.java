@@ -7,6 +7,7 @@ import com.harera.hayat.donations.service.book.BookDonationService;
 import com.harera.hayat.donations.service.clothing.ClothingDonationService;
 import com.harera.hayat.donations.service.food.FoodDonationService;
 import com.harera.hayat.donations.service.medicine.MedicineDonationService;
+import com.harera.hayat.framework.exception.EntityNotFoundException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +43,10 @@ public class DonationsService {
         return mapAll(search, DonationResponse.class);
     }
 
-    public void receive(Long id) {
-        donationRepository.findById(id).ifPresent(this::updateDonation);
+    public void receive(String qrCode) {
+        Donation donation = donationRepository.findByQrCode(qrCode).orElseThrow(
+                        () -> new EntityNotFoundException("Donation not found"));
+        updateDonation(donation);
     }
 
     private void updateDonation(Donation donation) {
