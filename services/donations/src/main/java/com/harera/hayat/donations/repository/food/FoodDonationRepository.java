@@ -4,6 +4,7 @@ import com.harera.hayat.donations.model.food.FoodDonation;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,8 +12,8 @@ import java.util.List;
 @Repository
 public interface FoodDonationRepository extends JpaRepository<FoodDonation, Long> {
 
-    @Query("select d from FoodDonation d where d.status = 'ACTIVE' " +
-            "and (d.title like %?1% or d.description like %?1%) " +
-            "order by d.donationDate desc")
-    List<FoodDonation> search(String query, Pageable withPage);
+    @Query("SELECT d FROM FoodDonation d WHERE d.status = 'ACTIVE' "
+            + "AND d.donationExpirationDate > CURRENT_TIMESTAMP "
+            + "AND (d.title LIKE %:query% OR d.description LIKE %:query%)")
+    List<FoodDonation> search(@Param("query") String query, Pageable withPage);
 }
